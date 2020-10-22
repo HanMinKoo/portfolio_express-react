@@ -1,0 +1,51 @@
+.content_wrap{
+    background-color: #f3e9e9;
+}
+#backImgMain{
+    width:1920px;
+    height:800px;
+    position: absolute; /*위에 글씨를 덮어 씌우기 위해. 아니 근데 왜? position 개념 제대로 안잡혔나보다*/
+    background-color:rgba(0,0,0,0.5);    
+    margin-top:0px;
+}
+#reservation_wrap{
+    clear:both;
+    background-image:url('../images/backImg_Main.jpg');
+    margin-top:100px; /*꼭 이렇게 해야만 메뉴랑 띠어지나...*/
+    background-size: 1920px 800px;
+    width:100%;
+    height:800px;
+    color:white;
+    text-align: center;
+    font-size:23px;
+}
+#reservationBtn{
+    color:white;
+    width:230px;
+    height:60px;
+    background-color: rgb(34, 143, 83);
+    border-radius: 15px;
+    margin-top:3%;
+    font-size: 0.9em;
+
+    cursor: pointer;
+}
+#community_wrap{
+    width:1200px;
+   
+    margin:0 auto;
+    margin-top:5%;
+    height:400px;
+}
+#communityImg{
+    width:600px;
+    height: 400px;
+    float:left;
+}
+#communityText{
+    float:left;
+    margin-left:5%;
+    
+    width:500px;
+    height:400px;
+}

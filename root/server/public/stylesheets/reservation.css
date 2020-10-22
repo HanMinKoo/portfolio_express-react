@@ -1,0 +1,97 @@
+*{margin:0; padding:0;} 
+ a{text-decoration: none; color:black;}
+
+/* header 관련: 메뉴, 홈, 로그인  */
+#m9Head{
+    position: fixed;
+    top:0;
+    background-color: white;
+    width:100%;
+    min-width:1200px;
+    height:60px;
+    z-index: 1;
+  
+}
+#wrap_head{
+    height:60px;
+    width: 1200px;
+    margin:0 auto;
+    text-align: center;
+ 
+ 
+}
+#wrap_head ul ,#home {
+    float:left;
+    margin-right:20%;
+  
+    
+}
+#wrap_head ul li{
+    display:inline;
+    font-size:1.5em;
+    
+    margin-right:100px;
+}
+#login{
+    float:right;
+  
+    font-size: 20px;
+    margin-left: 0%;
+    
+}
+
+
+
+/*ground btn 관련*/
+#groundListBackGround{
+    background-color: rgb(197, 197, 197);
+    width: 100%;
+
+}
+#groundList_wrap{
+
+    width:1200px;
+    background-color: white;
+    margin:0 auto;
+    margin-top:5%;
+    
+}
+#groundList_wrap h1{
+    font-size: 2em;
+    margin-bottom: 10%;
+}
+
+.groundListBtn{
+    width:525px;
+    height:400px;
+    background-color: white;
+    margin-left: 50px;
+    border:1px solid rgb(131, 121, 121);
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 5%;
+
+}
+.groundListBtn img{
+
+    margin-top: -13%;
+    width:515px;
+    height:200px;
+    
+}
+.groundListBtn ul{
+    
+    list-style:none;
+    font-size:1em;
+}
+.groundName{
+
+    color:rgb(28, 133, 175);
+    font-size: 1.7em;
+}
+
+.groundInfo{
+    position: relative;
+    top:80px;
+    margin-bottom: 2%; 
+}

@@ -1,0 +1,7 @@
+.footer li{
+    list-style: none;
+    
+}
+.footer{
+    border-top: 1px solid gray;
+}

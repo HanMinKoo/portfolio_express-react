@@ -1,0 +1,55 @@
+body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
+a{text-decoration: none; color:black;}
+.navbar{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 8px 12px;
+    position: sticky;  /*top,left,right,bottom 중 한개의 속성이 필수.*/
+    top:0;
+   
+}
+.navbar_logo{
+    font-size:24px;  /*awesome logo는 font임*/
+   
+    padding:8px 12px;
+}
+.navbar_logo i{
+    color: rgb(137, 218, 32);
+}
+
+.navbar_menu{
+    display:flex;
+    list-style: none;
+    padding-left: 0px;
+    font-size:1.2em;
+}
+
+.navbar_menu li{
+    padding:8px 12px; /*margin을 넣으면 박스 자체가 작아진다*/ 
+}
+.navbar_menu li:hover{
+    background-color: rgb(137, 218, 32);
+    border-radius: 8px;
+}
+
+.navbar_account{
+    display:flex;
+    padding-left: 0px;
+}
+.navbar_account li{
+    list-style: none;
+    padding:8px 12px;
+}
+
+#navbar_account_join{
+    background-color: black;
+    border-radius: 8px;
+}
+#navbar_account_join a{
+    color:white;
+}
+.navbar_hamburgerBtn{
+    display: none;
+}
