@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import '../css/nav.css';
+import  {Link} from "react-router-dom"; //Link를 쓰는 이유는, href로 경로를 바꾸면 페이지가 새로고침 되기 때문이다.
+//그래서 a태그를 Link로 바꾸고, href를 to로 바꾼다
+//ex) <li><a href='/login'>로그인</a></li> ==><li><Link to='/login'>로그인</Link></li>
+
 class Nav extends Component{
     render(){
-        console.log(this.props);
+        console.log(this.props.account);
         let navbarAccount;
-        if(this.props.account!=='' && this.props.account!=='admin'){
+        if(this.props.account!=='' && this.props.account!=='admin' && this.props.account!==undefined){
             navbarAccount=
                 <ul className="navbar_account">
                     <li>{this.props.account}</li>
@@ -22,7 +26,7 @@ class Nav extends Component{
         else{
             navbarAccount=
                 <ul className="navbar_account">
-                    <li><a href='/login'>로그인</a></li>
+                    <li><Link to='/login'>로그인</Link></li>
                     <li id="navbar_account_join"><a href='/join'>회원가입</a></li>
                 </ul>
         }
@@ -35,7 +39,7 @@ class Nav extends Component{
                 </div>
                 
                 <ul className="navbar_menu">
-                    <li><a href="/">홈</a></li>
+                    <li><Link to="/">홈</Link></li>
                     <li><a href="/reservation">운동장 예약</a></li>
                     <li><a href="/test">문의하기</a></li>
                 </ul>

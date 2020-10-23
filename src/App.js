@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import Nav from './components/nav';
-import Footer from './components/footer';
-import Section from './components/section_home';
-import './App.css';
-import axios from 'axios';
+import {BrowserRouter, Route} from 'react-router-dom';
 
+import Nav from './components/nav';
+import Login from './routes/login';
+import Home from './routes/home'
+import Join from './routes/join'
+
+import axios from 'axios';
 
 class App extends Component{
   state={
@@ -20,15 +22,15 @@ class App extends Component{
   componentDidMount(){
     this.getData();
   }
-
+  
   render(){
-    console.log('아니 되긴하냐');
     return(
-      <div className="App">
+      <BrowserRouter>
         <Nav account={this.state.account}></Nav>
-        <Section></Section>
-        <Footer></Footer>
-      </div>
+        <Route path="/" exact={true} component={Home}></Route>
+        <Route path="/login" component={Login}></Route>
+        <Route path="/join" component={Join}></Route>
+      </BrowserRouter>
     );
   }
 }

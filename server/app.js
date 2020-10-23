@@ -45,15 +45,6 @@ app.use(session({
   cookie:{maxAge:6000000} ///1000분의 1초
 }));
 
-app.get('/api/customers',(req,res)=>{
-  const customers=[
-    {id:1, firstName:'min9', lastName:'han'},
-    {id:2, firstName:'min99999', lastName:'han'},
-    {id:3, firstName:'크앙', lastName:'ㄴㅇㅁㄴㅇ'},
-  ];
-  res.json(customers);
-});
-
 app.get('/api/home',(req,res,next)=>{
   
   return ((req.session.account!==undefined)? res.json([{account:req.session.account}]) :res.json([{account:''}]));

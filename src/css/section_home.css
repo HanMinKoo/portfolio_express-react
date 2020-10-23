@@ -1,23 +1,26 @@
+body{margin:0;}
 .content_wrap{
     background-color: #f3e9e9;
 }
-#backImgMain{
-    width:1920px;
-    height:800px;
-    position: absolute; /*위에 글씨를 덮어 씌우기 위해. 아니 근데 왜? position 개념 제대로 안잡혔나보다*/
-    background-color:rgba(0,0,0,0.5);    
-    margin-top:0px;
-}
+
 #reservation_wrap{
-    clear:both;
+
     background-image:url('../images/backImg_Main.jpg');
-    margin-top:100px; /*꼭 이렇게 해야만 메뉴랑 띠어지나...*/
-    background-size: 1920px 800px;
+    background-size: 100% 800px;
     width:100%;
     height:800px;
-    color:white;
-    text-align: center;
+    background-color: #ffffff;
+    background-color: rgba(255,255,255,0.5);
+  
+    position: relative;
+    top:0;
+  
     font-size:23px;
+}
+#reservation_text{
+    color:white;
+    
+    align-items: center;
 }
 #reservationBtn{
     color:white;

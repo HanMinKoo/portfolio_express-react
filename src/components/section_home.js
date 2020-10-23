@@ -6,7 +6,7 @@ class Section extends Component{
             <section className="content_wrap">
                 <article id="reservation_wrap">
                     <div id="backImgMain"></div>
-                    <div id="textMain">
+                    <div id="reservation_text">
                         <h1>축구를 즐겁게</h1>
                         <h1>예약을 편리하게</h1>
                         <button id="reservationBtn">운동장 예약하기</button>
@@ -20,7 +20,6 @@ class Section extends Component{
                         <h4>후기를 통해 공유하세요!</h4>
                     </p>
                 </article>
-                
             </section>
         );
     }
