@@ -3,22 +3,42 @@ import '../css/nav.css';
 import  {Link} from "react-router-dom"; //Link를 쓰는 이유는, href로 경로를 바꾸면 페이지가 새로고침 되기 때문이다.
 //그래서 a태그를 Link로 바꾸고, href를 to로 바꾼다
 //ex) <li><a href='/login'>로그인</a></li> ==><li><Link to='/login'>로그인</Link></li>
-
+import axios from 'axios';
 class Nav extends Component{
+    state={
+        account: ''
+      }
+    
+      getData = async () =>{
+        const {data} = await axios.get('http://localhost:8004/api/home');
+        console.log(data);
+        this.setState({account:data[0].account});
+        console.log("account:",data[0].account);
+    
+      }
+
+      componentDidMount(){
+          console.log('account는??', this.state.account);
+        if(this.state.account==='')
+            this.getData();
+      }
+
+
+
     render(){
-        console.log(this.props.account);
+        
         let navbarAccount;
-        if(this.props.account!=='' && this.props.account!=='admin' && this.props.account!==undefined){
+        if(this.state.account!=='' && this.state.account!=='admin' && this.state.account!==undefined){
             navbarAccount=
                 <ul className="navbar_account">
-                    <li>{this.props.account}</li>
+                    <li>{this.state.account}</li>
                     <li>로그아웃</li>
                 </ul>
         }
-        else if(this.props.account==='admin'){
+        else if(this.state.account==='admin'){
             navbarAccount=
                 <ul className="navbar_account">
-                    <li>{this.props.account}</li>
+                    <li>{this.state.account}</li>
                     <li>로그아웃</li>
                     <div className="page"><strong><a href='/adminpage'>관리자 페이지</a></strong></div>
                 </ul>

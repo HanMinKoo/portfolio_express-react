@@ -14,11 +14,11 @@ class Section extends Component{
                 </article>
                 <article id="comment_wrap">
                     <h2>운동장 후기</h2>
-                    <p>
-                        <h4>운동장에 대한 후기를 남겨주세요!</h4>
-                        <h4>자신이 예약할 운동장 정보를</h4>
-                        <h4>후기를 통해 공유하세요!</h4>
-                    </p>
+                    <div>
+                        <h3>운동장에 대한 후기를 남겨주세요!</h3>
+                        <h3>자신이 예약할 운동장 정보를</h3>
+                        <h3>후기를 통해 공유하세요!</h3>
+                    </div>
                 </article>
             </section>
         );

@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()); 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+//app.use(cors());
 
 app.use(session({  
   secret: process.env.SESSION_SECRET, 
@@ -44,9 +44,14 @@ app.use(session({
   store:sessionStore,
   cookie:{maxAge:6000000} ///1000분의 1초
 }));
+app.use(cors({
+  //origin: "http://localhost:8004",
+  credentials: true
+}));
+
 
 app.get('/api/home',(req,res,next)=>{
-  
+  //console.log(req.session);
   return ((req.session.account!==undefined)? res.json([{account:req.session.account}]) :res.json([{account:''}]));
 //db에 session이 저장되어있으면 서버 껐다켜도 세션 안풀림. 
 });
@@ -63,9 +68,7 @@ app.use('/reservation',reservateionRouter);
 app.use('/mypage',myPageRouter);
 app.use('/adminpage',adminPageRouter);
 app.use('/reservationstate',reservationStateRouter);
-app.use('/test',(req,res)=>{
-  res.render('head');
-});
+
 
 app.use(function(req, res, next) {
   next(createError(404));

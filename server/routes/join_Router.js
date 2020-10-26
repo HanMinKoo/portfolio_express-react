@@ -5,10 +5,10 @@ const router = express.Router();
 const joinDB = require('../models/join_DB.js');
 const connectionDB= require('../models/connection_DB.js');
 
-router.get('/',(req,res)=>{
-    console.log('join page Render');
-    res.render('join');
-});
+// router.get('/',(req,res)=>{
+//     console.log('join page Render');
+//     res.render('join');
+// });
 router.post('/checkduplication',(req,res)=>{
     console.log("body의 value값",req.body);
     const dbCon=connectionDB.connectDB();
@@ -25,18 +25,18 @@ router.post('/checkduplication',(req,res)=>{
             console.log('table name:user / Result: select query Success');
             console.log(userInfo[0]);
             
-            (userInfo[0]===undefined) ? res.send("1") : res.send("0");
+            (userInfo[0]===undefined) ? res.json({result:"success"}) : res.json({result:"fail"}) 
         }
         dbCon.end();
     });
 });
 
 router.post('/progress', (req,res)=>{
-    console.log(req.body);
+    console.log('회원가입 req body:',req.body);
     crypto.pbkdf2(req.body.userPassword1,'m9m9',8080,64,'sha512',(err,key)=>{
         console.log("base64 인코딩 후 key값:",key.toString('base64'));
         let password=key.toString('base64');
-        joinDB.saveUser(req.body.userName,req.body.userEmail,password,res,req.body.userId);
+        joinDB.saveUser(req.body.userName,req.body.userEmail,password,res,req.body.account);
     });
 });
 
