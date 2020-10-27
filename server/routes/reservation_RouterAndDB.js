@@ -5,26 +5,6 @@ const connectionDB= require('../models/connection_DB.js');
 const pool= require('../models/pool_DB.js');
 const router = express.Router();
 
-
-// async function connectDB(){
-    
-//     const dbCon=mysql.createConnection({
-//         host: process.env.DB_IP,
-//         user: process.env.DB_USER,
-//         password : process.env.DB_PASSWORD,
-//         port	:process.env.DB_PORT,
-//         database	:process.env.DB_DATABASE,
-//     });
-  
-//     dbCon.connect((err)=>{
-//         if(err!==null)
-//             console.log(`Error: DB Connect fail: ` ,err);
-//         else
-//             console.log('DB Connect Success');
-//     });
-//     return dbCon;
-// }
-
 function printQueryResult(dbCon,err,result,table,action,query){
    console.log(`table name:${table} /action: ${action}`);
    
@@ -42,9 +22,6 @@ function printQueryResult(dbCon,err,result,table,action,query){
 
 router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
     console.log("정말정말??", req.body);
-
-  
-
 
     const dbCon=connectionDB.connectDB();
 
@@ -139,9 +116,16 @@ router.get('/',(req,res)=>{
         /*****운동장 리스트 페이지*****/
         if(req.query.number===undefined){  
             if(req.session.account!==undefined)
-                res.render('reservation',{account:req.session.account,groundList:groundInfo});
-            else
-                res.render('reservation',{account:'',groundList:groundInfo});
+            {
+                console.log("어디가 문제냐");
+                res.json({account:req.session.account,groundList:groundInfo});
+            }
+                //res.render('reservation',{account:req.session.account,groundList:groundInfo});
+            else{
+                console.log("여기가문제냐");
+                res.json({account:'',groundList:groundInfo});
+            }
+                //res.render('reservation',{account:'',groundList:groundInfo});
         }
 
         /*****운동장 예약 페이지*****/
@@ -158,7 +142,7 @@ router.get('/',(req,res)=>{
                         console.log('table name:ground_timetable / Result: query Success');
                
 
-                    res.render('reservation_detail',{account:req.session.account, groundList:groundInfo[req.query.number-1], groundTimeTable:data2, reservationList:''});
+                    res.json({account:req.session.account, groundList:groundInfo[req.query.number-1], groundTimeTable:data2, reservationList:''});
                 });
             } 
         }              

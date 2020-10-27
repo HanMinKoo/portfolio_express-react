@@ -44,7 +44,7 @@ router.post('/process',(req,res)=>{
             //console.log("req.sessionID",req.sessionID);
             req.session.save(()=>{
                 console.log('session save success');
-                res.cookie('sessionID',req.sessionID,{maxAge:6000000,httpOnly:true});
+                //res.cookie('sessionID',req.sessionID,{maxAge:6000000,httpOnly:true});
                 res.send({
                     loginResult:'success',
                     

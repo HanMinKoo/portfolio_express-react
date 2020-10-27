@@ -5,10 +5,6 @@ const router = express.Router();
 const joinDB = require('../models/join_DB.js');
 const connectionDB= require('../models/connection_DB.js');
 
-// router.get('/',(req,res)=>{
-//     console.log('join page Render');
-//     res.render('join');
-// });
 router.post('/checkduplication',(req,res)=>{
     console.log("body의 value값",req.body);
     const dbCon=connectionDB.connectDB();

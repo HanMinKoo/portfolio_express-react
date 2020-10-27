@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import '../css/join.css';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class Join_component extends Component{
-    
+    state={
+        redirect:false
+    }
 
     alertException(text, element){
         alert(text);
@@ -74,20 +77,19 @@ class Join_component extends Component{
    }
    
     handleJoin=(userInfo)=>{
-        alert("test");
+     
         axios({
             method:'post',
             url:'/join/progress',
             data:userInfo
         }).then((res)=>{
            
-            if(res.data.result==='success'){
-            
-               
-               
+            if(res.data.result==='success'){  
+                this.setState({redirect:true});
             }
             else{
-                
+                alert('회원가입 실패');
+                console.log('회원가입 실패 에러메시지: ',res.data.message);
             }
            
 
@@ -102,7 +104,7 @@ class Join_component extends Component{
 
         event.preventDefault();
         
-
+        
         const idRegExp=/^[a-zA-Z0-9]{6,12}/;
         const nameRegExp=/^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
         const passwordRegExp=/^[a-z0-9]{8,20}/;
@@ -118,14 +120,14 @@ class Join_component extends Component{
             returnVariable=this.alertException("비밀번호 확인을 입력해주세요.",form.userPassword2);
         else if(form.userPassword1.value!==form.userPassword2.value)
             returnVariable=this.alertException("비밀번호를 일치시켜주세요.",form.userPassword2);
-        else if(form.userId.value==='')
-            returnVariable=this.alertException("아이디를 입력해주세요.(6~12글자)",form.userId);
+        else if(form.account.value==='')
+            returnVariable=this.alertException("아이디를 입력해주세요.(6~12글자)",form.account);
         else if(!form.duplicationIdChk.checked)
-            returnVariable=this.alertException("아이디 중복체크를 진행하세요.",form.userId);
+            returnVariable=this.alertException("아이디 중복체크를 진행하세요.",form.account);
         else if(!form.duplicationEmailChk.checked)
             returnVariable=this.alertException("이메일 중복체크를 진행하세요.",form.userEmail);
-        else if(!(idRegExp.test(form.userId.value)))
-            returnVariable=this.alertException("아이디를 영문+숫자 조합으로 해주세요.(6~12글자)",form.userId);
+        else if(!(idRegExp.test(form.account.value)))
+            returnVariable=this.alertException("아이디를 영문+숫자 조합으로 해주세요.(6~12글자)",form.account);
         else if(!(nameRegExp.test(form.userName.value)))
             returnVariable=this.alertException("이름은 한글만 가능합니다.",form.userName);
         else if(!(passwordRegExp.test(form.userPassword1.value)))
@@ -134,19 +136,20 @@ class Join_component extends Component{
         if(returnVariable===false)
             return;
         
-        
-
         this.handleJoin({
             userName: event.target.userName.value,
             account:event.target.account.value,
             userEmail:event.target.userEmail.value,
-            password:event.target.password.value
+            userPassword1:event.target.userPassword1.value
         });
 
     }
    
     render(){
+        if(this.state.redirect)
+            return <Redirect to='/'/>;
         return(
+            
             <div id="join_wrap">
                 
                 <h1 id="home"><a href="/">M9SOCCER</a></h1>

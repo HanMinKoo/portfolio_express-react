@@ -1,7 +1,7 @@
 /*****모듈 변수 설정*****/
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
+//const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mysqlStore= require('express-mysql-session')(session);
@@ -28,13 +28,13 @@ const sessionStore= new mysqlStore
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views')); 
-app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views')); 
+// app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()); 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 //app.use(cors());
 
 app.use(session({  
@@ -50,9 +50,9 @@ app.use(cors({
 }));
 
 
-app.get('/api/home',(req,res,next)=>{
-  //console.log(req.session);
-  return ((req.session.account!==undefined)? res.json([{account:req.session.account}]) :res.json([{account:''}]));
+app.get('/api/getsession',(req,res,next)=>{
+  console.log(req.session);
+  return ((req.session.account!==undefined)? res.json([{account:req.session.account, message:'FOUND ACCOUNT'}]) :res.json([{account:'', message:'NOT FOUND ACCOUNT'}]));
 //db에 session이 저장되어있으면 서버 껐다켜도 세션 안풀림. 
 });
 app.use('/login',loginRouter);

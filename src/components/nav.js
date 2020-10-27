@@ -6,29 +6,30 @@ import  {Link} from "react-router-dom"; //Link를 쓰는 이유는, href로 경�
 import axios from 'axios';
 class Nav extends Component{
     state={
-        account: ''
-      }
-    
-      getData = async () =>{
-        const {data} = await axios.get('http://localhost:8004/api/home');
-        console.log(data);
-        this.setState({account:data[0].account});
-        console.log("account:",data[0].account);
-    
+        account: '',
       }
 
-      componentDidMount(){
-          console.log('account는??', this.state.account);
-        if(this.state.account==='')
-            this.getData();
+      componentDidMount(){;
+          this.setState({cnt:this.state.cnt+1});
+           axios({
+             method:'get',
+             url:'/api/getsession'
+           })
+           .then((res)=>{
+
+             const {account, message} = res.data[0];
+             console.log('session call: ',message);
+             this.setState({account});
+
+           }).catch((error)=>{
+            console.log('session call error: ', error);
+           });
       }
 
-
-
-    render(){
-        
+    render(){ 
         let navbarAccount;
         if(this.state.account!=='' && this.state.account!=='admin' && this.state.account!==undefined){
+            console.log("??");
             navbarAccount=
                 <ul className="navbar_account">
                     <li>{this.state.account}</li>
@@ -47,7 +48,7 @@ class Nav extends Component{
             navbarAccount=
                 <ul className="navbar_account">
                     <li><Link to='/login'>로그인</Link></li>
-                    <li id="navbar_account_join"><a href='/join'>회원가입</a></li>
+                    <li id="navbar_account_join"><Link to='/join'>회원가입</Link></li>
                 </ul>
         }
                
@@ -55,13 +56,13 @@ class Nav extends Component{
             <nav className="navbar">
                 <div className="navbar_logo">
                     <i className="fas fa-futbol"></i>
-                    <a href="/">M9SOCCER</a>
+                    <Link to="/">M9SOCCER</Link>
                 </div>
                 
                 <ul className="navbar_menu">
                     <li><Link to="/">홈</Link></li>
-                    <li><a href="/reservation">운동장 예약</a></li>
-                    <li><a href="/test">문의하기</a></li>
+                    <li><Link to="/reservation">운동장 예약</Link></li>
+                    <li><Link to="/test">문의하기</Link></li>
                 </ul>
                 {navbarAccount}
             </nav>

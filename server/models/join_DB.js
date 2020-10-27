@@ -9,11 +9,12 @@ function saveUser(userName, userEmail, userPassword,response,userId){
     dbCon.query(query, function(err,data){
         if(err){
             console.log('table name:user / Error: insert query Error : ',err);
+            response.json({result:'fail', message:err});
         }
         else{
             console.log('table name:user / Result: insert Success');
             console.log(data);
-            response.redirect('/');
+            response.json({result:'success', mesaage:data});
         }
         dbCon.end();
     });

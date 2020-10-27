@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import '../css/login.css';
+import { Redirect } from 'react-router-dom';
 
 
 class Login extends Component{
     state={
-        loginResultText: ''
+        loginResultText: '',
+        redirect:false
     }
 
     handleLogin = (loginInfo) => {
@@ -22,11 +24,7 @@ class Login extends Component{
                 this.setState({loginResultText:'아이디 또는 비밀번호를 확인해주세요.'});
             else if(res.data.loginResult==="success")
             {
-                
-                const {history} = this.props;
-                console.log(history);
-                //res.json();
-                history.replace('/');
+                this.setState({redirect:true});
             }
         })
         .catch((error)=>{
@@ -55,6 +53,8 @@ class Login extends Component{
         });
     }
     render(){
+        if(this.state.redirect)
+            return <Redirect to='/'/>;
         return(    
             <form id="loginForm" name="login_form" onSubmit={this.handleSubmit}>
                 <h1 >로그인</h1>
