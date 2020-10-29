@@ -5,17 +5,22 @@ import Nav from './components/nav';
 import Login from './routes/login';
 import Home from './routes/home';
 import Join from './routes/join';
-import Ground_List from './components/ground_list';
+import GroundList from './components/ground_list';
+import GroundDetail from './components/ground_detail';
+import History from './components/history';
 
 class App extends Component{
   render(){
+    
     return(
-      <BrowserRouter>
+      <BrowserRouter history={History}>
         <Nav></Nav>
         <Route path="/" exact={true} component={Home}></Route>
         <Route path="/login" component={Login}></Route>
         <Route path="/join" component={Join}></Route>
-        <Route path="/reservation" exact={true} component={Ground_List}></Route>
+        <Route path="/reservation" exact={true} component={GroundList}></Route>
+        <Route path="/test" exact={true} component={GroundDetail}></Route>
+       
       </BrowserRouter>
     );
   }
