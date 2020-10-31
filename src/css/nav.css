@@ -1,14 +1,24 @@
 body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 a{text-decoration: none; color:black;}
+
+.navbar_topbox{
+    width: 100%;
+    height: 64px;
+    position: fixed;
+    background-color: #ecf0f1;
+}
 .navbar{
+   /* margin: 0 auto;
+    width: 1200px;*/
     display:flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
+    background-color: #ecf0f1;
     padding: 8px 12px;
     position: sticky;  /*top,left,right,bottom 중 한개의 속성이 필수.*/
     top:0;
-   background-color: rgb(147, 236, 252);
+    z-index: 1;
+    
 }
 .navbar_logo{
     font-size:24px;  /*awesome logo는 font임*/
@@ -16,7 +26,7 @@ a{text-decoration: none; color:black;}
     padding:8px 12px;
 }
 .navbar_logo i{
-    color: rgb(137, 218, 32);
+    color: #2ecc71;
 }
 
 .navbar_menu{
@@ -30,7 +40,7 @@ a{text-decoration: none; color:black;}
     padding:8px 12px; /*margin을 넣으면 박스 자체가 작아진다*/ 
 }
 .navbar_menu li:hover{
-    background-color: rgb(137, 218, 32);
+    background-color: #2ecc71;
     border-radius: 8px;
 }
 
@@ -44,7 +54,7 @@ a{text-decoration: none; color:black;}
 }
 
 #navbar_account_join{
-    background-color: black;
+    background-color: #2ecc71;
     border-radius: 8px;
 }
 #navbar_account_join a{

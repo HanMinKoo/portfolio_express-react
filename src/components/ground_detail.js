@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import '../css/ground_detail.css';
+import '../css/calendar.css';
 
 
 function makeCalendar(firstDay,lastDate){
+    console.log('makeCalendar');
     let dayCnt=0; //1일이 시작하는 요일 계산하기 위해 선언한 변수
     let weekLine=0; //7이 될때 마다 tr생성
     let date=1; //날짜
@@ -45,7 +46,7 @@ function makeCalendar(firstDay,lastDate){
 }
 
 function initDate(date){
-    console.log("111111");
+  
     const year=date.getFullYear();
     const month=date.getMonth();
     const firstDay=new Date(year,month,1);
@@ -62,39 +63,36 @@ function initDate(date){
     return dateObj;
 }
 
-
 function Ground_Detail(){
 
-    let nextMonth;
+    //let nextMonth;
     
     const [date,setDate]= useState(new Date());
     const {year,month,firstDay,lastDate}=initDate(date);
-   
-    //console.log("111111");
+    console.log("111111");
     useEffect(()=>{ //return(html이 render)된 후에야 querySelctor 사용 가능
         console.log('2222');
         const tbody=document.querySelector('.js-tbodyDate');
         const tableYear = document.querySelector('.js-tableYear');
         const tableMonth = document.querySelector('.js-tableMonth');
-        nextMonth=document.querySelector('.js-nextMonth');
-        nextMonth.addEventListener('click',function(event){
-           
+        const nextMonth=document.querySelector('.js-nextMonth');
+        nextMonth.addEventListener('click',(event)=>{   
             while(tbody.hasChildNodes()){
+                console.log("z:",tbody.firstChild);
                 tbody.removeChild(tbody.firstChild);
             }
+            console.log("최종 tbody:",tbody.firstChild);
             setDate(new Date(year,month+1));
         });
         tableYear.innerHTML=`${year}년 `;
-        tableMonth.innerHTML=`${month}월`;
+        tableMonth.innerHTML=`${month+1}월`;
 
         makeCalendar(firstDay,lastDate);
     });
 
-   
-    
     return(
         <div className='calendar'>
-            <div>
+            <div className="css-calendarHeader">
                 <span>◀</span>
                 <span className="js-tableYear"></span>
                 <span className="js-tableMonth"></span>
@@ -112,16 +110,11 @@ function Ground_Detail(){
                         <th id="5">금</th>
                         <th id="6">토</th>
                     </tr>
-              
                 </thead>
-                <tbody className="js-tbodyDate">
-                    
-                </tbody>
+                <tbody className="js-tbodyDate"></tbody>
             </table>
         </div>
-
     );
-
 }
   
   export default Ground_Detail;

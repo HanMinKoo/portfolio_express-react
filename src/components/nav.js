@@ -53,19 +53,23 @@ class Nav extends Component{
         }
                
         return(
-            <nav className="navbar">
-                <div className="navbar_logo">
-                    <i className="fas fa-futbol"></i>
-                    <Link to="/">M9SOCCER</Link>
-                </div>
-                
-                <ul className="navbar_menu">
-                    <li><Link to="/">홈</Link></li>
-                    <li><Link to="/reservation">운동장 예약</Link></li>
-                    <li><Link to="/test">문의하기</Link></li>
-                </ul>
-                {navbarAccount}
-            </nav>
+            <>
+                <div className="navbar_topbox"></div>
+                <nav className="navbar">
+                    <div className="navbar_logo">
+                        <i className="fas fa-futbol"></i>
+                        <Link to="/">M9SOCCER</Link>
+                    </div>
+                    
+                    <ul className="navbar_menu">
+                        <li><Link to="/">홈</Link></li>
+                        <li><Link to="/ground">운동장 예약</Link></li>
+                        <li><Link to="/test">문의하기</Link></li>
+                    </ul>
+                    {navbarAccount}
+                </nav>
+            </>
+            
         );
     }
 }

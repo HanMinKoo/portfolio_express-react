@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
-import Footer from '../components/footer';
-import Section from '../components/section_home';
+import ReservationNotice from '../components/home_reservationNotice.jsx';
+import ReviewNotice from '../components/home_reviewNotice.jsx';
 
-class Home extends Component{
-  render(){
-    return(
-      <div className="App">
-        <Section></Section>
-        <Footer></Footer>
-      </div>
-    );
-  }
+
+const Home = () =>{
+  return(
+    <>
+      <ReservationNotice></ReservationNotice>
+      <ReviewNotice></ReviewNotice>
+    </>
+  );
 }
 
 export default Home;

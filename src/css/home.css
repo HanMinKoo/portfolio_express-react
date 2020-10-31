@@ -1,0 +1,64 @@
+body{margin:0;}
+
+.reservationImage{
+    position: absolute;
+    left:0;
+    width:1920px;
+    height:800px;
+    filter: brightness(50%); 
+    z-index: -1;
+}
+.reservationNotice_content{
+    text-align: center;
+    height:800px;
+    border:1px solid red;
+}
+
+.reservation_text{
+    color:white;
+    font-size:23px;
+    margin-top:200px;
+    margin-bottom: 3%;
+}
+
+.reservationMoveBtn{
+    cursor: pointer;
+    padding: 15px 40px;
+    background-color: #2ecc71;
+    border-radius: 15px;
+    color:white;
+}
+
+.reviewMoveBtn{
+    color:white;
+    width:240px;
+    height:70px;
+    background-color: #2ecc71;
+    border-radius: 15px;
+    margin-top:3%;
+    cursor: pointer;
+    border:0;
+}
+
+.reviewNotice_wrap{
+
+    width:1200px;
+    margin:0 auto;
+    margin-top: 7%;
+    height:400px;
+}
+.reviewImage{
+    width:600px;
+    height: 400px;
+    float:left;
+}
+.reviewText{
+    float:left;
+    margin-left: 5%;
+    width:500px;
+    height:400px;
+    list-style: none;
+}
+.reviewText li{
+    margin:5% 0px 3% 0%;
+}

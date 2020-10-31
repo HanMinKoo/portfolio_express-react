@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import '../css/reservation.css';
+import '../css/ground.css';
 import axios from 'axios';
-import {Route, Link} from 'react-router-dom';
-import ground_detail from './ground_detail';
-import queryString from 'query-string';
+
+import {Link} from 'react-router-dom';
 
 class Ground_List extends Component{
     state={
@@ -11,7 +10,6 @@ class Ground_List extends Component{
     }
 
     componentDidMount(){
-       
         axios({
             method:'get',
             url:'/reservation'
@@ -21,45 +19,40 @@ class Ground_List extends Component{
             this.setState({groundList:groundInfo});
         });
     }
+   
     render(){
+        console.log('왜 3번이니');
         let resrvationHTML=[];
-        const queryValue=queryString.parse(this.props.location.search);
-        console.log("queryValue",queryValue);
-
-        if(queryValue.number===undefined){
-            if(Object.keys(this.state.groundList).length!==0){
-                //console.log('groundList 이름',this.state.groundList[0].ground_name);
-                for(let i=0; i<Object.keys(this.state.groundList).length; i++){
-                    let imgSrc=`../images/groundImg/${this.state.groundList[i].img_directory_path}/${this.state.groundList[i].img_name}`;
-                    
-                    let path= `/reservation/?number=${this.state.groundList[i].id}`
+    
+        if(Object.keys(this.state.groundList).length!==0){
+            //console.log('groundList 이름',this.state.groundList[0].ground_name);
+            for(let i=0; i<Object.keys(this.state.groundList).length; i++){
+                let imgSrc=`../images/groundImg/${this.state.groundList[i].img_directory_path}/${this.state.groundList[i].img_name}`;
                 
-                    resrvationHTML[i]=
-                        <section>
-                            <Link to={path}>
-                                    <img className="groundImg" src={imgSrc}/>
-                                    <h2 className="groundName">{this.state.groundList[i].name}</h2>
-                                    <ul>
-                                        <li className="groundInfo"><h3>이용 시간:{this.state.groundList[i].use_time} </h3></li>
-                                        <li className="groundInfo"><h3>위치:{this.state.groundList[i].location} </h3></li>
-                                        <li className="groundInfo"><h3>가격: {this.state.groundList[i].price}</h3></li>   
-                                    </ul>
-                            </Link>
-                                        
-                        </section>
-                }   
-            }
-        }
-        else{
+                let path= `/ground/detail?number=${this.state.groundList[i].id}`
             
+                resrvationHTML[i]=
+
+                    <div className="groundList_content">
+                        <Link to={path}>
+                            <img className="groundImg" src={imgSrc}/>
+                            <ul className="groundInfo_NameLocation">
+                                <li><h2>{this.state.groundList[i].name}</h2></li>
+                                <li className="groundInfo"><h3>{this.state.groundList[i].location} </h3></li>
+                            </ul>
+                            <ul className="groundInfo_TimePrice">
+                                <li className="groundInfo"><h3>{this.state.groundList[i].use_time} </h3></li>
+                                <li className="groundInfo"><h3>{this.state.groundList[i].price} 만원</h3></li> 
+                            </ul>
+                        </Link>
+                    </div> 
+            }   
         }
         return(
-            <div id="groundListBackGround">
-                <article id="groundList_wrap">
-                    <h1>운동장 리스트</h1>
-                    {resrvationHTML}
-                </article> 
-            </div>
+            <article className="groundList_wrap">
+                <h1>운동장 리스트</h1>
+                {resrvationHTML}
+            </article> 
         );
     }
 }
