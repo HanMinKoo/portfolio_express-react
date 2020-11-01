@@ -6,8 +6,8 @@ import Nav from './components/nav';
 import Login from './routes/login';
 import Home from './routes/home';
 import Join from './routes/join';
-import GroundList from './components/ground_list';
-import GroundDetail from './components/ground_detail';
+import GroundList from './routes/ground_list';
+import GroundDetail from './routes/ground_detail';
 
 
 class App extends Component{
@@ -21,9 +21,6 @@ class App extends Component{
         <Route path="/join" component={Join}></Route>
         <Route path="/ground" exact={true} component={GroundList}></Route>
         <Route path="/ground/detail" component={GroundDetail}></Route>
-        
-        
-        <Route path="/test" exact={true} component={Footer}></Route>
         <Footer></Footer>
         
        

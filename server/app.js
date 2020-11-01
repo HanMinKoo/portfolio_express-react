@@ -70,6 +70,7 @@ app.use('/adminpage',adminPageRouter);
 app.use('/reservationstate',reservationStateRouter);
 
 
+
 app.use(function(req, res, next) {
   next(createError(404));
 });

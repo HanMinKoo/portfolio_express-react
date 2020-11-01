@@ -109,29 +109,14 @@ router.get('/',(req,res)=>{
         else
             console.log('table name:ground / Result: select query Success');
                     
-        
-        //console.log(groundInfo);
-        
-
         /*****운동장 리스트 페이지*****/
-        if(req.query.number===undefined){  
-            if(req.session.account!==undefined)
-            {
-                console.log("어디가 문제냐");
-                res.json({account:req.session.account,groundList:groundInfo});
-            }
-                //res.render('reservation',{account:req.session.account,groundList:groundInfo});
-            else{
-                console.log("여기가문제냐");
-                res.json({account:'',groundList:groundInfo});
-            }
-                //res.render('reservation',{account:'',groundList:groundInfo});
-        }
+        if(req.query.number===undefined)
+            res.json({groundList:groundInfo});  
 
-        /*****운동장 예약 페이지*****/
+        /*****운동장 상세 페이지*****/
         else{
             if(req.session.account===undefined) //만약 로그인이 안되어있으면, 운동장 상세 예약 현황 못봄
-                res.render('exception',{exception:'예약 현황은 로그인 사용자만 이용할 수 있습니다.'});
+                res.json({result:'fail', message:'로그인 사용자만 이용할 수 있습니다.'});    
             else{
                 query=`select ground_time from web_portfolio1.ground_time_list where ground_id=${groundInfo[req.query.number-1].id}`;
                 
@@ -142,15 +127,32 @@ router.get('/',(req,res)=>{
                         console.log('table name:ground_timetable / Result: query Success');
                
 
-                    res.json({account:req.session.account, groundList:groundInfo[req.query.number-1], groundTimeTable:data2, reservationList:''});
+                    res.json({groundList:groundInfo[req.query.number-1], groundTimeTable:data2, reservationList:''});
                 });
             } 
         }              
     });
  });
 
+ router.get('/img',(req,res)=>{
+    const dbCon=connectionDB.connectDB();
+    let query;
+    console.log('req.req.query.number:',req.query.number);
+    
+    (req.query.number==='0') ? query=`select * from web_portfolio1.ground_img`
+    : query=`select * from web_portfolio1.ground_img where ground_id=${req.query.number}`;
 
-
+    dbCon.query(query, (err,imgData)=>{
+        if(err){
+            console.log('table name:ground_img / Error: select query Error : ',err);
+            res.json({groundImg:imgData ,message:'이미지 데이터 가져오기 에러'});
+        }
+        else{
+            console.log('table name:ground_img / Result: select query Success');
+            res.json({groundImg:imgData , message:'이미지 데이터 가져오기 성공'});
+        }
+    });  
+});
 
 
  module.exports=router;

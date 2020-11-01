@@ -1,99 +1,51 @@
-html, body {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+*{margin:0; padding:0;} 
+
+.groundMainImg{
+  width:600px;
+  height: 400px;
+  float: left;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-.clearfix:after {
-  content: '';
-  display: block;
-  clear: both;
-  float: none;
-}
-
-
-a{text-decoration: none; color:black;}
-
-/* header 관련: 메뉴, 홈, 로그인  */
-header{
-  position: fixed;
-  top:0;
- 
-  width:100%;
-  min-width:1200px;
-  z-index: 1;
-}
-#wrap_head{
-  height:80px;
-  width: 1200px;
-  margin:0 auto;
-  text-align: center;
-
-}
-#wrap_head ul ,#home {
-  float:left;
-  margin-right:20%;
-}
-#wrap_head ul li{
-  display:inline;
-  font-size:1.5em;
-  
-  margin-right:100px;
-}
-#login{
-  float:right;
-  font-size: 20px;
-}
-
-.page{
-  float: right;
-  margin: 1% 4% 0 0;
-  font-size: 20px;
-}
-
-#body_wrap{
+.ground_detail_groundInfo{
   width:1200px;
-  height:600px;
-  margin:0 auto;
- 
+  margin: 0 auto;
+  margin-top: 5%;
 }
-#body_wrap{
-  margin-top: 15%;
-}
-#groundImg{
-  width:700px;
-  height:400px;
-  float:left;
-}
-#calendar_wrap{
-  float:left;
-  
+.groundInfo_text{
+  float: left;
+  list-style: none;
   margin-left: 5%;
-  
-  
 }
-
-
-#timeTable{
-  border:1px solid black;
+.groundInfo_text li{
   margin-top: 3%;
 }
-#timeTable>table{
-  border:3px solid red;
+.location{
+  color:gray;
+}
+.groundIntroduceText{
+  margin-top: 10%;
+  box-sizing: border-box;
+  padding:30px 30px;
+  width: 500px;
+  height: 170px;
+  background: #e6ebeb;
+}
+.groundImgList{
+  cursor: pointer;
+  clear: both;
+  padding-top: 1%;
+  width:600px;
+  display:flex;
+  justify-content: space-evenly;
 }
 
-#reservationBtn{
-  background-color:  rgb(34, 143, 83);
-  color:white;
-  font-size: 1em; 
-  border-radius: 10px;
-  margin-top:50px;
-  width: 200px;
-  height: 50px;
+.groundImgList img{
+  
+  width:130px;
+  height:90px;
 }
-#groundNumber{
- display:none;
+.groundImgList img:hover{
+  border:3px solid gray;
+  width:130px;
+  height:90px;
 }

@@ -57,19 +57,15 @@ function initDate(date){
         firstDay:firstDay.getDay(),
         lastDate:lastDay.getDate()
     };
-    // console.log(firstDay.getDate());
-    // console.log(lastDay.getDay());
 
     return dateObj;
 }
 
-function Ground_Detail(){
-
-    //let nextMonth;
+function Calendar(){
     
     const [date,setDate]= useState(new Date());
     const {year,month,firstDay,lastDate}=initDate(date);
-    console.log("111111");
+ 
     useEffect(()=>{ //return(html이 render)된 후에야 querySelctor 사용 가능
         console.log('2222');
         const tbody=document.querySelector('.js-tbodyDate');
@@ -117,4 +113,4 @@ function Ground_Detail(){
     );
 }
   
-  export default Ground_Detail;
+  export default Calendar;
