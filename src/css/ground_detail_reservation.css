@@ -1,0 +1,57 @@
+.calendar{
+    padding: 2% 0%;
+    width:400px;
+
+}
+.calendarHeader{
+    padding: 18px;
+    background: black;
+    
+
+    text-align: center;
+}
+.calendarHeader span{
+    color:white;
+    font-size: 22px;
+    
+}
+.calendarTable {
+    width:400px;
+}
+.calendarTable thead tr th, .calendarTable tbody tr td{
+    font-size: 18px;
+    text-align: center;
+}
+.calendarChoiceDate{
+    background: #2ecc71;
+}
+.calendarChoiceCompleteBtn{
+    margin-top: 3%;
+    width:400px;
+    height: 80px;
+    background-color: #2ecc71;
+    color:white;
+    border: 0px;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+
+
+.reservation_wrap{
+    width:1200px;
+   
+    margin: 0 auto;
+}
+.choiceList{
+    
+    list-style: none;
+    border-bottom: 1px solid gray;
+    padding:2% 0%;
+    font-size: 22px;
+}
+.choiceList li{
+    display: inline;
+    margin-right: 5%;
+    color:gray;
+}

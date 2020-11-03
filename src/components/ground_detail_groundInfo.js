@@ -54,7 +54,7 @@ const GroundInfo = ({groundInfoData, groundImgData}) =>{
         groundInfoJSX=initGroundInfo(groundInfoData,groundImgData);
 
     useEffect(()=>{
-        console.log("실행 몇번될까?>",groundInfoJSX);
+        
         if(groundInfoJSX !== undefined)
             changeGroundMainImg();
     });

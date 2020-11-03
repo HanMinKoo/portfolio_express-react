@@ -37,12 +37,14 @@
   width:600px;
   display:flex;
   justify-content: space-evenly;
+  margin-bottom: 3%;
 }
 
 .groundImgList img{
   
   width:130px;
   height:90px;
+
 }
 .groundImgList img:hover{
   border:3px solid gray;

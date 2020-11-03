@@ -19,7 +19,7 @@ const Ground_Detail = ({location,match}) => {
   return(
     <>
       <GroundInfo groundInfoData={groundInfo} groundImgData={groundImg}></GroundInfo>
-      <Calendar></Calendar>
+      <Calendar groundInfoData={groundInfo} groundImgData={groundImg}></Calendar>
     </>
   );
 }
