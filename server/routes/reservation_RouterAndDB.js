@@ -20,6 +20,38 @@ function printQueryResult(dbCon,err,result,table,action,query){
     console.log(result);
 }
 
+router.post('/getList',(req,res)=>{
+    const dbCon=connectionDB.connectDB();
+
+    const ground_id=req.body.ground_id;
+    const use_date = `${req.body.year}년${req.body.month}월${req.body.day}일`;
+
+    const query=`select * from ground_reservation_list where ground_id=${ground_id} 
+    and use_date='${use_date}'`;
+
+    dbCon.query(query, (err,reservationTimeList)=>{ //ground_ud에 맞는 timetable DB불러오기
+        if(err)
+            console.log('table name:ground_reservation_list / Error: select query Error : ',err);
+        else
+            console.log('table name:ground_reservation_list / Result: query Success');
+
+        console.log(reservationTimeList);
+
+        let data=[];
+        for(let i=0; i<reservationTimeList.length; i++){
+            let tmp={time:reservationTimeList[i].use_time}
+            data[i]=tmp;
+        }
+        
+        if(data.length===0){//선택한 날짜의 예약 현황이 한개도 없는 경우
+            let data=[{time:'모든 시간 예약 가능'}];
+            res.json(data);
+        }
+        else
+            res.json(data);
+    });
+});
+
 router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
     console.log("정말정말??", req.body);
 

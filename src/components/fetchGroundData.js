@@ -6,8 +6,8 @@ const fetchGroundInfo= async(id,setGroundInfo)=>{
     (id===0) ? path='/reservation' :path=`/reservation/?number=${id}`;
     const groundInfo = await fetch(path);
     const groundInfoData = await groundInfo.json();
-    
-    setGroundInfo(groundInfoData.groundList);
+   
+    setGroundInfo(groundInfoData);
 }
 
 const fetchGroundImg = async(id,setGroundImg)=>{

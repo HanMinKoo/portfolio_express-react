@@ -1,6 +1,7 @@
 .calendar{
     padding: 2% 0%;
     width:400px;
+    float: left;
 
 }
 .calendarHeader{
@@ -40,11 +41,16 @@
 
 .reservation_wrap{
     width:1200px;
-   
+    border:1px solid black;
     margin: 0 auto;
+
+    
+   
+    
 }
 .choiceList{
-    
+    width: 1200px;
+    margin: 0 auto;
     list-style: none;
     border-bottom: 1px solid gray;
     padding:2% 0%;

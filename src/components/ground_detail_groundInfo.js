@@ -1,8 +1,9 @@
 import React, {Component, useEffect} from 'react';
-import '../css/ground_detail.css';
+import '../css/ground_detail_groundInfo.css';
 
 
 function getImgList(groundImgData){
+    
     const {main_name,directory_path,number,extension}=groundImgData;
     let groundImg =[];
     

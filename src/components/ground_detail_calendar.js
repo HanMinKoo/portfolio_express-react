@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import '../css/ground_detail_reservation.css';
-import GroundTimeTable from './ground_detail_groundTimeTable';
-
+import '../css/ground_detail_calendar.css';
 
 function fetchDate(year,month,choiceDate){
     console.log("fetchData", year, month, choiceDate);
@@ -65,6 +63,11 @@ function makeCalendar(firstDay,lastDate,setChoiceDate){
                 setChoiceDate(td.id);
             });
 
+            // td.appendChild=
+            // <div>
+            //     <strong>{date}</strong>
+            //     <h1>test</h1>
+            // </div>
             td.innerHTML=date;
             tr.appendChild(td);
             date++;
@@ -125,33 +128,35 @@ function changeYearMonth(year,month,setDate){
         setDate(new Date(year,++month));
     });
 }
-function Calendar({groundInfoData, groundImgData}){
-    
+//function Calendar({groundInfoData, groundImgData}){
+function Calendar(){    
     const [date,setDate]= useState(new Date());
     const [choiceDate, setChoiceDate]= useState('');
     const {year,month,firstDay,lastDate}=initDate(date);
 
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
-        makeCalendar(firstDay,lastDate,setChoiceDate);
-        changeCalendarHeader(year,month);
+        // makeCalendar(firstDay,lastDate,setChoiceDate);
+        // changeCalendarHeader(year,month);
     },[]);
-   
+
     useEffect(()=>{ //return(html이 render)된 후에야 querySelctor 사용 가능
-        console.log('groundImgData',groundImgData);
-        console.log('groundInfoData',groundInfoData);
-        if(groundInfoData!=='' && groundImgData!==''){
+        // console.log('groundImgData',groundImgData);
+        // console.log('groundInfoData',groundInfoData);
+        //if(groundInfoData!=='' && groundImgData!==''){
+            console.log("123123123");
             makeCalendar(firstDay,lastDate,setChoiceDate);
             changeCalendarHeader(year,month);
-        }
+        //}
     },[date]);
 
     return(
-        <div className="reservation_wrap">
+        <>
             <ul className="choiceList">
                 <li>예약</li>
                 <li>운동장 정보</li>
             </ul>
+            <div className="reservation_wrap">
             <div className='calendar'>
                 <div className="calendarHeader">
                     <span className="js-previousMonth">◀</span>
@@ -177,9 +182,10 @@ function Calendar({groundInfoData, groundImgData}){
                 </table>
                 <button onClick={()=>fetchDate(year,month,choiceDate)} className="calendarChoiceCompleteBtn"><h3>선택 완료</h3></button>
 
-                <GroundTimeTable></GroundTimeTable>
+                
             </div>
         </div>
+        </>
     );
 }
   
