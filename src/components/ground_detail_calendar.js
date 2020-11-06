@@ -1,25 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import '../css/ground_detail_calendar.css';
+import {fetchGroundReservationTimeList, fetchBookReservation} from './fetchGroundData.js';
 
-function fetchDate(year,month,choiceDate){
-    console.log("fetchData", year, month, choiceDate);
-    // (id===0) ? path='/reservation' :path=`/reservation/?number=${id}`;
-    // const groundInfo = await fetch(path);
-    // const groundInfoData = await groundInfo.json();
-}
 
-function makeCalendar(firstDay,lastDate,setChoiceDate){
+function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
     console.log('makeCalendar');
     let dayCnt=0; //1일이 시작하는 요일 계산하기 위해 선언한 변수
     let weekLine=0; //7이 될때 마다 tr생성
     let date=1; //날짜
     let tr;
-    //const firstWeek=document.querySelector('.js-firstWeek');
-    //console.log("firstday",firstDay);
+
+
     const currentDate= new Date();
-    let choiceDate;
-    //console.log(currentDate.getDate());
-    
+    console.log(timeTable);
+    console.log(reservationData);
     
     const tbody=document.querySelector('.js-tbodyDate');//tr 생성하기 위해서
     
@@ -48,27 +42,54 @@ function makeCalendar(firstDay,lastDate,setChoiceDate){
         //date추가
         else if(dayCnt===firstDay || date<=lastDate){
             td.id=`${date}`;
-            if(date===currentDate.getDate()){
+            if(date===currentDate.getDate())
                 td.className='calendarChoiceDate';
-                //td.classList.re
-                choiceDate=td;
-                console.log('choiceDate',choiceDate);
-            }
             
-            td.addEventListener('click',()=>{
-                choiceDate.classList.remove('calendarChoiceDate');//기존의 choiceData의 class 삭제해주고.
-                td.className='calendarChoiceDate'; //선택한 날짜에 className 부여하여 선택표시
-                choiceDate=td;//그리고 현재 td를 선택한 choiceDate로..
-                console.log('td.id',td.id);
-                setChoiceDate(td.id);
+        //먼저 해당 년/월의 모든 예약 현황들 중 date에 맞는 예약 현황만 따로 배열로 만들기
+            const dateReservationList= reservationData.filter(reservation => 
+                reservation.use_date === `${year}년${month}월${date}일`);
+
+            //console.log(dateReservationList);
+            const ul=document.createElement('ul');
+        
+            
+            let count=1;
+            //현재 운동장의 시간들을 순회하며 운동장 시간과 date(날짜)의 시간에 해당하는 예약 현황이 있으면
+            //classList를 추가하여 예약 가능 불가능 나누기   
+            timeTable.forEach(tableTime => {
+                const li=document.createElement('li');
+                const findReservationTime=dateReservationList.find(reservationTime => 
+                    reservationTime.use_time === tableTime.ground_time);
+            
+                if(findReservationTime !== undefined){
+                    li.classList.add('unbookable');
+                    li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
+                }
+                else{
+                    li.classList.add('bookable');
+                    li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 가능)`;
+
+                    li.addEventListener('click',function(){
+                        const ground_id = reservationData[0].ground_id;
+                        
+                        fetchBookReservation(year, month, td.id, tableTime.ground_time, ground_id);
+                    });
+                }
+                ul.appendChild(li);
             });
 
-            // td.appendChild=
-            // <div>
-            //     <strong>{date}</strong>
-            //     <h1>test</h1>
-            // </div>
-            td.innerHTML=date;
+        
+            const tdDiv = document.createElement('div');
+            
+            tdDiv.appendChild(ul);
+
+            const tdDate = document.createElement('strong');
+            tdDate.innerHTML=date;
+            tdDate.className='date';
+
+            td.appendChild(tdDate);
+            td.appendChild(tdDiv);
+            
             tr.appendChild(td);
             date++;
         }
@@ -80,15 +101,19 @@ function changeCalendarHeader(year,month){
     const tableYear = document.querySelector('.js-tableYear');
     const tableMonth = document.querySelector('.js-tableMonth');
     tableYear.innerHTML=`${year}년 `;
-    tableMonth.innerHTML=`${month+1}월`;
+    tableMonth.innerHTML=`${month}월`;
 }
 
 function initDate(date){
    // console.log(date.getDate());
     const year=date.getFullYear();
-    const month=date.getMonth();
-    const firstDay=new Date(year,month,1);  
-    const lastDay = new Date(year,month+1,0);  
+    const month=date.getMonth()+1;
+    
+    const firstDay=new Date(year,month-1,1);  
+    const lastDay = new Date(year,month,0);  
+    console.log("initDatemonth",month);
+    console.log("initDatefirstDay",firstDay);
+    console.log("initDatelastDate",lastDay);
     const dateObj={
         year,
         month,
@@ -124,67 +149,80 @@ function changeYearMonth(year,month,setDate){
             tbody.removeChild(tbody.firstChild);
         }
         console.log("최종 tbody:",tbody.firstChild);
-
+        //fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth(),setReservationData);
         setDate(new Date(year,++month));
     });
 }
-//function Calendar({groundInfoData, groundImgData}){
-function Calendar(){    
-    const [date,setDate]= useState(new Date());
-    const [choiceDate, setChoiceDate]= useState('');
-    const {year,month,firstDay,lastDate}=initDate(date);
 
+function Calendar({ground_id, timeTable}){
+     
+    const [date,setDate]= useState(new Date());
+    const [reservationData, setReservationData]=useState('');
+   
+        //const [choiceDate, setChoiceDate]= useState('');
+    const {year,month,firstDay,lastDate}=initDate(date);
+    console.log("initDateMonth",month);
+
+   
+
+    //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
-        // makeCalendar(firstDay,lastDate,setChoiceDate);
-        // changeCalendarHeader(year,month);
+        fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
 
-    useEffect(()=>{ //return(html이 render)된 후에야 querySelctor 사용 가능
-        // console.log('groundImgData',groundImgData);
-        // console.log('groundInfoData',groundInfoData);
-        //if(groundInfoData!=='' && groundImgData!==''){
-            console.log("123123123");
-            makeCalendar(firstDay,lastDate,setChoiceDate);
-            changeCalendarHeader(year,month);
-        //}
-    },[date]);
+    useEffect(()=>{
+        if(reservationData !== ''){//reservationData.date와 바뀐 date는 다를꺼란말이야. 그걸 이용해보자.
+            const reservationArrayDate = reservationData[0].use_date.split('월');
+            const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
+
+            //month를 바꿀 때 마다 예약된 정보를 다시 요청해야한다
+            //그런데 기존에 reservationData가 ==='' 아닐때 fetch하게 되면, 기존의 reservationData가 있기 때문에 fetch가안된다 
+            //그래서 월을 바꿨을 때 reservationData 데이터의 년월과 바뀐 date의 년 월을 비교해서
+            //값이 다르다면 그 때 그 년월에 해당하는 데이터를 fetch하고, 값을 불러와 값이 맞다면 makeCleandar를한다. 
+            if(`${reservationArrayDate[0]}월` === changedDate){
+                console.log('맞지?');
+                makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+                changeCalendarHeader(year,month);
+            }
+            else 
+                fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+        }
+            
+    },[date,reservationData]);
 
     return(
         <>
             <ul className="choiceList">
-                <li>예약</li>
-                <li>운동장 정보</li>
+                <li className="choiceReservationInfo">예약</li>
+                <li className="choiceGroundInfo">운동장 정보</li>
             </ul>
             <div className="reservation_wrap">
-            <div className='calendar'>
-                <div className="calendarHeader">
-                    <span className="js-previousMonth">◀</span>
-                    <span className="js-tableYear"></span>
-                    <span className="js-tableMonth"></span>
-                    <span className='js-nextMonth'>▶</span>
-                    
+                <div className='calendar'>
+                    <div className="calendarHeader">
+                        <span className="js-previousMonth">◀</span>
+                        <span className="js-tableYear"></span>
+                        <span className="js-tableMonth"></span>
+                        <span className='js-nextMonth'>▶</span>
+                        
+                    </div>
+                    <table className="calendarTable">
+                        <thead>
+                            <tr>
+                                <th id="0">일</th>
+                                <th id="1">월</th>
+                                <th id="2">화</th>
+                                <th id="3">수</th>
+                                <th id="4">목</th>
+                                <th id="5">금</th>
+                                <th id="6">토</th>
+                            </tr>
+                        </thead>
+                        <tbody className="js-tbodyDate"></tbody> 
+                    </table>
                 </div>
-                <table className="calendarTable">
-                    <thead>
-                        <tr>
-                            <th id="0">일</th>
-                            <th id="1">월</th>
-                            <th id="2">화</th>
-                            <th id="3">수</th>
-                            <th id="4">목</th>
-                            <th id="5">금</th>
-                            <th id="6">토</th>
-                        </tr>
-                    </thead>
-                    <tbody className="js-tbodyDate"></tbody>
-                   
-                </table>
-                <button onClick={()=>fetchDate(year,month,choiceDate)} className="calendarChoiceCompleteBtn"><h3>선택 완료</h3></button>
-
-                
             </div>
-        </div>
+            <div className='clear'></div>
         </>
     );
 }

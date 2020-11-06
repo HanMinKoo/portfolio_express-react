@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react';
 import '../css/ground.css';
 
 import {Link} from 'react-router-dom';
-import {fetchGroundImg,fetchGroundInfo} from '../components/fetchGroundData.js';
+import {fetchGroundImg,fetchGroundInfoAndTimeList} from '../components/fetchGroundData.js';
 
 
 
@@ -49,7 +49,7 @@ const Ground_List = () =>{
     console.log(groundListData);
     useEffect( () =>{
         fetchGroundImg(0,setGroundImg);
-        fetchGroundInfo(0,setGroundList);
+        fetchGroundInfoAndTimeList(0,setGroundList);
     },[]);
 
     let groundListJSX=[];

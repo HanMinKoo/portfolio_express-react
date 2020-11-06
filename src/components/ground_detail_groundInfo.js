@@ -1,26 +1,33 @@
-import React, {Component, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import '../css/ground_detail_groundInfo.css';
 
 
 function getImgList(groundImgData){
-    
-    const {main_name,directory_path,number,extension}=groundImgData;
-    let groundImg =[];
-    
+
+    const {directory_path,number,extension}=groundImgData;
+ 
+    const imgList = document.querySelector('.groundImgList');
+    const mainImg = document.querySelector('.groundMainImg');
+
     for(let i=0; i<number; i++){
         const imgSrc=`../images/groundImg/${directory_path}/${directory_path}${i+1}.${extension}`;
-        groundImg[i]=<img src={imgSrc} className="test" id={i+1}></img>
+        const img = document.createElement('img');
+        img.src=imgSrc;
+        img.className='groundSubImg';
+        img.id=i+1;
+
+        img.addEventListener('click',function(){
+            mainImg.src=img.src;             
+        });
+        imgList.appendChild(img);
     }
-    return groundImg;
 }
 
 const initGroundInfo = (groundInfoData,groundImgData) =>{
+    console.log('initGroundInfo');
     const {name,use_time,price,location, introuduce}=groundInfoData;
     const {main_name,directory_path,extension}=groundImgData.groundImg[0];
     const mainImgPath =`../images/groundImg/${directory_path}/${main_name}.${extension}`;
-
-    //console.log("groundImgData.groundImg",groundImgData.groundImg[0]);
-    const groundImgList=getImgList(groundImgData.groundImg[0]);
 
     const jsx=
         <section className='ground_detail_groundInfo'>
@@ -38,7 +45,7 @@ const initGroundInfo = (groundInfoData,groundImgData) =>{
             </ul>
             
             <div className="groundImgList">
-                {groundImgList}
+               
             
             </div>
         </section>
@@ -47,35 +54,18 @@ const initGroundInfo = (groundInfoData,groundImgData) =>{
 
 
 const GroundInfo = ({groundInfoData, groundImgData}) =>{
-    
-    let groundInfoJSX;
-    
-    //두 정보 모두 fetch 완료 됐을 경우만 실행
-    if(groundInfoData!=='' && groundImgData!=='')
-        groundInfoJSX=initGroundInfo(groundInfoData,groundImgData);
+    const groundInfoJSX=initGroundInfo(groundInfoData,groundImgData);
 
     useEffect(()=>{
-        
         if(groundInfoJSX !== undefined)
-            changeGroundMainImg();
+            getImgList(groundImgData.groundImg[0]);
     });
 
-    
     return(   
         <>
             {groundInfoJSX}
         </>  
     );
-}
-
-function changeGroundMainImg(){
-    const test = document.querySelectorAll('.test');
-    console.log(test[0].currentSrc);
-    const mainImg = document.querySelector('.groundMainImg');
-    test[1].addEventListener('click',function(){
-        console.log('click');
-        mainImg.src=test[1].currentSrc;
-    });
 }
 
 export default GroundInfo;

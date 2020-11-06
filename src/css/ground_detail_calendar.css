@@ -1,8 +1,23 @@
+li{
+    list-style: none;
+}
+
+.bookable, .unbookable{
+    margin-bottom: 20px;
+}
+.date{
+    position: relative;
+    top: -50px;
+}
 .calendar{
     padding: 2% 0%;
-    width:400px;
+    width:1200px;
     float: left;
 
+}
+.choiceReservationInfo{
+    color:black;
+    border-bottom: 2px solid black;
 }
 .calendarHeader{
     padding: 18px;
@@ -17,36 +32,40 @@
     
 }
 .calendarTable {
-    width:400px;
+    width:1200px;
+    
 }
 .calendarTable thead tr th, .calendarTable tbody tr td{
     font-size: 18px;
-    text-align: center;
+    border:1px solid gray;
+}
+.calendarTable tbody tr{
+
+}
+.calendarTable tbody tr td{
+    padding:50px 0px;
+    
 }
 .calendarChoiceDate{
-    background: #2ecc71;
-}
-.calendarChoiceCompleteBtn{
-    margin-top: 3%;
-    width:400px;
-    height: 80px;
-    background-color: #2ecc71;
-    color:white;
-    border: 0px;
-    border-radius: 12px;
-    font-size: 20px;
+    background: #b2d4c0;
 }
 
+.unbookable{
+    color:red;
+}
+.bookable:hover{
+    border-bottom: 3px solid gray;
+    cursor: pointer;
+}
 
+.clear{
+    clear: both;
+}
 
 .reservation_wrap{
     width:1200px;
     border:1px solid black;
     margin: 0 auto;
-
-    
-   
-    
 }
 .choiceList{
     width: 1200px;

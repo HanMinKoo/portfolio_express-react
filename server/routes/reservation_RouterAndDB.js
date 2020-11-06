@@ -20,78 +20,67 @@ function printQueryResult(dbCon,err,result,table,action,query){
     console.log(result);
 }
 
-router.post('/getList',(req,res)=>{
+router.get('/list',(req,res)=>{
+
+    console.log("reservation/list,",req.query);
     const dbCon=connectionDB.connectDB();
+    const {ground_id, year, month}=req.query;
 
-    const ground_id=req.body.ground_id;
-    const use_date = `${req.body.year}년${req.body.month}월${req.body.day}일`;
+    const query=`select * from ground_reservation_list where ground_id=${ground_id} and use_date like '${year}년${month}월%'`;
 
-    const query=`select * from ground_reservation_list where ground_id=${ground_id} 
-    and use_date='${use_date}'`;
-
-    dbCon.query(query, (err,reservationTimeList)=>{ //ground_ud에 맞는 timetable DB불러오기
+    dbCon.query(query, (err,groundTimeList)=>{
         if(err)
-            console.log('table name:ground_reservation_list / Error: select query Error : ',err);
+            console.log('table name:ground_time_list / Error: select query Error : ',err);
         else
-            console.log('table name:ground_reservation_list / Result: query Success');
+            console.log('table name:ground_time_list / Result: query Success');
 
-        console.log(reservationTimeList);
-
-        let data=[];
-        for(let i=0; i<reservationTimeList.length; i++){
-            let tmp={time:reservationTimeList[i].use_time}
-            data[i]=tmp;
-        }
-        
-        if(data.length===0){//선택한 날짜의 예약 현황이 한개도 없는 경우
-            let data=[{time:'모든 시간 예약 가능'}];
-            res.json(data);
-        }
-        else
-            res.json(data);
+        console.log("groundTimeListgroundTimeListgroundTimeList:", groundTimeList);
+        res.json([groundTimeList]);
     });
+
 });
+
 
 router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
     console.log("정말정말??", req.body);
 
-    const dbCon=connectionDB.connectDB();
+    //const dbCon=connectionDB.connectDB();
 
     const ground_id=req.body.ground_id;
     const use_date = `${req.body.year}년${req.body.month}월${req.body.day}일`;
     
 
-    /*****운동장 시간 대를 선택 안했을 경우, 즉 날짜만 변경했을 경우******/
-    if(req.body.groundTime===undefined){
+    // /*****운동장 시간 대를 선택 안했을 경우, 즉 날짜만 변경했을 경우******/
+    // if(req.body.groundTime===undefined){
  
-        query=`select * from ground_reservation_list where ground_id=${ground_id} 
-                        and use_date='${use_date}'`;
+    //     query=`select * from ground_reservation_list where ground_id=${ground_id} 
+    //                     and use_date='${use_date}'`;
 
-        dbCon.query(query, (err,reservationTimeList)=>{ //ground_ud에 맞는 timetable DB불러오기
-            if(err)
-                console.log('table name:ground_reservation_list / Error: select query Error : ',err);
-            else
-                console.log('table name:ground_reservation_list / Result: query Success');
+    //     dbCon.query(query, (err,reservationTimeList)=>{ //ground_ud에 맞는 timetable DB불러오기
+    //         if(err)
+    //             console.log('table name:ground_reservation_list / Error: select query Error : ',err);
+    //         else
+    //             console.log('table name:ground_reservation_list / Result: query Success');
 
-            console.log(reservationTimeList);
+    //         console.log(reservationTimeList);
 
-            let data=[];
-            for(let i=0; i<reservationTimeList.length; i++){
-                let tmp={time:reservationTimeList[i].use_time}
-                data[i]=tmp;
-            }
+    //         let data=[];
+    //         for(let i=0; i<reservationTimeList.length; i++){
+    //             let tmp={time:reservationTimeList[i].use_time}
+    //             data[i]=tmp;
+    //         }
             
-            if(data.length===0){//선택한 날짜의 예약 현황이 한개도 없는 경우
-                let data=[{time:'모든 시간 예약 가능'}];
-                res.send(data);
-            }
-            else
-                res.send(data);
-        });
-    }
+    //         if(data.length===0){//선택한 날짜의 예약 현황이 한개도 없는 경우
+    //             let data=[{time:'모든 시간 예약 가능'}];
+    //             res.send(data);
+    //         }
+    //         else
+    //             res.send(data);
+    //     });
+    // }
 
     /*****로그인 상태에서 운동장 시간, 날짜 모두 선택하고 예약하기 버튼 눌렀을 경우(예약 진행)******/
-    else if(req.body.groundTime!==undefined && req.session.account!==undefined){    
+    if(req.body.groundTime!==undefined && req.session.account!==undefined){    
         const dbCon=connectionDB.connectDB();
         
         dbCon.beginTransaction();  //트랜잭션 적용 시작
@@ -106,20 +95,20 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
                 query = `insert into web_portfolio1.ground_reservation_list(user_id,ground_id,use_date,use_time) 
                 values('${req.session.user_id}',${ground_id},'${use_date}','${req.body.groundTime}')`;
 
-                dbCon.query(query, (err,result)=>{ //예약 정보 삽입 쿼리
-                    printQueryResult(dbCon,err,result,'ground_reservation_list','reservation process','insert');
-
+                dbCon.query(query, (err,data)=>{ //예약 정보 삽입 쿼리
+                    printQueryResult(dbCon,err,data,'ground_reservation_list','reservation process','insert');
+                    console.log(data);
                     if(!err){
                         dbCon.commit(); //트랜잭션 저장
                         dbCon.end();
-                        res.redirect('/');
+                        res.json({result:'reservationSuccess', message:'예약 성공'});
                     }
                     else
-                        res.render('exception',{exception:'예약 실패. 다시 시도해주세요.'});
+                        res.json({result:'error', message:'예약 실패. 다시 시도해주세요.'});
                 });
             }
             else //이미 예약된 정보가 있으면 경고문 출력
-                res.render('exception',{exception:'이미 예약된 시간입니다.'});
+                res.json({result:'duplicationReservation', message:'이미 예약된 시간입니다.'});
         });
     }
     /*****운동장 시간 체크 but 비로그인 상태, 즉 비정상적 접근 ******/
