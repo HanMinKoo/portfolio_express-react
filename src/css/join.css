@@ -1,7 +1,4 @@
-a{
-    text-decoration: none;
-    color:rgb(34, 143, 83);
-}
+
 #home{
     text-align: center;
 }
@@ -30,6 +27,14 @@ input{
     text-align: center;
     color:blue;
 }
-/*.duplicationRadio{
+.duplicationRadioId, .duplicationRadioEmail{
     display: none;
-}*/
+}
+.duplicationFound{
+    color:red;
+    margin-left: 3%;
+}
+.duplicationNotFound{
+    color:blue;
+    margin-left: 3%;
+}

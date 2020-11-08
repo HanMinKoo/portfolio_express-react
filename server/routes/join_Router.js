@@ -21,18 +21,20 @@ router.post('/checkduplication',(req,res)=>{
             console.log('table name:user / Result: select query Success');
             console.log(userInfo[0]);
             
-            (userInfo[0]===undefined) ? res.json({result:"success"}) : res.json({result:"fail"}) 
+            (userInfo[0]===undefined) ? res.json({result:"notFound", message:'사용 가능합니다.'}) : res.json({result:"found", message:'이미 존재합니다.'}) 
         }
         dbCon.end();
     });
 });
-
+//201107 회원가입 코드 비구조화 할당으로 바꾸고 검토안해봄.
 router.post('/progress', (req,res)=>{
     console.log('회원가입 req body:',req.body);
-    crypto.pbkdf2(req.body.userPassword1,'m9m9',8080,64,'sha512',(err,key)=>{
+    const {userName, userEmail, account, userPassword1} = req.body;
+    
+    crypto.pbkdf2(userPassword1,'m9m9',8080,64,'sha512',(err,key)=>{
         console.log("base64 인코딩 후 key값:",key.toString('base64'));
-        let password=key.toString('base64');
-        joinDB.saveUser(req.body.userName,req.body.userEmail,password,res,req.body.account);
+        const password=key.toString('base64');
+        joinDB.saveUser(userName, userEmail, password, res, account);
     });
 });
 

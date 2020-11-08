@@ -13,7 +13,7 @@ const initJSX = (groundListData,groundImgData) => {
 
     if(groundListData.groundList.length!==0){ 
         for(let i=0; i<groundListData.groundList.length; i++){
-            console.log("????????");
+   
             const {main_name, directory_path,extension}=groundImgData.groundImg[i];
             const {name, location, use_time, price}= groundListData.groundList[i];
 

@@ -14,67 +14,63 @@ class Join_component extends Component{
         return false;
     }
 
+    //type: email과 id
     checkDuplication(type){
-
         let element;
- 
-        if(type==='email')
-            element=document.getElementById("userEmail");
-        else if(type==='id')
-            element=document.getElementById("account");
-      
-       //alert(element.value);
+        (type ==='email') ? element = document.querySelector(".js-userEmail") :
+            element = document.querySelector(".js-account");
+
         if(element.value === ''){ 
            alert(`${type}을 입력해주세요.`);
            return;
         }
-   
-        const data={
-           type:element.type,
-           value:element.value
-        };
-        console.log(data);
+        
+        /****type: email 또는 id, value: email 또는 id input에 입력된 값****/
+        const data={ type:element.type, value:element.value};
         axios({
             method:'post',
             url:'/join/checkduplication',
             data,
         }).then((res)=>{
-           
-            let radioID;
-            let textID;
-            let textEmail;
-            console.log("중복체크 응답: ",res);
+            const {result, message} = res.data;
 
-            textID=document.getElementById('duplicateCheckID');
-            textEmail=document.getElementById('duplicateCheckEmail');
+            /****중복 여부 결과 문구 나타내는 span ****/
+            const duplicationTextId = document.querySelector('.js-duplicationTextSpanId');
+            const duplicationTextEmail = document.querySelector('.js-duplicateTextSpanEmail');
+
+            /****중복체크 했는지 확인하는 input radio  ****/
+            const duplicationRadioId = document.querySelector('.js-duplicationCheckRadioId');
+            const duplicationRadioEmail = document.querySelector('.js-duplicationCheckRadioEmail');
       
-            if(res.data.result==='success'){
-            
-                alert(`사용 가능한 ${type}입니다.`);
-                if(type==='email'){
-                    radioID=document.getElementById('duplicationRadioEmail');
-                    textEmail.innerHTML='사용가능한 이메일입니다.';
-                }
-                else if(type==='id'){
-                    radioID=document.getElementById('duplicationRadioId');
-                    textID.innerHTML='사용가능한 아이디입니다.'
-                }
+            if(result==='notFound'){
+                (type === 'email') ? 
+                this.setDuplicateNotFoundMessage(duplicationTextEmail, message,duplicationRadioEmail) :
+                this.setDuplicateNotFoundMessage(duplicationTextId, message,duplicationRadioId);
             }
             else{
-                alert(`이미 존재하는 ${type}입니다.`);
-                if(type==='email')
-                    textEmail.innerHTML='이미 존재하는 이메일입니다.';
-                else if(type==='id')
-                    textID.innerHTML='이미 존재하는 id입니다.'
-                
-                return; 
+                (type==='email') ? 
+                this.setDuplicateFoundMessage(duplicationTextEmail, message, duplicationRadioEmail) : 
+                this.setDuplicateFoundMessage(duplicationTextId, message, duplicationRadioId);
             }
-            radioID.checked=true;
-
         }).catch((error)=>{
+            alert('중복처리 오류');
             console.log('회원가입 중복체크 error: ', error);
         });
    }
+//1. 중복 여부 결과에 따른 텍스트 셋팅 
+//2. 매개변수(span태그, 메시지, input radio 태그, input radio ture/false 값, css 클래스명) ****/
+   setDuplicateNotFoundMessage(duplicateText, message, duplicateCheckRadio){
+       duplicateCheckRadio.checked=true;
+       duplicateText.classList.remove('duplicationFound');
+       duplicateText.classList.add('duplicationNotFound');
+       duplicateText.innerHTML=message;     
+   }
+   setDuplicateFoundMessage(duplicateText, message, duplicateCheckRadio){
+        duplicateCheckRadio.checked=false;
+        duplicateText.classList.remove('duplicationNotFound');
+        duplicateText.classList.add('duplicationFound');
+        duplicateText.innerHTML=message;
+    }
    
     handleJoin=(userInfo)=>{
      
@@ -159,16 +155,16 @@ class Join_component extends Component{
                 
                     <label>이메일</label>
                     <button type="button" onClick={()=>this.checkDuplication('email')} id="duplicationChk">중복체크</button>
-                    <span id="duplicateCheckEmail"></span>
+                    <span id="duplicateCheckEmail" className="js-duplicateTextSpanEmail"></span>
                 
-                    <input type="email" name="userEmail" id="userEmail" ></input>
+                    <input type="email" name="userEmail" id="userEmail" className="js-userEmail" ></input>
 
                     
                     <label>아이디</label>
                     <button type="button" onClick={()=>this.checkDuplication('id')} id="duplicationChk" >중복체크</button>
-                    <span id="duplicateCheckID"></span>
+                    <span id="duplicateCheckID" className="js-duplicationTextSpanId"></span>
                     
-                    <input type="text" name="account" id="account" ></input>
+                    <input type="text" name="account" id="account" className="js-account"></input>
                     <div className="check_font" id="id_check"></div>
             
                     <label>비밀번호</label>
@@ -177,8 +173,8 @@ class Join_component extends Component{
                     <label>비밀번호 확인</label>
                     
                     <input type="password" name="userPassword2"></input>
-                    <input className="duplicationRadio" type="radio" name="duplicationIdChk" id="duplicationRadioId" value="" ></input>
-                    <input className="duplicationRadio" type="radio" name="duplicationEmailChk" id="duplicationRadioEmail"value="" ></input>
+                    <input className="js-duplicationCheckRadioId duplicationRadioId"  type="radio" name="duplicationIdChk" id="duplicationRadioId" value="" ></input>
+                    <input className="js-duplicationCheckRadioEmail duplicationRadioEmail" type="radio" name="duplicationEmailChk" id="duplicationRadioEmail"value="" ></input>
                     
                     <button type= "submit" id="joinBtn">가입하기</button> 
                     <br></br>

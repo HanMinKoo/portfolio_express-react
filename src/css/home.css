@@ -2,6 +2,7 @@ body{margin:0;}
 
 .reservationImage{
     position: absolute;
+    top:0;
     left:0;
     width:1920px;
     height:800px;
@@ -10,8 +11,8 @@ body{margin:0;}
 }
 .reservationNotice_content{
     text-align: center;
-    height:800px;
-    border:1px solid red;
+    height:600px;
+    
 }
 
 .reservation_text{

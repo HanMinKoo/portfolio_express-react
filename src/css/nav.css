@@ -1,5 +1,5 @@
 body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
-a{text-decoration: none; color:black;}
+
 
 .navbar_topbox{
     width: 100%;
@@ -22,12 +22,9 @@ a{text-decoration: none; color:black;}
 }
 .navbar_logo{
     font-size:24px;  /*awesome logo는 font임*/
-   
     padding:8px 12px;
 }
-.navbar_logo i{
-    color: #2ecc71;
-}
+
 
 .navbar_menu{
     display:flex;
@@ -38,6 +35,10 @@ a{text-decoration: none; color:black;}
 
 .navbar_menu li{
     padding:8px 12px; /*margin을 넣으면 박스 자체가 작아진다*/ 
+}
+
+.navbar_menu li a , .navbar_logo a{
+    color:black;
 }
 .navbar_menu li:hover{
     background-color: #2ecc71;

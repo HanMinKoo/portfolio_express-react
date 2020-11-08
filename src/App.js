@@ -8,10 +8,13 @@ import Home from './routes/home';
 import Join from './routes/join';
 import GroundList from './routes/ground_list';
 import GroundDetail from './routes/ground_detail';
+import AdminPage from './components/adminpage';
 
 
 class App extends Component{
   render(){
+    const title = document.querySelector("title");
+    title.innerText="React Portfolio";
     console.log("이게 두번인가");
     return(
       <BrowserRouter>
@@ -21,6 +24,8 @@ class App extends Component{
         <Route path="/join" component={Join}></Route>
         <Route path="/ground" exact={true} component={GroundList}></Route>
         <Route path="/ground/detail" component={GroundDetail}></Route>
+        <Route path="/adminpage" component={AdminPage}></Route>
+        <Route path="/mypage" component={GroundDetail}></Route>
         <Footer></Footer>
         
        

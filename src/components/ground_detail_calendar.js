@@ -1,6 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import '../css/ground_detail_calendar.css';
-import {fetchGroundReservationTimeList, fetchBookReservation} from './fetchGroundData.js';
+import {fetchGroundReservationTimeList, bookReservation} from './fetchGroundData.js';
+
+//예약, 운동장 정보 등 메뉴 선택이벤트 활성화
+function initChoiceInfoMenu(){
+    const reservationInfo = document.querySelector('.js-choiceReservationInfo');
+    const groundInfo = document.querySelector('.js-choiceGroundInfo');
+
+    reservationInfo.addEventListener('click', function(){
+        groundInfo.classList.remove('choiceInfo');
+        reservationInfo.classList.add('choiceInfo');
+    });
+    groundInfo.addEventListener('click', function(){
+        reservationInfo.classList.remove('choiceInfo');
+        groundInfo.classList.add('choiceInfo');
+    });
+}
 
 
 function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
@@ -44,18 +59,19 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
             td.id=`${date}`;
             if(date===currentDate.getDate())
                 td.className='calendarChoiceDate';
-            
-        //먼저 해당 년/월의 모든 예약 현황들 중 date에 맞는 예약 현황만 따로 배열로 만들기
+    
+
+            //1.해당 달의 모든 예약 현황 중 현재 날짜(date)에 맞는 예약 현황만 따로 배열로 만들기
             const dateReservationList= reservationData.filter(reservation => 
                 reservation.use_date === `${year}년${month}월${date}일`);
 
-            //console.log(dateReservationList);
             const ul=document.createElement('ul');
-        
-            
+          
             let count=1;
-            //현재 운동장의 시간들을 순회하며 운동장 시간과 date(날짜)의 시간에 해당하는 예약 현황이 있으면
-            //classList를 추가하여 예약 가능 불가능 나누기   
+            //2. forEach를 통해 현재 운동장의 이용 시간대를 순회.
+            //3. 현재 날짜의 운동장 예약 현황(dateReservationList)에 순회하는 시간대가 존재하면(find 메소드)
+            //classList의 값을 unbookable, 존재하지 않으면 bookable을 추가하여 예약 가능 불가능 적용
+            //4.classList의 값이 bookable일 경우 클릭 이벤트를 설정하여 예약 진행 함수 호출(bookReservation)
             timeTable.forEach(tableTime => {
                 const li=document.createElement('li');
                 const findReservationTime=dateReservationList.find(reservationTime => 
@@ -71,16 +87,13 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
 
                     li.addEventListener('click',function(){
                         const ground_id = reservationData[0].ground_id;
-                        
-                        fetchBookReservation(year, month, td.id, tableTime.ground_time, ground_id);
+                        bookReservation(year, month, td.id, tableTime.ground_time, ground_id);
                     });
                 }
                 ul.appendChild(li);
             });
 
-        
             const tdDiv = document.createElement('div');
-            
             tdDiv.appendChild(ul);
 
             const tdDate = document.createElement('strong');
@@ -168,7 +181,9 @@ function Calendar({ground_id, timeTable}){
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
+        initChoiceInfoMenu();
         fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+        
     },[]);
 
     useEffect(()=>{
@@ -194,8 +209,8 @@ function Calendar({ground_id, timeTable}){
     return(
         <>
             <ul className="choiceList">
-                <li className="choiceReservationInfo">예약</li>
-                <li className="choiceGroundInfo">운동장 정보</li>
+                <li className="js-choiceReservationInfo">예약</li>
+                <li className="js-choiceGroundInfo">운동장 정보</li>
             </ul>
             <div className="reservation_wrap">
                 <div className='calendar'>

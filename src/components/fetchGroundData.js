@@ -23,7 +23,7 @@ const fetchGroundReservationTimeList = async(id, year,month,setReservationData)=
     console.log('운동장 예약시간리스트 fetch완료: ',groundReservationListData); 
     setReservationData(groundReservationListData[0]);
 }
-const fetchBookReservation = async(year,month,date,ground_time, ground_id)=>{
+const bookReservation = async(year,month,date,ground_time, ground_id)=>{
     axios({
         method:'post',
         url:'/reservation/process',
@@ -45,4 +45,4 @@ const fetchBookReservation = async(year,month,date,ground_time, ground_id)=>{
        console.log('reservationProcess error: ', error);
       });
 }
-export {fetchGroundImg,fetchGroundInfoAndTimeList,fetchGroundReservationTimeList, fetchBookReservation}
+export {fetchGroundImg,fetchGroundInfoAndTimeList,fetchGroundReservationTimeList, bookReservation}

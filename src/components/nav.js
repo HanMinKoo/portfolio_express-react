@@ -29,19 +29,21 @@ class Nav extends Component{
     render(){ 
         let navbarAccount;
         if(this.state.account!=='' && this.state.account!=='admin' && this.state.account!==undefined){
-            console.log("??");
+
             navbarAccount=
                 <ul className="navbar_account">
                     <li>{this.state.account}</li>
                     <li>로그아웃</li>
+                    <li className="page"><Link to='/mypage'>마이 페이지</Link></li>
                 </ul>
+                
         }
         else if(this.state.account==='admin'){
             navbarAccount=
                 <ul className="navbar_account">
                     <li>{this.state.account}</li>
                     <li>로그아웃</li>
-                    <div className="page"><strong><a href='/adminpage'>관리자 페이지</a></strong></div>
+                    <li className="page"><Link to='/adminpage'>관리자 페이지</Link></li>
                 </ul>
         }
         else{
@@ -57,7 +59,6 @@ class Nav extends Component{
                 <div className="navbar_topbox"></div>
                 <nav className="navbar">
                     <div className="navbar_logo">
-                        <i className="fas fa-futbol"></i>
                         <Link to="/">M9SOCCER</Link>
                     </div>
                     

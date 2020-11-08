@@ -15,14 +15,15 @@ router.get('/',(req,res)=>{
         else
             console.log('table name:ground_reservation_list / Result: select query Success');
 
-        console.log(result[0]);
+        console.log("adminpage 결과:", result[0]);
         
         if(result[0]===undefined) {
             result[0]={
                 text:"예약 현황이 존재하지 않습니다."
             }
         } 
-        res.render('adminpage',{account:req.session.account, reservationList:result});
+        res.json({reservationList:result});
+        //res.render('adminpage',{account:req.session.account, reservationList:result});
     });
 
 });

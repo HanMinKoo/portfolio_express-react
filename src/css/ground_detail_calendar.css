@@ -15,10 +15,7 @@ li{
     float: left;
 
 }
-.choiceReservationInfo{
-    color:black;
-    border-bottom: 2px solid black;
-}
+
 .calendarHeader{
     padding: 18px;
     background: black;
@@ -74,9 +71,15 @@ li{
     border-bottom: 1px solid gray;
     padding:2% 0%;
     font-size: 22px;
+    
 }
 .choiceList li{
     display: inline;
     margin-right: 5%;
     color:gray;
+    cursor: pointer;
+    padding: 10px 20px;
+}
+.choiceInfo{
+    border-bottom: 2px solid black;
 }
