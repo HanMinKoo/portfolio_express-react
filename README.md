@@ -18,6 +18,14 @@
 
 
 ### 폴더 구조
-- src 폴더 - 프론트엔드 파일 관련
-  + ㅅㄷㄴㅅㄴㅅㄷㄴㅅㄴㄷ
+- src 폴더 - 프론트엔드 React 관련 폴더
+  + components 폴더: 컴포넌트 소스 코드 관련 파일 
+  + css 폴더: css 소스 코드 관련 파일
+  + images 폴더: 이미지 파일 관련
+  + Routes 폴더: router별 소스 코드 관련 파일 
+
+- server 폴더 - 백엔드 Node.JS Express 관련 폴더
+  + bin 폴더 - 서버 실행 파일
+  + models - db 소스 코드 관련 파일
+  + routes - router별 서버 로직 소스 코드 및 db 소스 코드 관련
 
