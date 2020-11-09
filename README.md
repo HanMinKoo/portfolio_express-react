@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 운동장 예약 관리 웹 (React, Node.JS Express 프레임워크)
 
-## Available Scripts
 
-In the project directory, you can run:
+### 프로젝트 내용
+- 운동장을 웹을 통해 편리하게 예약하고자 만든 프로젝트
 
-### `npm start`
+### 사용 언어 및 기술
+- 프론트엔드: HTML, CSS, JavaScript(ES6+), JSX, React 라이브러리
+- 백엔드: Node.JS, Express 프레임워크, MySQL
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 대표 구현 기능
+1. 로그인 및 회원가입
+2. 예약 현황 추가, 조회, 삭제, 변경
+3. 각 운동장 예약 현황을 담고 있는 달력
+4. 운동장 메인 이미지 변경
+5. 이메일 문의
+6. 관리자 및 마이페이지
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+### 폴더 구조
+- src 폴더 - 프론트엔드 React 관련 폴더
+  + components 폴더: 컴포넌트 소스 코드 관련 파일 
+  + css 폴더: css 소스 코드 관련 파일
+  + images 폴더: 이미지 파일 관련
+  + Routes 폴더: router별 소스 코드 관련 파일 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- server 폴더 - 백엔드 Node.JS Express 관련 폴더
+  + bin 폴더 - 서버 실행 파일
+  + models - db 소스 코드 관련 파일
+  + routes - router별 서버 로직 소스 코드 및 db 소스 코드 관련
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
