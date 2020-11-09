@@ -64,3 +64,7 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 .navbar_hamburgerBtn{
     display: none;
 }
+
+.js-logout{
+    cursor: pointer;
+}

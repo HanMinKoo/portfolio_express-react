@@ -15,15 +15,15 @@ const fetchReservationList = async(setReservationData) =>{
 
 
 const AdminPage = () =>{
-    const [reservationData, setReservationData] = useState('');
+    //const [reservationData, setReservationData] = useState('');
     let tbodyJSX;
-     if(reservationData !== '')
+     //if(reservationData !== '')
      //console.log("asdadas",reservationData.reservationList[0]);
-         tbodyJSX=initJSX(reservationData.reservationList);
-    useEffect(()=>{
+         //tbodyJSX=initJSX(reservationData.reservationList);
+    //useEffect(()=>{
         //console.log("asdadas",reservationData.reservationList[0]);
-        fetchReservationList(setReservationData);
-    },[]);
+        //fetchReservationList(setReservationData);
+    //},[]);
     return(
         
         <table>

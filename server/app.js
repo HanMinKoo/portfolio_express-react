@@ -59,7 +59,8 @@ app.use('/login',loginRouter);
 app.get('/logout',(req,res)=>{
     req.session.destroy((err)=>{ //세션을 완전히 삭제, 완전히 세션을 삭제했으니 브라우저가 다음에 웹에 접근할 때 다시 세션 발급됨.
       console.log(`session destroy err: `,err);
-      res.redirect('/');
+      //res.redirect('/');
+      res.json({result:'', message:err});
     }); 
 });
 app.use('/join',joinRouter);
