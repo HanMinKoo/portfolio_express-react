@@ -16,8 +16,7 @@ class Login extends Component{
             url: '/login/process',
             data:loginInfo,
             withCredentials:true
-        }
-        )
+        })
         .then((res)=>{
             console.log("진짜?",res);
             if(res.data.loginResult==="fail")
@@ -54,7 +53,7 @@ class Login extends Component{
     }
     render(){
         if(this.state.redirect)
-            return <Redirect to='/'/>;
+            return <Redirect to='/' test="zzzz"/>;
         return(    
             <form id="loginForm" name="login_form" onSubmit={this.handleSubmit}>
                 <h1 >로그인</h1>

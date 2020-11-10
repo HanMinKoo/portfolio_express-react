@@ -52,14 +52,13 @@ app.use(cors({
 
 app.get('/api/getsession',(req,res,next)=>{
   console.log(req.session);
-  return ((req.session.account!==undefined)? res.json([{account:req.session.account, message:'FOUND ACCOUNT'}]) :res.json([{account:'', message:'NOT FOUND ACCOUNT'}]));
+  return ((req.session.account!==undefined)? res.json({account:req.session.account, message:'FOUND ACCOUNT'}) :res.json({account:'', message:'NOT FOUND ACCOUNT'}));
 //db에 session이 저장되어있으면 서버 껐다켜도 세션 안풀림. 
 });
 app.use('/login',loginRouter);
 app.get('/logout',(req,res)=>{
     req.session.destroy((err)=>{ //세션을 완전히 삭제, 완전히 세션을 삭제했으니 브라우저가 다음에 웹에 접근할 때 다시 세션 발급됨.
       console.log(`session destroy err: `,err);
-      //res.redirect('/');
       res.json({result:'', message:err});
     }); 
 });

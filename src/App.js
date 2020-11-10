@@ -17,8 +17,10 @@ class App extends Component{
     title.innerText="React Portfolio";
     console.log("이게 두번인가");
     return(
+      <>
+     
       <BrowserRouter>
-        <Nav></Nav>
+      <Nav></Nav>
         <Route path="/" exact={true} component={Home}></Route>
         <Route path="/login" component={Login}></Route>
         <Route path="/join" component={Join}></Route>
@@ -27,9 +29,9 @@ class App extends Component{
         <Route path="/adminpage" component={AdminPage}></Route>
         <Route path="/mypage" component={GroundDetail}></Route>
         <Footer></Footer>
-        
-       
       </BrowserRouter>
+    
+      </>
     );
   }
 }
