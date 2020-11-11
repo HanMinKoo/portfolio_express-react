@@ -22,6 +22,8 @@ router.post('/',(req,res)=>{
                 console.log('table name:ground_reservation_list / Error: delete query Error : ',err);
             else if(state==='approval')
                 console.log('table name:ground_reservation_list / Error: update query Error : ',err);
+
+            res.json({result:'error'});
         }
         else{
             if(state==='cancel')
@@ -30,7 +32,7 @@ router.post('/',(req,res)=>{
                 console.log('table name:ground_reservation_list / Result: update query Success');
             
             console.log(result);
-            res.send('ok');
+            res.json({result:'success'});
         }
     });
 });

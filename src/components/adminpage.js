@@ -1,5 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import '../css/adminpage.css';
+import axios from 'axios';
+
+function updateReservationState(changeState,id,currentState){
+    if(currentState==='승인 완료'){ //혹시모를 예외처리
+        alert('이미 승인 처리된 예약입니다.');
+        return;
+    }
+    const data={
+        state:changeState,
+        id
+    };
+    axios({
+        method:'post',
+        url:'/reservationstate',
+        data: data
+    }).then((res)=>{
+         
+    });
+
+
+}
+
 
 const fetchReservationList = async(setReservationData) =>{
     const reservationList = await fetch(`/adminpage`);
@@ -22,7 +44,7 @@ const fetchReservationList = async(setReservationData) =>{
             <td>{reservationData[i].name}</td>
             <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
             <td>{reservationData[i].state}</td>
-            <button type="button">취소</button>
+            <button type="button" className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
             </tr>;
         }
         else{
@@ -33,8 +55,8 @@ const fetchReservationList = async(setReservationData) =>{
             <td>{reservationData[i].name}</td>
             <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
             <td>{reservationData[i].state}</td>
-            <button type="button" className="approvalBtn" >승인</button>
-            <button type="button" className="cancelBtn" >취소</button>
+            <button type="button" className="approvalBtn" onClick={()=>updateReservationState('approval',reservationData[i].id, reservationData[i].state)}>승인</button>
+            <button type="button" className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
             </tr>;
         }
     }
