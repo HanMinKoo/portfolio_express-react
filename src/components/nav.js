@@ -92,7 +92,7 @@ const Nav = () =>{
                 <ul className="navbar_menu">
                     <li><Link to="/">홈</Link></li>
                     <li><Link to="/ground">운동장 예약</Link></li>
-                    <li><Link to="/test">문의하기</Link></li>
+                    <li><Link to="/inquire">문의하기</Link></li>
                 </ul>
                 {loginInfojsx}
             </nav>

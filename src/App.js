@@ -9,7 +9,7 @@ import Join from './routes/join';
 import GroundList from './routes/ground_list';
 import GroundDetail from './routes/ground_detail';
 import AdminPage from './components/adminpage';
-
+import Inquire from './components/inquire';
 
 class App extends Component{
   render(){
@@ -28,6 +28,7 @@ class App extends Component{
         <Route path="/ground/detail" component={GroundDetail}></Route>
         <Route path="/adminpage" component={AdminPage}></Route>
         <Route path="/mypage" component={GroundDetail}></Route>
+        <Route path="/inquire" component={Inquire}></Route>
         <Footer></Footer>
       </BrowserRouter>
     

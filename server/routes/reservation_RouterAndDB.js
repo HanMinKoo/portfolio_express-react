@@ -21,8 +21,8 @@ function printQueryResult(dbCon,err,result,table,action,query){
 }
 
 router.get('/list',(req,res)=>{
-
-    console.log("reservation/list,",req.query);
+    console.log("req header좀 보자꾸나", req.headers);
+    //console.log("reservation/list,",req.query);
     const dbCon=connectionDB.connectDB();
     const {ground_id, year, month}=req.query;
 
@@ -34,7 +34,7 @@ router.get('/list',(req,res)=>{
         else
             console.log('table name:ground_time_list / Result: query Success');
 
-        console.log("groundTimeListgroundTimeListgroundTimeList:", groundTimeList);
+        //console.log("groundTimeListgroundTimeListgroundTimeList:", groundTimeList);
         res.json([groundTimeList]);
     });
 
@@ -48,36 +48,6 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
 
     const ground_id=req.body.ground_id;
     const use_date = `${req.body.year}년${req.body.month}월${req.body.day}일`;
-    
-
-    // /*****운동장 시간 대를 선택 안했을 경우, 즉 날짜만 변경했을 경우******/
-    // if(req.body.groundTime===undefined){
- 
-    //     query=`select * from ground_reservation_list where ground_id=${ground_id} 
-    //                     and use_date='${use_date}'`;
-
-    //     dbCon.query(query, (err,reservationTimeList)=>{ //ground_ud에 맞는 timetable DB불러오기
-    //         if(err)
-    //             console.log('table name:ground_reservation_list / Error: select query Error : ',err);
-    //         else
-    //             console.log('table name:ground_reservation_list / Result: query Success');
-
-    //         console.log(reservationTimeList);
-
-    //         let data=[];
-    //         for(let i=0; i<reservationTimeList.length; i++){
-    //             let tmp={time:reservationTimeList[i].use_time}
-    //             data[i]=tmp;
-    //         }
-            
-    //         if(data.length===0){//선택한 날짜의 예약 현황이 한개도 없는 경우
-    //             let data=[{time:'모든 시간 예약 가능'}];
-    //             res.send(data);
-    //         }
-    //         else
-    //             res.send(data);
-    //     });
-    // }
 
     /*****로그인 상태에서 운동장 시간, 날짜 모두 선택하고 예약하기 버튼 눌렀을 경우(예약 진행)******/
     if(req.body.groundTime!==undefined && req.session.account!==undefined){    
