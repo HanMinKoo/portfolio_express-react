@@ -1,6 +1,32 @@
 import React, {Component, useState} from 'react';
 import '../css/inquire.css';
 
+function checkInquireForm(event){
+    const form = document.inquire_Form;
+
+    if(form.userName.value===''){
+        alert('이름을 입력해주세요.');
+        form.userName.focus(); 
+        return;
+    }
+    else if(form.phoneNumber.value===''){
+        alert('휴대폰 번호를 입력해주세요.');
+        form.phoneNumber.focus(); 
+        return;
+    }
+    else if(form.content.value===''){
+        alert('내용을 입력해주세요.');
+        form.content.focus(); 
+        return;
+    }
+    else if(!form.infoChk.checked){
+        alert('개인정보 수집 및 이용 동의를 체크해주세요.');
+        form.infoChk.focus(); 
+        return;
+    }
+    form.submit(); 
+}
+
 function Inquire(){
     return(
         <div className="inquire_wrap">
@@ -9,7 +35,7 @@ function Inquire(){
                 <h1 >문의하기</h1>
                 <strong >운동장 예약관련 문의사항이 있으신 분은 아래의 작성폼을 작성해주시기 바랍니다.</strong>
             </div>
-            <form action="/inquire" method="post" className="inquireForm" name="inquire_Form">
+            <form onSubmit={checkInquireForm} method="post" className="inquireForm" name="inquire_Form">
                 <label for="customerName">고객명</label>
                 <input type="text" name="userName" id="customerName" className="formCustomerName" maxlength="10"/>
                 <label for="phonNumber">연락처</label>
