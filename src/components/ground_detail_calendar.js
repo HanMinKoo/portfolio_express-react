@@ -27,6 +27,7 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
 
 
     const currentDate= new Date();
+    console.log('currentDate',currentDate.getDate());
     console.log(timeTable);
     console.log(reservationData);
     
@@ -57,41 +58,58 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
         //date추가
         else if(dayCnt===firstDay || date<=lastDate){
             td.id=`${date}`;
-            if(date===currentDate.getDate())
-                td.className='calendarChoiceDate';
-    
-
-            //1.해당 달의 모든 예약 현황 중 현재 날짜(date)에 맞는 예약 현황만 따로 배열로 만들기
-            const dateReservationList= reservationData.filter(reservation => 
-                reservation.use_date === `${year}년${month}월${date}일`);
 
             const ul=document.createElement('ul');
-          
-            let count=1;
-            //2. forEach를 통해 현재 운동장의 이용 시간대를 순회.
-            //3. 현재 날짜의 운동장 예약 현황(dateReservationList)에 순회하는 시간대가 존재하면(find 메소드)
-            //classList의 값을 unbookable, 존재하지 않으면 bookable을 추가하여 예약 가능 불가능 적용
-            //4.classList의 값이 bookable일 경우 클릭 이벤트를 설정하여 예약 진행 함수 호출(bookReservation)
-            timeTable.forEach(tableTime => {
-                const li=document.createElement('li');
-                const findReservationTime=dateReservationList.find(reservationTime => 
-                    reservationTime.use_time === tableTime.ground_time);
+
             
-                if(findReservationTime !== undefined){
+            if(date === currentDate.getDate())
+                td.className='calendarChoiceDate';
+
+
+            let count=1;
+            //현재 날짜보다 이전의 날짜는 모두 예약 못하게 막기.(예약 완료로 표시)
+            if(date < currentDate.getDate()){
+                timeTable.forEach(tableTime => {
+                    console.log(tableTime.ground_time);
+                    const li=document.createElement('li');
                     li.classList.add('unbookable');
                     li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
-                }
-                else{
-                    li.classList.add('bookable');
-                    li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 가능)`;
+                    ul.appendChild(li);
+                });
+            }
+            else{
+                //1.해당 달의 모든 예약 현황 중 현재 날짜(date)에 맞는 예약 현황만 따로 배열로 만들기
+                const dateReservationList= reservationData.filter(reservation => 
+                    reservation.use_date === `${year}년${month}월${date}일`);
 
-                    li.addEventListener('click',function(){
-                        const ground_id = reservationData[0].ground_id;
-                        bookReservation(year, month, td.id, tableTime.ground_time, ground_id);
-                    });
-                }
-                ul.appendChild(li);
-            });
+                //const ul=document.createElement('ul');
+            
+                
+                //2. forEach를 통해 현재 운동장의 이용 시간대를 순회.
+                //3. 현재 날짜의 운동장 예약 현황(dateReservationList)에 순회하는 시간대가 존재하면(find 메소드)
+                //classList의 값을 unbookable, 존재하지 않으면 bookable을 추가하여 예약 가능 불가능 적용
+                //4.classList의 값이 bookable일 경우 클릭 이벤트를 설정하여 예약 진행 함수 호출(bookReservation)
+                timeTable.forEach(tableTime => {
+                    const li=document.createElement('li');
+                    const findReservationTime=dateReservationList.find(reservationTime => 
+                        reservationTime.use_time === tableTime.ground_time);
+                
+                    if(findReservationTime !== undefined){
+                        li.classList.add('unbookable');
+                        li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
+                    }
+                    else{
+                        li.classList.add('bookable');
+                        li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 가능)`;
+
+                        li.addEventListener('click',function(){
+                            const ground_id = reservationData[0].ground_id;
+                            bookReservation(year, month, td.id, tableTime.ground_time, ground_id);
+                        });
+                    }
+                    ul.appendChild(li);
+                });
+            }
 
             const tdDiv = document.createElement('div');
             tdDiv.appendChild(ul);
