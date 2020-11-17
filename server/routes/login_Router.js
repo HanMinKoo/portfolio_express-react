@@ -4,18 +4,6 @@ const crypto = require('crypto');
 const router=express.Router();
 const loginDB = require('../models/login_DB.js');
 
-// router.get('/',(req,res)=>{
-//     console.log("login page render");
-//    //console.log(req.session);
-//    if(req.session.loginText ===true){
-//         req.session.loginText=null;
-//         res.render('login',{text:'아이디 또는 비밀번호를 확인해주세요.'});
-//    }
-//    else
-//         res.render('login',{text:''});
-// });
-
-
 router.post('/process',(req,res)=>{
     console.log("req header좀 보자꾸나", req.headers);
     //console.log(req.body);
@@ -46,10 +34,7 @@ router.post('/process',(req,res)=>{
             req.session.save(()=>{
                 console.log('session save success');
                 //res.cookie('sessionID',req.sessionID,{maxAge:6000000,httpOnly:true});
-                res.send({
-                    loginResult:'success',
-                    
-                });
+                res.json({loginResult:'success'});
             });  
         }
     }

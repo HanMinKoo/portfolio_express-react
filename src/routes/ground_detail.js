@@ -3,8 +3,7 @@ import queryString from 'query-string';
 import GroundInfo from '../components/ground_detail_groundInfo';
 import {fetchGroundImg,fetchGroundInfoAndTimeList} from '../components/fetchGroundData.js';
 import Calendar from '../components/ground_detail_calendar';
-
-
+import { Redirect } from 'react-router-dom';
 
 const Ground_Detail = ({location,match}) => {
   const [groundInfo, setGroundInfoAndTimeList]=useState('');
@@ -18,7 +17,9 @@ const Ground_Detail = ({location,match}) => {
   let jsx='';
 
   console.log(`groundInfo:${groundInfo} , groundImg: ${groundImg}`);
+
   useEffect(()=>{
+   
     fetchGroundInfoAndTimeList(id,setGroundInfoAndTimeList);
     fetchGroundImg(id,setGroundImg);
   },[]);
@@ -29,6 +30,12 @@ const Ground_Detail = ({location,match}) => {
       <GroundInfo groundInfoData={groundInfo.groundList} groundImgData={groundImg}></GroundInfo>
       <Calendar ground_id={id} timeTable={groundInfo.groundTimeTable}></Calendar>
     </>
+  }
+
+    //로그인 사용자가 아니면 fail 
+  else if(groundInfo.result === 'fail'){
+    alert("로그인 사용자만 이용할 수 있습니다.");
+    return <Redirect to='/login' />;
   }
   return(
     <>

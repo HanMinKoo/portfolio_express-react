@@ -3,8 +3,6 @@ import '../css/footer.css';
 
 
 function Footer(){
-    const [test,setTest]=useState([0]);
-    console.log("footer");
     return(
         <ul className="footer">
             <li>M9SOCCER</li>

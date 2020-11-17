@@ -3,9 +3,10 @@
     margin-bottom: 10px;
     color:white;
     
+    
 }
 .footer{
-    
+    clear:both;
     text-align: center;
     margin-top: 7%;
     background-color:#000;

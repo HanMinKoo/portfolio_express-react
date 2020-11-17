@@ -6,6 +6,8 @@ const fetchGroundInfoAndTimeList= async(id,setGroundInfoAndTimeList)=>{
     const groundInfo = await fetch(path);
     const groundInfoData = await groundInfo.json();
    
+    console.log('groundInfoData',groundInfoData);
+    
     setGroundInfoAndTimeList(groundInfoData);
 }
 

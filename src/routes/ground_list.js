@@ -5,8 +5,6 @@ import {Link} from 'react-router-dom';
 import {fetchGroundImg,fetchGroundInfoAndTimeList} from '../components/fetchGroundData.js';
 
 
-
-
 const initJSX = (groundListData,groundImgData) => {
 
     let jsx = [];
@@ -41,13 +39,13 @@ const initJSX = (groundListData,groundImgData) => {
     return jsx;
 }
 
-
 const Ground_List = () =>{
-
+    
     const [groundListData, setGroundList]= useState('');
     const [groundImgData, setGroundImg]=useState('');
     console.log(groundListData);
     useEffect( () =>{
+
         fetchGroundImg(0,setGroundImg);
         fetchGroundInfoAndTimeList(0,setGroundList);
     },[]);

@@ -2,6 +2,18 @@ import React, {useEffect, useState} from 'react';
 import '../css/ground_detail_calendar.css';
 import {fetchGroundReservationTimeList, bookReservation} from './fetchGroundData.js';
 
+
+
+
+function makeUnBookable(timeTable, ul, count){
+    timeTable.forEach(tableTime => {
+        const li=document.createElement('li');
+        li.classList.add('unbookable');
+        li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
+        ul.appendChild(li);
+    });
+}
+
 //예약, 운동장 정보 등 메뉴 선택이벤트 활성화
 function initChoiceInfoMenu(){
     const reservationInfo = document.querySelector('.js-choiceReservationInfo');
@@ -61,29 +73,43 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
 
             const ul=document.createElement('ul');
 
-            
             if(date === currentDate.getDate())
                 td.className='calendarChoiceDate';
 
 
             let count=1;
-            //현재 날짜보다 이전의 날짜는 모두 예약 못하게 막기.(예약 완료로 표시)
-            if(date < currentDate.getDate()){
-                timeTable.forEach(tableTime => {
-                    console.log(tableTime.ground_time);
-                    const li=document.createElement('li');
-                    li.classList.add('unbookable');
-                    li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
-                    ul.appendChild(li);
-                });
+            
+            //****현재 날짜보다 이전의 날짜는 모두 예약 못하게 막기.(예약 완료로 표시)  ****/
+            //1. 지난 달, 또는 지난 년도이거나 또는
+            //2. 일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
+            if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) ||
+            (date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
+                makeUnBookable(timeTable, ul, count);
+                    // timeTable.forEach(tableTime => {
+                    //     makeUnBookable()
+                    //     const li=document.createElement('li');
+                    //     li.classList.add('unbookable');
+                    //     li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
+                    //     ul.appendChild(li);
+                    // });
+                
             }
+            //이번년도 이번달의 지난 날 예약 완료 처리
+            //일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
+            // else if((date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
+            //     makeUnBookable(timeTable, ul, count);
+            //         // timeTable.forEach(tableTime => {
+            //         //     const li=document.createElement('li');
+            //         //     li.classList.add('unbookable');
+            //         //     li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
+            //         //     ul.appendChild(li);
+            //         // });
+            //     //}
+            // }
             else{
                 //1.해당 달의 모든 예약 현황 중 현재 날짜(date)에 맞는 예약 현황만 따로 배열로 만들기
                 const dateReservationList= reservationData.filter(reservation => 
-                    reservation.use_date === `${year}년${month}월${date}일`);
-
-                //const ul=document.createElement('ul');
-            
+                    reservation.use_date === `${year}년${month}월${date}일`);      
                 
                 //2. forEach를 통해 현재 운동장의 이용 시간대를 순회.
                 //3. 현재 날짜의 운동장 예약 현황(dateReservationList)에 순회하는 시간대가 존재하면(find 메소드)
@@ -163,7 +189,7 @@ function changeYearMonth(year,month,setDate){
         const tbody=document.querySelector('.js-tbodyDate');
 
         while(tbody.hasChildNodes()){
-            console.log("z:",tbody.firstChild);
+            //console.log("z:",tbody.firstChild);
             tbody.removeChild(tbody.firstChild);
         }
         console.log("최종 tbody:",tbody.firstChild);
@@ -189,11 +215,10 @@ function Calendar({ground_id, timeTable}){
      
     const [date,setDate]= useState(new Date());
     const [reservationData, setReservationData]=useState('');
-   
-        //const [choiceDate, setChoiceDate]= useState('');
-    const {year,month,firstDay,lastDate}=initDate(date);
-    console.log("initDateMonth",month);
 
+    const {year,month,firstDay,lastDate}=initDate(date);
+
+    console.log("initDateMonth",month);
    
 
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
@@ -201,25 +226,32 @@ function Calendar({ground_id, timeTable}){
         changeYearMonth(year,month,setDate);
         initChoiceInfoMenu();
         fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
-        
     },[]);
 
     useEffect(()=>{
         if(reservationData !== ''){//reservationData.date와 바뀐 date는 다를꺼란말이야. 그걸 이용해보자.
-            const reservationArrayDate = reservationData[0].use_date.split('월');
-            const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
+            // if(reservationData.length === 0){
+            //     console.log('reservationDatareservationData',reservationData);
+            //     reservationData.use_date = null;
+            //     makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+            //     changeCalendarHeader(year,month);
+            // }
+            // else{
+                const reservationArrayDate = reservationData[0].use_date.split('월');
+                const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
 
-            //month를 바꿀 때 마다 예약된 정보를 다시 요청해야한다
-            //그런데 기존에 reservationData가 ==='' 아닐때 fetch하게 되면, 기존의 reservationData가 있기 때문에 fetch가안된다 
-            //그래서 월을 바꿨을 때 reservationData 데이터의 년월과 바뀐 date의 년 월을 비교해서
-            //값이 다르다면 그 때 그 년월에 해당하는 데이터를 fetch하고, 값을 불러와 값이 맞다면 makeCleandar를한다. 
-            if(`${reservationArrayDate[0]}월` === changedDate){
-                console.log('맞지?');
-                makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
-                changeCalendarHeader(year,month);
-            }
-            else 
-                fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+                //month를 바꿀 때 마다 예약된 정보를 다시 요청해야한다
+                //그런데 기존에 reservationData가 ==='' 아닐때 fetch하게 되면, 기존의 reservationData가 있기 때문에 fetch가안된다 
+                //그래서 월을 바꿨을 때 reservationData 데이터의 년월과 바뀐 date의 년 월을 비교해서
+                //값이 다르다면 그 때 그 년월에 해당하는 데이터를 fetch하고, 값을 불러와 값이 맞다면 makeCleandar를한다. 
+                if(`${reservationArrayDate[0]}월` === changedDate){
+                    console.log('맞지?');
+                    makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+                    changeCalendarHeader(year,month);
+                }
+                else 
+                    fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+            //}
         }
             
     },[date,reservationData]);
