@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 
 class Login extends Component{
+    
     state={
         loginResultText: '',
         redirect:false
@@ -23,7 +24,9 @@ class Login extends Component{
                 this.setState({loginResultText:'아이디 또는 비밀번호를 확인해주세요.'});
             else if(res.data.loginResult==="success")
             {
-                this.setState({redirect:true});
+                window.location.href="/";
+                //location.href="/";
+                //this.setState({redirect:true});
             }
         })
         .catch((error)=>{
@@ -52,8 +55,9 @@ class Login extends Component{
         });
     }
     render(){
-        if(this.state.redirect)
-            return <Redirect to='/' test="zzzz"/>;
+        
+        //if(this.state.redirect)
+            //return <Redirect to='/' test="zzzz"/>;
         return(    
             <form id="loginForm" name="login_form" onSubmit={this.handleSubmit}>
                 <h1 >로그인</h1>

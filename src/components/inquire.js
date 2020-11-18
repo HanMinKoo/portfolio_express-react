@@ -4,6 +4,7 @@ import '../css/inquire.css';
 function checkInquireForm(event){
     const form = document.inquire_Form;
 
+
     if(form.userName.value===''){
         alert('이름을 입력해주세요.');
         form.userName.focus(); 
@@ -75,10 +76,8 @@ function Inquire(){
                     </p>
                 </div>    
             </form>
-        </div>
-        
+        </div>  
     );
-
 }
 
 export default Inquire;
