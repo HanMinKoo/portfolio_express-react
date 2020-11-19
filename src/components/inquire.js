@@ -1,34 +1,45 @@
-import React, {Component, useState} from 'react';
+import React, {useRef} from 'react';
 import '../css/inquire.css';
 
-function checkInquireForm(event){
-    const form = document.inquire_Form;
+const checkInquireForm= function (event,nameInput,phoneNumber, formContent,formCheckBox){
+    //alert(event);
+    event.preventDefault();
+    //alert(nameInput.current.value);
+    //a.current.focus();
+    //const form = document.inquire_Form;
+    //console.log(form);
 
-
-    if(form.userName.value===''){
-        alert('이름을 입력해주세요.');
-        form.userName.focus(); 
+    if(nameInput.current.value === ''){
+        alert('고객명을 입력해주세요.');
+        nameInput.current.focus();
         return;
     }
-    else if(form.phoneNumber.value===''){
+    else if(phoneNumber.current.value === '')
         alert('휴대폰 번호를 입력해주세요.');
-        form.phoneNumber.focus(); 
+        phoneNumber.current.focus(); 
         return;
     }
-    else if(form.content.value===''){
-        alert('내용을 입력해주세요.');
-        form.content.focus(); 
-        return;
-    }
-    else if(!form.infoChk.checked){
-        alert('개인정보 수집 및 이용 동의를 체크해주세요.');
-        form.infoChk.focus(); 
-        return;
-    }
-    form.submit(); 
+    // else if(formContent.current.value === ''){
+
+    // }
+    // else if(form.content.value===''){
+    //     alert('내용을 입력해주세요.');
+    //     form.content.focus(); 
+    //     return;
+    // }
+    // else if(!form.infoChk.checked){
+    //     alert('개인정보 수집 및 이용 동의를 체크해주세요.');
+    //     form.infoChk.focus(); 
+    //     return;
+    // }
+    //form.submit(); 
 }
 
 function Inquire(){
+    const nameInput = useRef();
+    const phoneNumber = useRef();
+    const formContent = useRef();
+    const formCheckBox = useRef();
     return(
         <div className="inquire_wrap">
             
@@ -36,13 +47,13 @@ function Inquire(){
                 <h1 >문의하기</h1>
                 <strong >운동장 예약관련 문의사항이 있으신 분은 아래의 작성폼을 작성해주시기 바랍니다.</strong>
             </div>
-            <form onSubmit={checkInquireForm} method="post" className="inquireForm" name="inquire_Form">
+            <form onSubmit={(e)=>checkInquireForm(e, nameInput, phoneNumber, formContent,formCheckBox)} method="post" className="inquireForm" name="inquire_Form">
                 <label for="customerName">고객명</label>
-                <input type="text" name="userName" id="customerName" className="formCustomerName" maxlength="10"/>
+                <input type="text" name="userName" id="customerName" className="formCustomerName" maxlength="10" ref={nameInput}/>
                 <label for="phonNumber">연락처</label>
-                <input type="text" name="phoneNumber" id="phonNumber" className="formPhoneNumber" maxlength="15"/>
+                <input type="text" name="phoneNumber" id="phonNumber" className="formPhoneNumber" maxlength="15" ref={phoneNumber}/>
                 <label for="formContent">내용</label>
-                <input type="text" name="content" id="formContent" className="formContent" maxlength="998" />
+                <input type="text" name="content" id="formContent" className="formContent" maxlength="998" ref={formContent}/>
                
                 <div className="inquireFormPrivacy">
                     <h2>개인정보 수집 및 이용동의에 대한 안내</h2>
@@ -69,10 +80,10 @@ function Inquire(){
                             참고하시기 바랍니다.
                         </span>
                     </p>
-                    <input type="checkbox" name="infoChk" className="checkBox"></input>
+                    <input type="checkbox" name="infoChk" className="checkBox" ref={formCheckBox}></input>
                     <span >개인정보 수집 및 이용에 동의합니다.</span>
                     <p className="FormBtn">
-                        <input type="button" value="작성" onClick="inquire_Form_Chk();" name="chk" />
+                        <input type="submit" value="작성"  name="chk" />
                     </p>
                 </div>    
             </form>
