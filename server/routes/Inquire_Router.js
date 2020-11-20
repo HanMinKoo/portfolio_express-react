@@ -6,9 +6,9 @@ const inquireDB= require('../models/Inquire_DB');
 const router = express.Router();
 require('dotenv').config();
 
-router.post('/',(req,res)=>{
-    return ((req.session.account!==undefined)? res.render('inquire',{account:req.session.account}) :res.render('inquire',{account:''}));
-});
+// router.post('/',(req,res)=>{
+//     return ((req.session.account!==undefined)? res.render('inquire',{account:req.session.account}) :res.render('inquire',{account:''}));
+// });
 router.post('/process', (req, res, next)=> {
     //console.log(req);
     
@@ -46,7 +46,7 @@ router.post('/process', (req, res, next)=> {
             transporter.close();
         }
     });
-    res.redirect('/');
+    res.json({result:'ok'});
 });
 
 module.exports = router;

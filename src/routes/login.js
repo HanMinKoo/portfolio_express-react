@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import '../css/login.css';
-import { Redirect } from 'react-router-dom';
-
 
 class Login extends Component{
     
@@ -23,11 +21,8 @@ class Login extends Component{
             if(res.data.loginResult==="fail")
                 this.setState({loginResultText:'아이디 또는 비밀번호를 확인해주세요.'});
             else if(res.data.loginResult==="success")
-            {
                 window.location.href="/";
-                //location.href="/";
-                //this.setState({redirect:true});
-            }
+            
         })
         .catch((error)=>{
             console.log(error);

@@ -16,12 +16,21 @@ function updateReservationState(changeState,id,currentState){
         url:'/reservationstate',
         data: data
     }).then((res)=>{
-         
+        const trId = document.getElementById(id);
+        if(changeState === 'cancel'){
+            const tableBody = document.querySelector('tbody');
+            
+            tableBody.removeChild(trId);
+        }
+        else if(changeState === 'approval'){
+            const btnId = id+'button';
+            //alert(btnId);
+            const button = document.getElementById(btnId);
+            //alert(button);
+            trId.removeChild(button);
+        }
     });
-
-
 }
-
 
 const fetchReservationList = async(setReservationData) =>{
     const reservationList = await fetch(`/adminpage`);
@@ -37,26 +46,28 @@ const fetchReservationList = async(setReservationData) =>{
     for(let i = 0; i<reservationData.length; i++){
         if(reservationData[i].state === '승인 완료')
         {
+            
             jsx[i]=
-            <tr>
-            <td>{reservationData[i].id}</td>
-            <td>{reservationData[i].account}</td>
-            <td>{reservationData[i].name}</td>
-            <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
-            <td>{reservationData[i].state}</td>
-            <button type="button" className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
+            <tr id = {reservationData[i].id}>
+                <td>{reservationData[i].id}</td>
+                <td>{reservationData[i].account}</td>
+                <td>{reservationData[i].name}</td>
+                <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
+                <td className = "reservationState" >{reservationData[i].state}</td>
+                <button type="button"  className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
             </tr>;
         }
         else{
+            const buttonId=reservationData[i].id+'button';
             jsx[i]=
-            <tr>
-            <td>{reservationData[i].id}</td>
-            <td>{reservationData[i].account}</td>
-            <td>{reservationData[i].name}</td>
-            <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
-            <td>{reservationData[i].state}</td>
-            <button type="button" className="approvalBtn" onClick={()=>updateReservationState('approval',reservationData[i].id, reservationData[i].state)}>승인</button>
-            <button type="button" className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
+            <tr id = {reservationData[i].id}>
+                <td>{reservationData[i].id}</td>
+                <td>{reservationData[i].account}</td>
+                <td>{reservationData[i].name}</td>
+                <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
+                <td className = "reservationState">{reservationData[i].state}</td>
+                <button type="button" id={buttonId} className="approvalBtn" onClick={()=>updateReservationState('approval',reservationData[i].id, reservationData[i].state)}>승인</button>
+                <button type="button" className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
             </tr>;
         }
     }

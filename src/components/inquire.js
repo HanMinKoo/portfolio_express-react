@@ -1,38 +1,45 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import '../css/inquire.css';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+const submitForm = (userName, phoneNumber, content, setInquire) =>{
+    axios({
+        method: 'post',
+        url: '/inquire/process',
+        data:{userName, phoneNumber, content},
+    }).then((res)=>{
+        //alert('TEST');
+        console.log("success inquire", res);
+        setInquire(true);
+    }).catch( error => console.log('inquire error', error));
 
-const checkInquireForm= function (event,nameInput,phoneNumber, formContent,formCheckBox){
-    //alert(event);
+
+}
+
+const checkInquireForm= function (event,nameInput,phoneNumber, formContent,formCheckBox, setInquire){
     event.preventDefault();
-    //alert(nameInput.current.value);
-    //a.current.focus();
-    //const form = document.inquire_Form;
-    //console.log(form);
 
     if(nameInput.current.value === ''){
         alert('고객명을 입력해주세요.');
         nameInput.current.focus();
         return;
     }
-    else if(phoneNumber.current.value === '')
+    else if(phoneNumber.current.value === ''){
         alert('휴대폰 번호를 입력해주세요.');
         phoneNumber.current.focus(); 
         return;
     }
-    // else if(formContent.current.value === ''){
-
-    // }
-    // else if(form.content.value===''){
-    //     alert('내용을 입력해주세요.');
-    //     form.content.focus(); 
-    //     return;
-    // }
-    // else if(!form.infoChk.checked){
-    //     alert('개인정보 수집 및 이용 동의를 체크해주세요.');
-    //     form.infoChk.focus(); 
-    //     return;
-    // }
-    //form.submit(); 
+    else if(formContent.current.value === ''){
+        alert('내용을 입력해주세요.');
+        formContent.current.focus(); 
+        return;
+    }
+    else if(!formCheckBox.current.checked){
+        alert('개인정보 수집 및 이용 동의를 체크해주세요.');
+        formCheckBox.current.focus(); 
+        return;
+    }
+    submitForm(nameInput.current.value, phoneNumber.current.value, formContent.current.value, setInquire);
 }
 
 function Inquire(){
@@ -40,6 +47,13 @@ function Inquire(){
     const phoneNumber = useRef();
     const formContent = useRef();
     const formCheckBox = useRef();
+
+    const [successInquire, setInquire] = useState(false);
+
+    if(successInquire){
+        alert('문의 내용이 전송되었습니다');
+        return <Redirect to='/'/>;
+    }
     return(
         <div className="inquire_wrap">
             
@@ -47,13 +61,13 @@ function Inquire(){
                 <h1 >문의하기</h1>
                 <strong >운동장 예약관련 문의사항이 있으신 분은 아래의 작성폼을 작성해주시기 바랍니다.</strong>
             </div>
-            <form onSubmit={(e)=>checkInquireForm(e, nameInput, phoneNumber, formContent,formCheckBox)} method="post" className="inquireForm" name="inquire_Form">
+            <form onSubmit={(e)=>checkInquireForm(e, nameInput, phoneNumber, formContent,formCheckBox, setInquire)} method="post" className="inquireForm" name="inquire_Form">
                 <label for="customerName">고객명</label>
                 <input type="text" name="userName" id="customerName" className="formCustomerName" maxlength="10" ref={nameInput}/>
                 <label for="phonNumber">연락처</label>
                 <input type="text" name="phoneNumber" id="phonNumber" className="formPhoneNumber" maxlength="15" ref={phoneNumber}/>
                 <label for="formContent">내용</label>
-                <input type="text" name="content" id="formContent" className="formContent" maxlength="998" ref={formContent}/>
+                <input type="text" name="content" id="formContent" className="formContent" maxLength="998" ref={formContent}/>
                
                 <div className="inquireFormPrivacy">
                     <h2>개인정보 수집 및 이용동의에 대한 안내</h2>
