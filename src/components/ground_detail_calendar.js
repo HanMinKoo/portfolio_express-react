@@ -6,12 +6,13 @@ import {fetchGroundReservationTimeList, bookReservation} from './fetchGroundData
 
 
 function makeUnBookable(timeTable, ul, count){
-    timeTable.forEach(tableTime => {
+    //timeTable.forEach(tableTime => {
         const li=document.createElement('li');
         li.classList.add('unbookable');
-        li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
+        li.innerHTML = '예약 불가';
+        //li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
         ul.appendChild(li);
-    });
+    //});
 }
 
 //예약, 운동장 정보 등 메뉴 선택이벤트 활성화
@@ -39,9 +40,9 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
 
 
     const currentDate= new Date();
-    console.log('currentDate',currentDate.getDate());
-    console.log(timeTable);
-    console.log(reservationData);
+    //console.log('currentDate',currentDate.getDate());
+    //console.log(timeTable);
+    //console.log(reservationData);
     
     const tbody=document.querySelector('.js-tbodyDate');//tr 생성하기 위해서
     
@@ -85,27 +86,8 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
             if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) ||
             (date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
                 makeUnBookable(timeTable, ul, count);
-                    // timeTable.forEach(tableTime => {
-                    //     makeUnBookable()
-                    //     const li=document.createElement('li');
-                    //     li.classList.add('unbookable');
-                    //     li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
-                    //     ul.appendChild(li);
-                    // });
-                
             }
-            //이번년도 이번달의 지난 날 예약 완료 처리
-            //일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
-            // else if((date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
-            //     makeUnBookable(timeTable, ul, count);
-            //         // timeTable.forEach(tableTime => {
-            //         //     const li=document.createElement('li');
-            //         //     li.classList.add('unbookable');
-            //         //     li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
-            //         //     ul.appendChild(li);
-            //         // });
-            //     //}
-            // }
+
             else{
                 //1.해당 달의 모든 예약 현황 중 현재 날짜(date)에 맞는 예약 현황만 따로 배열로 만들기
                 const dateReservationList= reservationData.filter(reservation => 
@@ -168,9 +150,9 @@ function initDate(date){
     
     const firstDay=new Date(year,month-1,1);  
     const lastDay = new Date(year,month,0);  
-    console.log("initDatemonth",month);
-    console.log("initDatefirstDay",firstDay);
-    console.log("initDatelastDate",lastDay);
+    //console.log("initDatemonth",month);
+    //console.log("initDatefirstDay",firstDay);
+    //console.log("initDatelastDate",lastDay);
     const dateObj={
         year,
         month,
@@ -187,40 +169,38 @@ function changeYearMonth(year,month,setDate){
     
     previousMonth.addEventListener('click',()=>{
         const tbody=document.querySelector('.js-tbodyDate');
-
+        console.log('이전달 클릭');
         while(tbody.hasChildNodes()){
-            //console.log("z:",tbody.firstChild);
             tbody.removeChild(tbody.firstChild);
         }
-        console.log("최종 tbody:",tbody.firstChild);
-
-        setDate(new Date(year,--month));
-
+        month -= 2;
+        console.log('이전달 month -2', month);
+        setDate(new Date(year,month++));
+        console.log('이전달 month ++', month);
     });
 
     nextMonth.addEventListener('click',(event)=>{   
         const tbody=document.querySelector('.js-tbodyDate');
-
+        console.log('이후달 클릭');
         while(tbody.hasChildNodes()){
-            console.log("z:",tbody.firstChild);
             tbody.removeChild(tbody.firstChild);
         }
-        console.log("최종 tbody:",tbody.firstChild);
-        //fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth(),setReservationData);
-        setDate(new Date(year,++month));
+        console.log('다음달 month ', month);
+        setDate(new Date(year,month++));
+        console.log('다음달 month++ ', month);
     });
 }
 
 function Calendar({ground_id, timeTable}){
      
     const [date,setDate]= useState(new Date());
-    const [reservationData, setReservationData]=useState('');
-
+    const [reservationData, setReservationData]=useState(null);
+    
     const {year,month,firstDay,lastDate}=initDate(date);
-
-    console.log("initDateMonth",month);
-   
-
+    console.log(year,month,firstDay,lastDate)
+    //console.log('지금', new Date(20,0)); //1920년 1월 
+    //console.log("initDateMonth",month);  
+                                            
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
@@ -229,14 +209,20 @@ function Calendar({ground_id, timeTable}){
     },[]);
 
     useEffect(()=>{
-        if(reservationData !== ''){//reservationData.date와 바뀐 date는 다를꺼란말이야. 그걸 이용해보자.
+        if(reservationData !== null){//reservationData.date와 바뀐 date는 다를꺼란말이야. 그걸 이용해보자.
             // if(reservationData.length === 0){
-            //     console.log('reservationDatareservationData',reservationData);
+            //     console.log('reservationData.length',reservationData.length);
             //     reservationData.use_date = null;
             //     makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
             //     changeCalendarHeader(year,month);
             // }
             // else{
+                console.log('dddddddddddddddddd',reservationData[0]);
+                //console.log('dddddddddddddddddd',reservationData[0].use_date);
+                if(reservationData[0] === undefined){
+                    //console.log('dddddddddddddddddd',reservationData[0]);
+                }
+                //console.log('reservationData.length 0아님',reservationData[0].use_date);
                 const reservationArrayDate = reservationData[0].use_date.split('월');
                 const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
 

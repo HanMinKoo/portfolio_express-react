@@ -4,8 +4,6 @@ const router = express.Router();
 const connectionDB= require('../models/connection_DB.js');
 require('dotenv').config();
 
-
-
 router.get('/',(req,res)=>{
     const dbCon=connectionDB.connectDB();
 
@@ -24,7 +22,8 @@ router.get('/',(req,res)=>{
                 text:"예약 현황이 존재하지 않습니다."
             }
         } 
-        res.render('mypage',{account:req.session.account, reservationList:result});
+        res.json({account:req.session.account, reservationList:result});
+        //res.render('mypage',{account:req.session.account, reservationList:result});
     });
 });
 

@@ -83,3 +83,9 @@ li{
 .choiceInfo{
     border-bottom: 2px solid black;
 }
+
+.js-previousMonth, .js-nextMonth{
+    cursor: pointer;
+
+    padding: 6px 12px;
+}

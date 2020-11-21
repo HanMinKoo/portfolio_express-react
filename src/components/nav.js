@@ -11,7 +11,7 @@ const initJSX = (account) =>{
         navbarAccount=
             <ul className="navbar_account">
                 <li>{account}</li>
-                <li className="js-logout">로그아웃</li>
+                <li className="js-logout"><Link to ='/'>로그아웃</Link></li>
                 <li className="page"><Link to='/mypage'>마이 페이지</Link></li>
             </ul>
             
@@ -20,7 +20,7 @@ const initJSX = (account) =>{
         navbarAccount=
             <ul className="navbar_account">
                 <li>{account}</li>
-                <li className="js-logout">로그아웃</li>
+                <li className="js-logout"><Link to ='/'>로그아웃</Link></li>
                 <li className="page"><Link to='/adminpage'>관리자 페이지</Link></li>
             </ul>
     }
