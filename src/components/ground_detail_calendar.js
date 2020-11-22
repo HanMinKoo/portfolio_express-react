@@ -111,8 +111,14 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
                         li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 가능)`;
 
                         li.addEventListener('click',function(){
-                            const ground_id = reservationData[0].ground_id;
-                            bookReservation(year, month, td.id, tableTime.ground_time, ground_id);
+                            const reservationConfirm = window.confirm('예약을 진행하시겠습니까?');
+
+                            if(reservationConfirm){
+                                const ground_id = reservationData[0].ground_id;
+                                bookReservation(year, month, td.id, tableTime.ground_time, ground_id);
+                            }
+                            else
+                                alert("예약 노노");
                         });
                     }
                     ul.appendChild(li);
@@ -208,39 +214,52 @@ function Calendar({ground_id, timeTable}){
         fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
 
-    useEffect(()=>{
-        if(reservationData !== null){//reservationData.date와 바뀐 date는 다를꺼란말이야. 그걸 이용해보자.
-            // if(reservationData.length === 0){
-            //     console.log('reservationData.length',reservationData.length);
-            //     reservationData.use_date = null;
-            //     makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
-            //     changeCalendarHeader(year,month);
-            // }
-            // else{
-                console.log('dddddddddddddddddd',reservationData[0]);
-                //console.log('dddddddddddddddddd',reservationData[0].use_date);
-                if(reservationData[0] === undefined){
-                    //console.log('dddddddddddddddddd',reservationData[0]);
-                }
-                //console.log('reservationData.length 0아님',reservationData[0].use_date);
-                const reservationArrayDate = reservationData[0].use_date.split('월');
-                const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
+    // useEffect(()=>{
+    //     if(reservationData !== null){
+    //         // if(reservationData.length === 0){
+    //         //     console.log('reservationData.length',reservationData.length);
+    //         //     reservationData.use_date = null;
+    //         //     makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+    //         //     changeCalendarHeader(year,month);
+    //         // }
+    //         // else{
+    //             console.log('dddddddddddddddddd',reservationData[0]);
+    //             //console.log('dddddddddddddddddd',reservationData[0].use_date);
+    //             if(reservationData[0] === undefined){
+    //                 //console.log('dddddddddddddddddd',reservationData[0]);
+    //             }
+    //             //console.log('reservationData.length 0아님',reservationData[0].use_date);
+    //             const reservationArrayDate = reservationData[0].use_date.split('월');
+    //             const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
 
-                //month를 바꿀 때 마다 예약된 정보를 다시 요청해야한다
-                //그런데 기존에 reservationData가 ==='' 아닐때 fetch하게 되면, 기존의 reservationData가 있기 때문에 fetch가안된다 
-                //그래서 월을 바꿨을 때 reservationData 데이터의 년월과 바뀐 date의 년 월을 비교해서
-                //값이 다르다면 그 때 그 년월에 해당하는 데이터를 fetch하고, 값을 불러와 값이 맞다면 makeCleandar를한다. 
-                if(`${reservationArrayDate[0]}월` === changedDate){
-                    console.log('맞지?');
-                    makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
-                    changeCalendarHeader(year,month);
-                }
-                else 
-                    fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
-            //}
-        }
+    //             //month를 바꿀 때 마다 예약된 정보를 다시 요청해야한다
+    //             //그런데 기존에 reservationData가 !=='' 때 fetch하게 되면, 기존의 reservationData가 있기 때문에 fetch가안된다 
+    //             //그래서 월을 바꿨을 때 reservationData 데이터의 년월과 바뀐 date의 년 월을 비교해서
+    //             //값이 다르다면 그 때 그 년월에 해당하는 데이터를 fetch하고, 값을 불러와 값이 맞다면 makeCleandar를한다. 
+    //             if(`${reservationArrayDate[0]}월` === changedDate){
+    //                 console.log('맞지?');
+    //                 makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+    //                 changeCalendarHeader(year,month);
+    //             }
+    //             else 
+    //                 fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+    //         //}
+    //     }
             
-    },[date,reservationData]);
+    // },[date,reservationData]);
+
+    useEffect(()=>{
+        //맨 처음 마운트 되고 모든useEffect가 실행되는데, 동시에 reservationData 의 useEffect 까지 실행 되니 달력이 2번그려지게된다(reservationData를 두번 호출한꼴이됨). 그러니깐 reservationData !== null처리해서 처음 실행되는거막기.
+        if(reservationData !== null){
+            fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+        }
+    },[date]);
+    useEffect(()=>{
+        if(reservationData !== null){
+            makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+            changeCalendarHeader(year,month);
+        }
+    },[reservationData]);
 
     return(
         <>

@@ -1,4 +1,4 @@
-'use stict';
+
 const mysql=require('mysql');
 const express = require('express');
 const connectionDB= require('../models/connection_DB.js');
@@ -82,8 +82,8 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
         });
     }
     /*****운동장 시간 체크 but 비로그인 상태, 즉 비정상적 접근 ******/
-    else if(req.query.groundTime!==undefined && req.session.account===undefined)
-        res.render('exception',{exception:'비정상적 접근입니다. 로그인 후 이용하세요.'}); 
+    // else if(req.query.groundTime!==undefined && req.session.account===undefined)
+    //     res.render('exception',{exception:'비정상적 접근입니다. 로그인 후 이용하세요.'}); 
 });
 
 router.get('/',(req,res)=>{

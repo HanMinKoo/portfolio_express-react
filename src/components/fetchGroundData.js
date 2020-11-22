@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
+
 const fetchGroundInfoAndTimeList= async(id,setGroundInfoAndTimeList)=>{
     let path;
 
@@ -23,6 +25,7 @@ const fetchGroundReservationTimeList = async(id, year,month,setReservationData)=
     const groundReservationList = await fetch(`/reservation/list/?ground_id=${id}&year=${year}&month=${month}`);
     const groundReservationListData = await groundReservationList.json();
     console.log('운동장 예약시간리스트 fetch완료: ',groundReservationListData); 
+
     setReservationData(groundReservationListData[0]);
 }
 const bookReservation = async(year,month,date,ground_time, ground_id)=>{
@@ -37,13 +40,16 @@ const bookReservation = async(year,month,date,ground_time, ground_id)=>{
             ground_id
         }
     }).then((res)=>{
+        alert("예약이 완료되었습니다.");
         console.log(res);
         const {result, message} = res.data;
         console.log('reservationProcess result', result);
         console.log('reservationProcess message:', message);
+        
         // this.setState({account});
 
       }).catch((error)=>{
+        alert("예약 에러!");
        console.log('reservationProcess error: ', error);
       });
 }
