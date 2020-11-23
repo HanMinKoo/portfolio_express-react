@@ -55,31 +55,32 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
         
         dbCon.beginTransaction();  //트랜잭션 적용 시작
         
-        let query=`select * from web_portfolio1.ground_reservation_list 
-        where ground_id=${ground_id} and use_date='${use_date}' and use_time='${req.body.groundTime}'`;
+        // let query=`select * from web_portfolio1.ground_reservation_list 
+        // where ground_id=${ground_id} and use_date='${use_date}' and use_time='${req.body.groundTime}'`;
 
-        dbCon.query(query, (err,reservationInfo)=>{ //운동장 id, 예약날짜, 예약시간이 이미 있는지 조회
-            printQueryResult(dbCon,err,reservationInfo,'ground_reservation_list','reservation process','select');
+        // dbCon.query(query, (err,reservationInfo)=>{ //운동장 id, 예약날짜, 예약시간이 이미 있는지 조회
+        //     printQueryResult(dbCon,err,reservationInfo,'ground_reservation_list','reservation process','select');
         
-            if(reservationInfo[0]===undefined){//예약 정보가 조회 안됐으면(즉, 빈 예약시간이므로 예약 가능)
-                query = `insert into web_portfolio1.ground_reservation_list(user_id,ground_id,use_date,use_time) 
-                values('${req.session.user_id}',${ground_id},'${use_date}','${req.body.groundTime}')`;
+        //     if(reservationInfo[0]===undefined){//예약 정보가 조회 안됐으면(즉, 빈 예약시간이므로 예약 가능)
+        const query = `insert into web_portfolio1.ground_reservation_list(user_id,ground_id,use_date,use_time) 
+        values('${req.session.user_id}',${ground_id},'${use_date}','${req.body.groundTime}')`;
 
-                dbCon.query(query, (err,data)=>{ //예약 정보 삽입 쿼리
-                    printQueryResult(dbCon,err,data,'ground_reservation_list','reservation process','insert');
-                    console.log(data);
-                    if(!err){
-                        dbCon.commit(); //트랜잭션 저장
-                        dbCon.end();
-                        res.json({result:'reservationSuccess', message:'예약 성공'});
-                    }
-                    else
-                        res.json({result:'error', message:'예약 실패. 다시 시도해주세요.'});
-                });
+        dbCon.query(query, (err,data)=>{ //예약 정보 삽입 쿼리
+            printQueryResult(dbCon,err,data,'ground_reservation_list','reservation process','insert');
+            console.log(data);
+            if(!err){
+                dbCon.commit(); //트랜잭션 저장
+                dbCon.end();
+                res.json({result:'reservationSuccess', message:'예약 성공', error:'none'});
             }
-            else //이미 예약된 정보가 있으면 경고문 출력
-                res.json({result:'duplicationReservation', message:'이미 예약된 시간입니다.'});
+            else{
+                res.json({result:'error', message:'예약 실패. 다시 시도해주세요.', error:err});
+            }
         });
+            //}
+            // else //이미 예약된 정보가 있으면 경고문 출력
+            //     res.json({result:'duplicationReservation', message:'이미 예약된 시간입니다.'});
+        //});
     }
     /*****운동장 시간 체크 but 비로그인 상태, 즉 비정상적 접근 ******/
     // else if(req.query.groundTime!==undefined && req.session.account===undefined)

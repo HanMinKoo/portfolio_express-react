@@ -25,6 +25,7 @@ function initChoiceInfoMenu(){
         reservationInfo.classList.add('choiceInfo');
     });
     groundInfo.addEventListener('click', function(){
+        //bookReservation(2020, 11, 27, '10:00 ~ 12:00', 1);
         reservationInfo.classList.remove('choiceInfo');
         groundInfo.classList.add('choiceInfo');
     });

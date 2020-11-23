@@ -40,13 +40,18 @@ const bookReservation = async(year,month,date,ground_time, ground_id)=>{
             ground_id
         }
     }).then((res)=>{
-        alert("예약이 완료되었습니다.");
+        //alert("예약이 완료되었습니다.");
         console.log(res);
-        const {result, message} = res.data;
+        const {result, message, error} = res.data;
+        if(error !== 'none')
+            (error.code === 'ER_DUP_ENTRY') ?alert('이미 예약된 시간입니다.') : alert("예약 실패. 관리자에게 문의하시기 바랍니다.");
+        else{
+            alert("예약이 완료되었습니다.");
+            window.location.reload();
+        }
+        
         console.log('reservationProcess result', result);
         console.log('reservationProcess message:', message);
-        
-        // this.setState({account});
 
       }).catch((error)=>{
         alert("예약 에러!");

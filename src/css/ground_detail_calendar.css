@@ -7,20 +7,17 @@ li{
 }
 .date{
     position: relative;
-    top: -50px;
+    top:-10px;
+    left:-70px;
+    
 }
 .calendar{
     padding: 2% 0%;
-    width:1200px;
-    float: left;
-
 }
 
 .calendarHeader{
     padding: 18px;
     background: black;
-    
-
     text-align: center;
 }
 .calendarHeader span{
@@ -28,21 +25,16 @@ li{
     font-size: 22px;
     
 }
-.calendarTable {
+/*.calendarTable {
     width:1200px;
     
-}
+}*/
 .calendarTable thead tr th, .calendarTable tbody tr td{
     font-size: 18px;
     border:1px solid gray;
+    padding: 1% 0%;
 }
-.calendarTable tbody tr{
 
-}
-.calendarTable tbody tr td{
-    padding:50px 0px;
-    
-}
 .calendarChoiceDate{
     background: #b2d4c0;
 }
@@ -61,7 +53,6 @@ li{
 
 .reservation_wrap{
     width:1200px;
-    border:1px solid black;
     margin: 0 auto;
 }
 .choiceList{
