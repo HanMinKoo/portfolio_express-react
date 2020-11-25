@@ -1,7 +1,5 @@
 *{margin:0; padding:0;} 
 
-a{text-decoration: none; color:black;}
-
 #loginForm{
 
     position: relative;
@@ -26,9 +24,14 @@ a{text-decoration: none; color:black;}
     font-size: 1em; 
     border-radius: 10px;
 }
-#join{
-    color:blue;
-}
+
 #loginResultText{
     color:red;
+}
+
+.joinLink{
+    color:blue;
+}
+.notAccountText{
+    font-size: 14px;
 }

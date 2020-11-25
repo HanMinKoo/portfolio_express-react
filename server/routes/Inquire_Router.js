@@ -6,12 +6,9 @@ const inquireDB= require('../models/Inquire_DB');
 const router = express.Router();
 require('dotenv').config();
 
-// router.post('/',(req,res)=>{
-//     return ((req.session.account!==undefined)? res.render('inquire',{account:req.session.account}) :res.render('inquire',{account:''}));
-// });
+
 router.post('/process', (req, res, next)=> {
-    //console.log(req);
-    
+
     let userName=req.body.userName;
     let phoneNumber=req.body.phoneNumber;
     let content=req.body.content;

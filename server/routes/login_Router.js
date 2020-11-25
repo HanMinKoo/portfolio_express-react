@@ -6,7 +6,6 @@ const loginDB = require('../models/login_DB.js');
 
 router.post('/process',(req,res)=>{
     console.log("req header좀 보자꾸나", req.headers);
-    //console.log(req.body);
     let password;
 
     crypto.pbkdf2(req.body.password,'m9m9',8080,64,'sha512',(err,key)=>{
@@ -29,11 +28,8 @@ router.post('/process',(req,res)=>{
             req.session.account=account;
             req.session.user_id=user_id;
             
-            //console.log("adasdadasdasdasd  ",req);
-            //console.log("req.sessionID",req.sessionID);
             req.session.save(()=>{
                 console.log('session save success');
-                //res.cookie('sessionID',req.sessionID,{maxAge:6000000,httpOnly:true});
                 res.json({loginResult:'success'});
             });  
         }

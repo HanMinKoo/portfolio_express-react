@@ -33,7 +33,7 @@ function initChoiceInfoMenu(){
 
 
 function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
-    console.log('makeCalendar');
+    //console.log('makeCalendar');
     let dayCnt=0; //1일이 시작하는 요일 계산하기 위해 선언한 변수
     let weekLine=0; //7이 될때 마다 tr생성
     let date=1; //날짜
@@ -176,14 +176,14 @@ function changeYearMonth(year,month,setDate){
     
     previousMonth.addEventListener('click',()=>{
         const tbody=document.querySelector('.js-tbodyDate');
-        console.log('이전달 클릭');
+        //console.log('이전달 클릭');
         while(tbody.hasChildNodes()){
             tbody.removeChild(tbody.firstChild);
         }
         month -= 2;
-        console.log('이전달 month -2', month);
+        //console.log('이전달 month -2', month);
         setDate(new Date(year,month++));
-        console.log('이전달 month ++', month);
+        //console.log('이전달 month ++', month);
     });
 
     nextMonth.addEventListener('click',(event)=>{   
@@ -192,9 +192,9 @@ function changeYearMonth(year,month,setDate){
         while(tbody.hasChildNodes()){
             tbody.removeChild(tbody.firstChild);
         }
-        console.log('다음달 month ', month);
+        //console.log('다음달 month ', month);
         setDate(new Date(year,month++));
-        console.log('다음달 month++ ', month);
+        //console.log('다음달 month++ ', month);
     });
 }
 
@@ -204,7 +204,7 @@ function Calendar({ground_id, timeTable}){
     const [reservationData, setReservationData]=useState(null);
     
     const {year,month,firstDay,lastDate}=initDate(date);
-    console.log(year,month,firstDay,lastDate)
+    //console.log(year,month,firstDay,lastDate)
     //console.log('지금', new Date(20,0)); //1920년 1월 
     //console.log("initDateMonth",month);  
                                             

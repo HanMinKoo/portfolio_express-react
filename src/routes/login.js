@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import '../css/login.css';
 
 class Login extends Component{
@@ -17,15 +18,13 @@ class Login extends Component{
             withCredentials:true
         })
         .then((res)=>{
-            console.log("진짜?",res);
             if(res.data.loginResult==="fail")
                 this.setState({loginResultText:'아이디 또는 비밀번호를 확인해주세요.'});
             else if(res.data.loginResult==="success")
                 window.location.href="/";
-            
         })
         .catch((error)=>{
-            console.log(error);
+            console.log('login Error',error);
         });
     }
 
@@ -50,9 +49,6 @@ class Login extends Component{
         });
     }
     render(){
-        
-        //if(this.state.redirect)
-            //return <Redirect to='/' test="zzzz"/>;
         return(    
             <form id="loginForm" name="login_form" onSubmit={this.handleSubmit}>
                 <h1 >로그인</h1>
@@ -63,6 +59,7 @@ class Login extends Component{
                 <div id="loginResultText">{this.state.loginResultText}</div> 
 
                 <input type="submit" value="로그인" id="loginForm_btn" className="loginForm_input"  ></input>
+                <strong className="notAccountText">계정이 없으신 경우 <Link to="/join" className="joinLink">회원가입 </Link>을 눌러주세요.</strong>
             </form>
         );
     }

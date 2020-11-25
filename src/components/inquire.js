@@ -9,7 +9,7 @@ const submitForm = (userName, phoneNumber, content, setInquire) =>{
         data:{userName, phoneNumber, content},
     }).then((res)=>{
         //alert('TEST');
-        console.log("success inquire", res);
+        //console.log("success inquire", res);
         setInquire(true);
     }).catch( error => console.log('inquire error', error));
 

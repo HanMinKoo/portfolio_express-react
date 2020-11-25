@@ -1,25 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-function updateReservationState(changeState,id){
+function deleteReservation(id){
     const tableBody = document.querySelector('tbody');
     const data={
-        state:changeState,
         id
     };
     axios({
-        method:'post',
+        method:'delete',
         url:'/reservationstate',
-        data: data
+        data
     }).then((res)=>{
         const trId = document.getElementById(id);
-        console.log(tableBody);
-        console.log(trId);
-        if(changeState === 'cancel')
-            
-            tableBody.removeChild(trId);
-        
-
+        tableBody.removeChild(trId);
+        alert('삭제되었습니다.');
     });
 }
 
@@ -47,7 +41,7 @@ function initJSX(myReservationList){
                     <td>{reservationList[i].name}</td>
                     <td>{reservationList[i].use_date} &nbsp; {reservationList[i].use_time}</td>
                     <td>{reservationList[i].state}</td>
-                    <td><button type='button' onClick={()=>updateReservationState('cancel', reservationList[i].id)}>취소</button></td>
+                    <td><button type='button' onClick={()=>deleteReservation(reservationList[i].id)}>취소</button></td>
                 </tr>
             
         

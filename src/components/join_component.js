@@ -85,7 +85,7 @@ class Join_component extends Component{
             }
             else{
                 alert('회원가입 실패');
-                console.log('회원가입 실패 에러메시지: ',res.data.message);
+                //console.log('회원가입 실패 에러메시지: ',res.data.message);
             }
            
 

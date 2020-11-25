@@ -26,7 +26,7 @@ router.post('/checkduplication',(req,res)=>{
         dbCon.end();
     });
 });
-//201107 회원가입 코드 비구조화 할당으로 바꾸고 검토안해봄.
+
 router.post('/progress', (req,res)=>{
     console.log('회원가입 req body:',req.body);
     const {userName, userEmail, account, userPassword1} = req.body;

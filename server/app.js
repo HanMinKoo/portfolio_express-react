@@ -27,15 +27,10 @@ const sessionStore= new mysqlStore
   database	:process.env.DB_DATABASE,
 });
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views')); 
-// app.set('view engine', 'ejs');
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()); 
-// app.use(express.static(path.join(__dirname, 'public')));
-//app.use(cors());
+
 
 app.use(session({  
   secret: process.env.SESSION_SECRET, 
@@ -45,7 +40,6 @@ app.use(session({
   cookie:{maxAge:6000000} ///1000분의 1초
 }));
 app.use(cors({
-  //origin: "http://localhost:8004",
   credentials: true
 }));
 

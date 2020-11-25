@@ -23,7 +23,7 @@ router.get('/',(req,res)=>{
             }
         } 
         res.json({account:req.session.account, reservationList:result});
-        //res.render('mypage',{account:req.session.account, reservationList:result});
+
     });
 });
 

@@ -23,7 +23,6 @@ router.get('/',(req,res)=>{
             }
         } 
         res.json({reservationList:result});
-        //res.render('adminpage',{account:req.session.account, reservationList:result});
     });
 
 });
