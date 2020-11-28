@@ -12,15 +12,17 @@ const initJSX = (groundListData,groundImgData) => {
     if(groundListData.groundList.length!==0){ 
         for(let i=0; i<groundListData.groundList.length; i++){
    
+            //console.log('groundListData.groundList[i];',groundListData.groundList[i]);
             const {main_name, directory_path,extension}=groundImgData.groundImg[i];
             const {name, location, use_time, price}= groundListData.groundList[i];
+            
 
             const imgSrc=`../images/groundImg/${directory_path}/${main_name}.${extension}`;
             const path= `/ground/detail?number=${groundListData.groundList[i].id}`
         
             jsx[i]=
 
-                <div className="groundList_content">
+                <div className="groundList_content" key={i}>
                     <Link to={path}>
                         <img className="groundImg" src={imgSrc}/>
                         <ul className="groundInfo_NameLocation">
@@ -43,7 +45,7 @@ const Ground_List = () =>{
     
     const [groundListData, setGroundList]= useState('');
     const [groundImgData, setGroundImg]=useState('');
-    console.log(groundListData);
+
     useEffect( () =>{
 
         fetchGroundImg(0,setGroundImg);

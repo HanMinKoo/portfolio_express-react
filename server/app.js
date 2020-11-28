@@ -1,7 +1,7 @@
 /*****모듈 변수 설정*****/
 const createError = require('http-errors');
 const express = require('express');
-//const path = require('path');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mysqlStore= require('express-mysql-session')(session);
@@ -15,6 +15,7 @@ const reservateionRouter=require('./routes/reservation_RouterAndDB.js');
 const myPageRouter=require('./routes/mypage_RouterAndDB.js');
 const adminPageRouter=require('./routes/admingpage_RouterAndDB.js');
 const reservationStateRouter=require('./routes/reservationState_RouterAndDB');
+const groundRouter = require('./routes/ground_Router');
 
 require('dotenv').config();
 const app = express();
@@ -26,7 +27,7 @@ const sessionStore= new mysqlStore
   port	:process.env.DB_PORT,
   database	:process.env.DB_DATABASE,
 });
-
+app.use(express.static(path.join(__dirname, '../build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser()); 
@@ -43,9 +44,12 @@ app.use(cors({
   credentials: true
 }));
 
-
-app.get('/api/getsession',(req,res,next)=>{
+app.get('/',(req,res)=>{
+  res.send(express.static(path.join(__dirname, '../../build/index.html')));
+});
+app.get('/session',(req,res,next)=>{
   console.log(req.session);
+  
   return ((req.session.account!==undefined)? res.json({account:req.session.account, message:'FOUND ACCOUNT'}) :res.json({account:'', message:'NOT FOUND ACCOUNT'}));
 //db에 session이 저장되어있으면 서버 껐다켜도 세션 안풀림. 
 });
@@ -62,6 +66,7 @@ app.use('/reservation',reservateionRouter);
 app.use('/mypage',myPageRouter);
 app.use('/adminpage',adminPageRouter);
 app.use('/reservationstate',reservationStateRouter);
+app.use('/ground',groundRouter);
 
 
 

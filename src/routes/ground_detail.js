@@ -16,7 +16,7 @@ const Ground_Detail = ({location,match}) => {
 
   let jsx='';
 
-  console.log(`groundInfo:${groundInfo} , groundImg: ${groundImg}`);
+  //console.log(`groundInfo:${groundInfo} , groundImg: ${groundImg}`);
 
   useEffect(()=>{
    
@@ -31,12 +31,12 @@ const Ground_Detail = ({location,match}) => {
       <Calendar ground_id={id} timeTable={groundInfo.groundTimeTable}></Calendar>
     </>
   }
-
-    //로그인 사용자가 아니면 fail 
-  else if(groundInfo.result === 'fail'){
-    alert("로그인 사용자만 이용할 수 있습니다.");
-    return <Redirect to='/login' />;
+  else if(groundInfo === 'notLogin'){
+      alert("로그인 사용자만 이용할 수 있습니다.");
+      return <Redirect to='/login' />;
   }
+
+  
   return(
     <>
       {jsx}

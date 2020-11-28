@@ -28,7 +28,7 @@ function initJSX(myReservationList){
     let jsx = [];
     const {account, reservationList} = myReservationList; 
     
-    console.log('mypage data',reservationList);
+    //console.log('mypage data',reservationList);
 
     for(let i = 0; i<reservationList.length; i++){   
         if(reservationList[0].name === undefined)
@@ -36,7 +36,7 @@ function initJSX(myReservationList){
         else{
             jsx[i]=
             
-                <tr id = {reservationList[i].id}>
+                <tr id = {reservationList[i].id} key={reservationList[i].id}>
                     <td>{reservationList[i].id}</td>
                     <td>{reservationList[i].name}</td>
                     <td>{reservationList[i].use_date} &nbsp; {reservationList[i].use_time}</td>

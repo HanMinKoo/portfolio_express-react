@@ -26,7 +26,8 @@ function getImgList(groundImgData){
 const initGroundInfo = (groundInfoData,groundImgData) =>{
     //console.log('initGroundInfo');
     const {name,use_time,price,location, introduce}=groundInfoData;
-    //console.log('introuduce',introduce)
+
+
     const {main_name,directory_path,extension}=groundImgData.groundImg[0];
     const mainImgPath =`../images/groundImg/${directory_path}/${main_name}.${extension}`;
 

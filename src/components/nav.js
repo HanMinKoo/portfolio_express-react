@@ -37,12 +37,12 @@ const initJSX = (account) =>{
 function fetchloginInfo(setAccount){
     axios({
             method:'get',
-            url:'/api/getsession'
+            url:'/session'
         })
         .then((res)=>{
-            const {account, message} = res.data;
-            console.log("account", account);
-            console.log('session call: ',message);
+            const {account} = res.data;
+            //console.log("account", account);
+            //console.log('session call: ',message);
             setAccount(account);
         }).catch((error)=>{
             console.log('session call error: ', error);
@@ -54,7 +54,7 @@ function processLogout(setAccount){
         url:'/logout'
     })
     .then((res)=>{
-        console.log('res: ',res);
+        //console.log('res: ',res);
         const {result} = res.data;
         setAccount(result);
     }).catch((error)=>{

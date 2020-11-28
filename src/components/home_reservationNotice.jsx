@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '../css/home.css';
 import bgImage_home1 from '../images/home_reservationNoticeImage.jpg'
 import  {Link} from "react-router-dom";

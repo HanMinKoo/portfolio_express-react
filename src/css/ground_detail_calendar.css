@@ -4,6 +4,7 @@ li{
 
 .bookable, .unbookable{
     margin-bottom: 20px;
+    font-size: 20px;
 }
 .date{
     position: relative;
@@ -25,14 +26,14 @@ li{
     font-size: 22px;
     
 }
-/*.calendarTable {
-    width:1200px;
-    
-}*/
+
 .calendarTable thead tr th, .calendarTable tbody tr td{
     font-size: 18px;
     border:1px solid gray;
     padding: 1% 0%;
+}
+.calendarTable tbody tr td{
+    width:171px; /*1200/7*/
 }
 
 .calendarChoiceDate{
@@ -46,6 +47,8 @@ li{
     border-bottom: 3px solid gray;
     cursor: pointer;
 }
+
+
 
 .clear{
     clear: both;

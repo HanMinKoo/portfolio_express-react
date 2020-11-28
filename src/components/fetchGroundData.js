@@ -1,22 +1,22 @@
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
+
 
 const fetchGroundInfoAndTimeList= async(id,setGroundInfoAndTimeList)=>{
-    let path;
 
-    (id===0) ? path='/reservation' :path=`/reservation/?number=${id}`;
-    const groundInfo = await fetch(path);
+    //console.log('idididid', id)
+    const groundInfo = await fetch(`/ground/info-reservationlist/${id}`,{method:'get'});
     const groundInfoData = await groundInfo.json();
-   
-    //console.log('groundInfoData',groundInfoData);
-    
+    //console.log('groundInfoDatagroundInfoDatagroundInfoData',groundInfoData);
+    if(groundInfoData.result === 'fail'){
+        setGroundInfoAndTimeList('notLogin');
+        return;
+    }
     setGroundInfoAndTimeList(groundInfoData);
 }
 
 const fetchGroundImg = async(id,setGroundImg)=>{
-    const groundImg = await fetch(`/reservation/img/?number=${id}`);
+    const groundImg = await fetch(`/ground/img/${id}`,{method: 'get'});
     const groundImgData = await groundImg.json();
-    //console.log('체크',groundImgData);
     setGroundImg(groundImgData);
 }
 

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '../css/home.css';
 import bgImage_home from '../images/home_reviewNoticeImage.jpg';
-import  {Link} from "react-router-dom";
+
 
 
 

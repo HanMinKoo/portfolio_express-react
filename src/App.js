@@ -16,7 +16,7 @@ class App extends Component{
   render(){
     const title = document.querySelector("title");
     title.innerText="React Portfolio";
-    console.log("이게 두번인가");
+
     return(
       <>
      

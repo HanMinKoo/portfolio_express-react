@@ -18,17 +18,17 @@ function makeUnBookable(timeTable, ul, count){
 //예약, 운동장 정보 등 메뉴 선택이벤트 활성화
 function initChoiceInfoMenu(){
     const reservationInfo = document.querySelector('.js-choiceReservationInfo');
-    const groundInfo = document.querySelector('.js-choiceGroundInfo');
+    //const groundInfo = document.querySelector('.js-choiceGroundInfo');
 
     reservationInfo.addEventListener('click', function(){
-        groundInfo.classList.remove('choiceInfo');
+        //groundInfo.classList.remove('choiceInfo');
         reservationInfo.classList.add('choiceInfo');
     });
-    groundInfo.addEventListener('click', function(){
-        //bookReservation(2020, 11, 27, '10:00 ~ 12:00', 1);
-        reservationInfo.classList.remove('choiceInfo');
-        groundInfo.classList.add('choiceInfo');
-    });
+    // groundInfo.addEventListener('click', function(){
+    //     //bookReservation(2020, 11, 27, '10:00 ~ 12:00', 1);
+    //     reservationInfo.classList.remove('choiceInfo');
+    //     groundInfo.classList.add('choiceInfo');
+    // });
 }
 
 
@@ -188,7 +188,7 @@ function changeYearMonth(year,month,setDate){
 
     nextMonth.addEventListener('click',(event)=>{   
         const tbody=document.querySelector('.js-tbodyDate');
-        console.log('이후달 클릭');
+        //console.log('이후달 클릭');
         while(tbody.hasChildNodes()){
             tbody.removeChild(tbody.firstChild);
         }
@@ -215,40 +215,6 @@ function Calendar({ground_id, timeTable}){
         fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
 
-    // useEffect(()=>{
-    //     if(reservationData !== null){
-    //         // if(reservationData.length === 0){
-    //         //     console.log('reservationData.length',reservationData.length);
-    //         //     reservationData.use_date = null;
-    //         //     makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
-    //         //     changeCalendarHeader(year,month);
-    //         // }
-    //         // else{
-    //             console.log('dddddddddddddddddd',reservationData[0]);
-    //             //console.log('dddddddddddddddddd',reservationData[0].use_date);
-    //             if(reservationData[0] === undefined){
-    //                 //console.log('dddddddddddddddddd',reservationData[0]);
-    //             }
-    //             //console.log('reservationData.length 0아님',reservationData[0].use_date);
-    //             const reservationArrayDate = reservationData[0].use_date.split('월');
-    //             const changedDate = `${date.getFullYear()}년${date.getMonth()+1}월`;
-
-    //             //month를 바꿀 때 마다 예약된 정보를 다시 요청해야한다
-    //             //그런데 기존에 reservationData가 !=='' 때 fetch하게 되면, 기존의 reservationData가 있기 때문에 fetch가안된다 
-    //             //그래서 월을 바꿨을 때 reservationData 데이터의 년월과 바뀐 date의 년 월을 비교해서
-    //             //값이 다르다면 그 때 그 년월에 해당하는 데이터를 fetch하고, 값을 불러와 값이 맞다면 makeCleandar를한다. 
-    //             if(`${reservationArrayDate[0]}월` === changedDate){
-    //                 console.log('맞지?');
-    //                 makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
-    //                 changeCalendarHeader(year,month);
-    //             }
-    //             else 
-    //                 fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
-    //         //}
-    //     }
-            
-    // },[date,reservationData]);
-
     useEffect(()=>{
         //맨 처음 마운트 되고 모든useEffect가 실행되는데, 동시에 reservationData 의 useEffect 까지 실행 되니 달력이 2번그려지게된다(reservationData를 두번 호출한꼴이됨). 그러니깐 reservationData !== null처리해서 처음 실행되는거막기.
         if(reservationData !== null){
@@ -266,7 +232,7 @@ function Calendar({ground_id, timeTable}){
         <>
             <ul className="choiceList">
                 <li className="js-choiceReservationInfo">예약</li>
-                <li className="js-choiceGroundInfo">운동장 정보</li>
+                
             </ul>
             <div className="reservation_wrap">
                 <div className='calendar'>

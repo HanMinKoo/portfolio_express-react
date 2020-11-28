@@ -62,11 +62,11 @@ function Inquire(){
                 <strong >운동장 예약관련 문의사항이 있으신 분은 아래의 작성폼을 작성해주시기 바랍니다.</strong>
             </div>
             <form onSubmit={(e)=>checkInquireForm(e, nameInput, phoneNumber, formContent,formCheckBox, setInquire)} method="post" className="inquireForm" name="inquire_Form">
-                <label for="customerName">고객명</label>
-                <input type="text" name="userName" id="customerName" className="formCustomerName" maxlength="10" ref={nameInput}/>
-                <label for="phonNumber">연락처</label>
-                <input type="text" name="phoneNumber" id="phonNumber" className="formPhoneNumber" maxlength="15" ref={phoneNumber}/>
-                <label for="formContent">내용</label>
+                <label htmlFor="customerName">고객명</label>
+                <input type="text" name="userName" id="customerName" className="formCustomerName" maxLength="10" ref={nameInput}/>
+                <label htmlFor="phonNumber">연락처</label>
+                <input type="text" name="phoneNumber" id="phonNumber" className="formPhoneNumber" maxLength="15" ref={phoneNumber}/>
+                <label htmlFor="formContent">내용</label>
                 <input type="text" name="content" id="formContent" className="formContent" maxLength="998" ref={formContent}/>
                
                 <div className="inquireFormPrivacy">
@@ -82,11 +82,13 @@ function Inquire(){
                                 <th>보유기간</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td>휴대폰 번호</td>
-                            <td>고객 문의 및 상담 요청에 대한 회신</td>
-                            <td>문의 접수 후 1년 보관</td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>휴대폰 번호</td>
+                                <td>고객 문의 및 상담 요청에 대한 회신</td>
+                                <td>문의 접수 후 1년 보관</td>
+                            </tr>
+                        </tbody>
                     </table>
                     <p className="detailTextPrivacy">
                         <span>자세한 내용은  
