@@ -34,10 +34,10 @@ router.get('/info-reservationlist/:id',(req,res)=>{
 
 
     //로그인이 되어있지 않은 상태에서 특정 운동장을 조회할 경우
-    if(id > 0 && (req.session.account === undefined)) {
-        res.json({result:'fail', message:'로그인 사용자만 이용할 수 있습니다.'});
-        return;
-    }
+    // if(id > 0 && (req.session.account === undefined)) {
+    //     res.json({result:'fail', message:'로그인 사용자만 이용할 수 있습니다.'});
+    //     return;
+    // }
     
     const dbCon=connectionDB.connectDB();
 

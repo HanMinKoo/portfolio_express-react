@@ -32,13 +32,14 @@ function initChoiceInfoMenu(){
 }
 
 
-function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
+function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,ground_id){
     //console.log('makeCalendar');
     let dayCnt=0; //1일이 시작하는 요일 계산하기 위해 선언한 변수
     let weekLine=0; //7이 될때 마다 tr생성
     let date=1; //날짜
     let tr;
-
+    console.log('reservationData',reservationData);
+    console.log('timetable',timeTable);
 
     const currentDate= new Date();
     //console.log('currentDate',currentDate.getDate());
@@ -115,8 +116,9 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable){
                             const reservationConfirm = window.confirm('예약을 진행하시겠습니까?');
 
                             if(reservationConfirm){
-                                const ground_id = reservationData[0].ground_id;
-                                bookReservation(year, month, td.id, tableTime.ground_time, ground_id);
+                                
+                                const groundId = ground_id;
+                                bookReservation(year, month, td.id, tableTime.ground_time, groundId);
                             }
                             else
                                 alert("예약 노노");
@@ -223,7 +225,7 @@ function Calendar({ground_id, timeTable}){
     },[date]);
     useEffect(()=>{
         if(reservationData !== null){
-            makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable);
+            makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,ground_id);
             changeCalendarHeader(year,month);
         }
     },[reservationData]);

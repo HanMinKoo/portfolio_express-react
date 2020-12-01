@@ -44,6 +44,9 @@ router.get('/list',(req,res)=>{
 router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
     console.log("정말정말??", req.body);
 
+    if(req.session.account === undefined)
+        res.json({result:'not login', message:'로그인 사용자만 이용할 수 있습니다.'});
+    
     //const dbCon=connectionDB.connectDB();
 
     const ground_id=req.body.ground_id;
@@ -86,44 +89,5 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
     // else if(req.query.groundTime!==undefined && req.session.account===undefined)
     //     res.render('exception',{exception:'비정상적 접근입니다. 로그인 후 이용하세요.'}); 
 });
-
-// router.get('/',(req,res)=>{
-//     console.log("query=", req.query);
-//     console.log("session=", req.session);
-    
-//     const dbCon=connectionDB.connectDB();
-
-//     let query= `select * from web_portfolio1.ground`;
-
-//     dbCon.query(query, (err,groundInfo)=>{
-//         if(err)
-//             console.log('table name:ground / Error: select query Error : ',err);
-//         else
-//             console.log('table name:ground / Result: select query Success');
-                    
-//         /*****운동장 리스트 페이지*****/
-//         if(req.query.number===undefined)
-//             res.json({groundList:groundInfo});  
-
-//         /*****운동장 상세 페이지*****/
-//         else{
-//             if(req.session.account===undefined) //만약 로그인이 안되어있으면, 운동장 상세 예약 현황 못봄
-//                 res.json({result:'fail', message:'로그인 사용자만 이용할 수 있습니다.'});    
-//             else{
-//                 query=`select ground_time from web_portfolio1.ground_time_list where ground_id=${groundInfo[req.query.number-1].id}`;
-                
-//                 dbCon.query(query, (err,data2)=>{ //ground_id에 맞는 timetable DB불러오기
-//                     if(err)
-//                         console.log('table name:ground_time_list / Error: select query Error : ',err);
-//                     else
-//                         console.log('table name:ground_timetable / Result: query Success');
-               
-
-//                     res.json({groundList:groundInfo[req.query.number-1], groundTimeTable:data2, reservationList:''});
-//                 });
-//             } 
-//         }              
-//     });
-//  });
 
  module.exports=router;
