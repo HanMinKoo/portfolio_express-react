@@ -109,4 +109,4 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 }
 
 @media screen and (max-width:650px){.navbar_menu li a{padding: 8px 200px;}}
-@media screen and (max-width:550px){.navbar_menu li a{padding: 8px 170px;}}
+@media screen and (max-width:550px){.navbar_menu li a{padding: 8px 100px;}}
