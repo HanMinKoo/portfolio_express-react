@@ -69,15 +69,15 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
     cursor: pointer;
 }
 
-@media screen and (max-width:768px){
+@media screen and (max-width:800px){
     .navbar{
         flex-direction: column;
         align-items: flex-start;
     }
     .navbar_menu{
         display: none;
-        width: 100%;
         flex-direction: column;
+        width: 100%;
     }
     .navbar_menu li{
         width: 100%;
@@ -85,10 +85,10 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
         border-bottom: 3px solid black;;
     }
     .navbar_account{
+        margin-top: 3%;
         display: none;
         width:100%;
         justify-content: center;
-        
     }
     .navbar_hamburgerBtn{
         display: block;
@@ -96,7 +96,6 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
         cursor: pointer;
         right: 30px;
         top:15px; 
-        
     }
     .navbar_hamburgerBtn img{
         width:35px;

@@ -12,7 +12,6 @@ body{margin:0;}
 .reservationNotice_content{
     text-align: center;
     height:600px;
-    
 }
 
 .reservation_text{
@@ -42,24 +41,39 @@ body{margin:0;}
 }
 
 .reviewNotice_wrap{
-
-    width:1200px;
-    margin:0 auto;
+    display: flex;
+    justify-content: center;
     margin-top: 7%;
-    height:400px;
 }
 .reviewImage{
     width:600px;
     height: 400px;
-    float:left;
 }
 .reviewText{
-    float:left;
     margin-left: 5%;
-    width:500px;
-    height:400px;
+   
+
     list-style: none;
 }
 .reviewText li{
     margin:5% 0px 3% 0%;
+}
+
+@media screen and (max-width:800px){
+    .reviewNotice_wrap{
+        flex-direction: column;  
+    }
+    .reviewImage{
+        width: 100%;
+        min-width: 550px;
+        height: 100%;
+    }
+    .reviewText{
+        margin:7% 0%;
+        text-align: center;
+    }
+    .reservationNotice_content>h1{ /* >  요 표시가 저 클래스의 직속 자식 중 h1을 뜻함 */
+    /*만약 <li><h1>이렇게 되어있는거에는 영향을 안줌</h1></li>*/
+        margin-top: 7%;
+    }
 }
