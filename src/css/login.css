@@ -1,15 +1,15 @@
 *{margin:0; padding:0;} 
 
-#loginForm{
-
-    position: relative;
-    top:150px;
-    text-align: center;
-
+.loginForm{
     width:300px;
     margin: 0 auto;
-    margin-bottom: 15%;
-    
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+.loginForm > .loginHeaderText
+{
+    padding: 5%;
 }
 .loginForm_input{
     width:100%;
@@ -18,14 +18,16 @@
     display:block;
 }
 
-#loginForm_btn{
-    background-color:  rgb(34, 143, 83);
+.loginForm_btn{
+    background-color: #2ecc71;
+    border-color: #2ecc71;
     color:white;
-    font-size: 1em; 
+    font-size: 1.2em;
+    font-weight: bold; 
     border-radius: 10px;
 }
 
-#loginResultText{
+.loginResultText{
     color:red;
 }
 
@@ -35,3 +37,8 @@
 .notAccountText{
     font-size: 14px;
 }
+
+@media screen and (max-width:1100px){.loginForm{margin-bottom: 15%;}}
+@media screen and (max-width:900px){.loginForm{margin-bottom: 25%;}}
+@media screen and (max-width:700px){.loginForm{margin-bottom: 32%;}}
+@media screen and (max-width:600px){.loginForm{margin-bottom: 40%;}}

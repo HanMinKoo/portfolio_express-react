@@ -1,5 +1,8 @@
-body{margin:0;}
-
+*{margin:0; padding:0;}
+.reservationNotice_wrap{
+ 
+    height: 800px;
+}
 .reservationImage{
     position: absolute;
     top:0;
@@ -9,16 +12,18 @@ body{margin:0;}
     filter: brightness(50%); 
     z-index: -1;
 }
-.reservationNotice_content{
-    text-align: center;
-    height:600px;
-}
+
 
 .reservation_text{
+    text-align: center;
     color:white;
-    font-size:23px;
     margin-top:200px;
-    margin-bottom: 3%;
+}
+.reservation_text>li{
+    font-size:23px;
+}
+.reservation_text>h1{
+    margin-top: 3%;
 }
 
 .reservationMoveBtn{
@@ -41,9 +46,9 @@ body{margin:0;}
 }
 
 .reviewNotice_wrap{
+    margin-top: -170px;
     display: flex;
     justify-content: center;
-    margin-top: 7%;
 }
 .reviewImage{
     width:600px;
@@ -51,8 +56,6 @@ body{margin:0;}
 }
 .reviewText{
     margin-left: 5%;
-   
-
     list-style: none;
 }
 .reviewText li{

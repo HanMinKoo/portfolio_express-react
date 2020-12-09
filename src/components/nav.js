@@ -100,7 +100,6 @@ const Nav = () =>{
     });
     return(
         <>
-            <div className="navbar_topbox"></div>
             <nav className="navbar">
                 <div className="navbar_logo">
                     <Link to="/">M9SOCCER</Link>
@@ -111,7 +110,7 @@ const Nav = () =>{
                     <li><Link to="/inquire">문의하기</Link></li>
                 </ul>
                 {loginInfojsx}
-                <li class="navbar_hamburgerBtn js-navbar_hamburgerBtn">
+                <li className="navbar_hamburgerBtn js-navbar_hamburgerBtn">
                     <img src={hamburgerBtn}></img>
                 </li>
             </nav>

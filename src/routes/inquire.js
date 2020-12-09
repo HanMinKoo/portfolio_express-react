@@ -71,7 +71,7 @@ function Inquire(){
                
                 <div className="inquireFormPrivacy">
                     <h2>개인정보 수집 및 이용동의에 대한 안내</h2>
-                    <strong>필요 수집, 이용 항목(문의 접수와 처리, 회신을 위한 최소한의 개인정보 동의가 필요합니다.)</strong>
+                    <h4>필요 수집, 이용 항목(문의 접수와 처리, 회신을 위한 최소한의 개인정보 동의가 필요합니다.)</h4>
 
                 
                     <table className="inquireFormPrivacyTable">

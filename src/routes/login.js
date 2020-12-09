@@ -50,15 +50,15 @@ class Login extends Component{
     }
     render(){
         return(    
-            <form id="loginForm" name="login_form" onSubmit={this.handleSubmit}>
-                <h1 >로그인</h1>
+            <form className="loginForm" name="login_form" onSubmit={this.handleSubmit}>
+                <h1 className="loginHeaderText">로그인</h1>
                 <input name="account" type="text" className="loginForm_input" placeholder="아이디" required/> 
                 {"\n"}    
                 <input name="password" type="password" className="loginForm_input" placeholder="비밀번호" required/>
                 
-                <div id="loginResultText">{this.state.loginResultText}</div> 
+                <div className="loginResultText">{this.state.loginResultText}</div> 
 
-                <input type="submit" value="로그인" id="loginForm_btn" className="loginForm_input"  ></input>
+                <input type="submit" value="로그인" className="loginForm_input loginForm_btn"  ></input>
                 <strong className="notAccountText">계정이 없으신 경우 <Link to="/join" className="joinLink">회원가입 </Link>을 눌러주세요.</strong>
             </form>
         );

@@ -2,7 +2,7 @@
 
 
 .inquire_wrap{
-    width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
     margin-top: 5%;
 }
@@ -10,6 +10,9 @@
 .inquireInfoText{
     text-align: center;
     margin-bottom: 5%;
+}
+.inquireInfoText>h1{
+    margin-bottom: 3%;
 }
 
 .formCustomerName, .formPhoneNumber, .formContent{
@@ -22,11 +25,10 @@
     margin-top: 5%;
 }
 
-.inquireFormPrivacyTable thead th{
-    
-
+.inquireFormPrivacyTable{
+    max-width: 1200px;
+    margin-top: 2%;
 }
-
 .inquireFormPrivacyTable tr td, .inquireFormPrivacyTable tr th {
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
@@ -46,11 +48,23 @@
 
 .FormBtn input{
     margin: 0 auto;
+    margin-top: 5%;
     width: 250px;
     height: 70px;
-    font-size: large;
+    font-weight: bold;
+    font-size: 20px;
     color: white;
     background-color: #2ecc71;
+    border-color:  #2ecc71;
     border-radius: 12px;
     cursor: pointer;
+}
+
+@media screen and (max-width:1200px){
+    .inquire_wrap{
+        width: 90%;
+    }
+    .inquireFormPrivacyTable{
+        width: 100%;
+    }
 }

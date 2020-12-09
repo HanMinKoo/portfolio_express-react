@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../css/join.css';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 class Join_component extends Component{
     state={
@@ -146,26 +146,26 @@ class Join_component extends Component{
             return <Redirect to='/'/>;
         return(
             
-            <div id="join_wrap">
+            <div className="join_wrap">
                 
-                <h1 id="home"><a href="/">M9SOCCER</a></h1>
-                <form id="joinForm" name="join_form" onSubmit={this.handleSubmit}>
+                <h1 className="homeText"><Link to="/">M9SOCCER</Link></h1>
+                <form className="joinForm" name="join_form" onSubmit={this.handleSubmit}>
                     <label>이름</label>
                     <input type="text" name="userName"></input>
                 
                     <label>이메일</label>
                     <button type="button" onClick={()=>this.checkDuplication('email')} id="duplicationChk">중복체크</button>
-                    <span id="duplicateCheckEmail" className="js-duplicateTextSpanEmail"></span>
+                    <span className="js-duplicateTextSpanEmail"></span>
                 
-                    <input type="email" name="userEmail" id="userEmail" className="js-userEmail" ></input>
+                    <input type="email" name="userEmail" className="js-userEmail" ></input>
 
                     
                     <label>아이디</label>
-                    <button type="button" onClick={()=>this.checkDuplication('id')} id="duplicationChk" >중복체크</button>
-                    <span id="duplicateCheckID" className="js-duplicationTextSpanId"></span>
+                    <button type="button" onClick={()=>this.checkDuplication('id')} >중복체크</button>
+                    <span className="js-duplicationTextSpanId"></span>
                     
-                    <input type="text" name="account" id="account" className="js-account"></input>
-                    <div className="check_font" id="id_check"></div>
+                    <input type="text" name="account" className="js-account"></input>
+                    <div className="check_font" ></div>
             
                     <label>비밀번호</label>
                     
@@ -173,13 +173,13 @@ class Join_component extends Component{
                     <label>비밀번호 확인</label>
                     
                     <input type="password" name="userPassword2"></input>
-                    <input className="js-duplicationCheckRadioId duplicationRadioId"  type="radio" name="duplicationIdChk" id="duplicationRadioId" value="" ></input>
-                    <input className="js-duplicationCheckRadioEmail duplicationRadioEmail" type="radio" name="duplicationEmailChk" id="duplicationRadioEmail"value="" ></input>
+                    <input className="js-duplicationCheckRadioId duplicationRadioId"  type="radio" name="duplicationIdChk" value="" ></input>
+                    <input className="js-duplicationCheckRadioEmail duplicationRadioEmail" type="radio" name="duplicationEmailChk" value="" ></input>
                     
-                    <button type= "submit" id="joinBtn">가입하기</button> 
+                    <button type= "submit" className="joinBtn">가입하기</button> 
                     <br></br>
                     <br></br>
-                    <strong><a href="/login" id="login">로그인</a> 하러가기</strong>
+                    <strong><Link to="/login" className="login">로그인</Link> 하러가기</strong>
                 </form>
             </div>
         );

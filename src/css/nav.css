@@ -1,12 +1,7 @@
 body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 
 
-.navbar_topbox{
-    width: 100%;
-    height: 64px;
-    position: fixed;
-    background-color: #ecf0f1;
-}
+
 .navbar{
    /* margin: 0 auto;
     width: 1200px;*/
@@ -39,6 +34,9 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 
 .navbar_menu li a , .navbar_logo a{
     color:black;
+}
+.navbar_menu li a{
+    padding: 8px 12px;
 }
 .navbar_menu li:hover{
     background-color: #2ecc71;
@@ -82,7 +80,10 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
     .navbar_menu li{
         width: 100%;
         text-align: center;
-        border-bottom: 3px solid black;;
+        border-bottom: 1px solid black;
+    }
+    .navbar_menu li a{
+        padding: 8px 250px;
     }
     .navbar_account{
         margin-top: 3%;
@@ -106,3 +107,6 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
         display: flex;
     }
 }
+
+@media screen and (max-width:650px){.navbar_menu li a{padding: 8px 200px;}}
+@media screen and (max-width:550px){.navbar_menu li a{padding: 8px 170px;}}
