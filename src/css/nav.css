@@ -62,9 +62,48 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
     color:white;
 }
 .navbar_hamburgerBtn{
-    display: none;
+    display:none;
 }
 
 .js-logout{
     cursor: pointer;
+}
+
+@media screen and (max-width:768px){
+    .navbar{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar_menu{
+        display: none;
+        width: 100%;
+        flex-direction: column;
+    }
+    .navbar_menu li{
+        width: 100%;
+        text-align: center;
+        border-bottom: 3px solid black;;
+    }
+    .navbar_account{
+        display: none;
+        width:100%;
+        justify-content: center;
+        
+    }
+    .navbar_hamburgerBtn{
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        right: 30px;
+        top:15px; 
+        
+    }
+    .navbar_hamburgerBtn img{
+        width:35px;
+        height:35px;
+        color:#2ecc71
+    }
+    .navbar_menu.active, .navbar_account.active{
+        display: flex;
+    }
 }

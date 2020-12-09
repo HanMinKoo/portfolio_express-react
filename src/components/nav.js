@@ -2,6 +2,21 @@ import React, {useState,useEffect} from 'react';
 import '../css/nav.css';
 import  {Link} from "react-router-dom"; 
 import axios from 'axios';
+import hamburgerBtn from '../images/hamburger.png';
+
+
+
+function initHamburgerBtn(){
+    const hamburgerBtn=document.querySelector('.js-navbar_hamburgerBtn');
+    const menu = document.querySelector('.navbar_menu');
+    const icon = document.querySelector('.navbar_account');
+
+    hamburgerBtn.addEventListener('click',()=>{
+        console.log("click");
+        menu.classList.toggle('active');
+        icon.classList.toggle('active');
+    });
+}
 
 const initJSX = (account) =>{
     let navbarAccount;
@@ -76,6 +91,7 @@ const Nav = () =>{
     const loginInfojsx=initJSX(account);
     useEffect(()=>{
         fetchloginInfo(setAccount);
+        initHamburgerBtn();
     },[]);
     useEffect(()=>{
         if(account === '')
@@ -88,14 +104,18 @@ const Nav = () =>{
             <nav className="navbar">
                 <div className="navbar_logo">
                     <Link to="/">M9SOCCER</Link>
-            </div>
+                </div>
                 <ul className="navbar_menu">
                     <li><Link to="/">홈</Link></li>
-                    <li><Link to="/ground" test="가나다라마바사t">운동장 예약</Link></li>
+                    <li><Link to="/ground" >운동장 예약</Link></li>
                     <li><Link to="/inquire">문의하기</Link></li>
                 </ul>
                 {loginInfojsx}
+                <li class="navbar_hamburgerBtn js-navbar_hamburgerBtn">
+                    <img src={hamburgerBtn}></img>
+                </li>
             </nav>
+            
         </>
 
     );

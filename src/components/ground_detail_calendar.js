@@ -38,8 +38,8 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
     let weekLine=0; //7이 될때 마다 tr생성
     let date=1; //날짜
     let tr;
-    console.log('reservationData',reservationData);
-    console.log('timetable',timeTable);
+    //console.log('reservationData',reservationData);
+    //console.log('timetable',timeTable);
 
     const currentDate= new Date();
     //console.log('currentDate',currentDate.getDate());

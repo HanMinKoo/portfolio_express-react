@@ -8,9 +8,9 @@ import Home from './routes/home';
 import Join from './routes/join';
 import GroundList from './routes/ground_list';
 import GroundDetail from './routes/ground_detail';
-import AdminPage from './components/adminpage';
-import MyPage from './components/mypage';
-import Inquire from './components/inquire';
+import AdminPage from './routes/adminpage';
+import MyPage from './routes/mypage';
+import Inquire from './routes/inquire';
 
 class App extends Component{
   render(){
