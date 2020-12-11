@@ -15,7 +15,7 @@ import Inquire from './routes/inquire';
 class App extends Component{
   render(){
     const title = document.querySelector("title");
-    title.innerText="React Portfolio";
+    title.innerText="한민구 Portfolio";
 
     return(
       <>

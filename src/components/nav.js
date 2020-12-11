@@ -102,7 +102,7 @@ const Nav = () =>{
         <>
             <nav className="navbar">
                 <div className="navbar_logo">
-                    <Link to="/">M9SOCCER</Link>
+                    <Link to="/">MK GROUND</Link>
                 </div>
                 <ul className="navbar_menu">
                     <li><Link to="/">홈</Link></li>

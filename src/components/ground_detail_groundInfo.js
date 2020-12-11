@@ -32,28 +32,27 @@ const initGroundInfo = (groundInfoData,groundImgData) =>{
     const mainImgPath =`../images/groundImg/${directory_path}/${main_name}.${extension}`;
 
     const jsx=
-        <section className='ground_detail_groundInfo'>
-            <img src={mainImgPath} className="groundMainImg"></img>
-            <ul className="groundInfo_text">
+        <section className='groundInfo_wrap'>
+            <div className='groundInfo_Content_wrap'>
+                <img src={mainImgPath} className="groundMainImg"></img>
+                <ul className="groundInfo_text">
 
-                <li><h1>{name}</h1></li>
-                <li><h3 className="location">{location}</h3></li>
-                <li><h3>가격: {price} 만원</h3></li>
-                <li><h3>이용 가능 시간: {use_time}</h3></li>
+                    <li><h1>{name}</h1></li>
+                    <li><h3 className="location">{location}</h3></li>
+                    <li><h3>가격: {price} 만원</h3></li>
+                    <li><h3>이용 가능 시간: {use_time}</h3></li>
 
-                <div className="groundIntroduceText">
-                    <strong>운동장 소개</strong>
-                    <div>
-                        <br></br>
-                    {introduce}
+                    <div className="groundIntroduceText">
+                        <strong>운동장 소개</strong>
+                        <div>
+                            <br></br>
+                            {introduce}
+                        </div>
                     </div>
-                </div>
-            </ul>
-            
-            <div className="groundImgList">
-               
-            
+                </ul>
             </div>
+            
+            <div className="groundImgList"></div>
         </section>
     return jsx;
 } 

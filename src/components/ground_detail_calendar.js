@@ -5,14 +5,11 @@ import {fetchGroundReservationTimeList, bookReservation} from './fetchGroundData
 
 
 
-function makeUnBookable(timeTable, ul, count){
-    //timeTable.forEach(tableTime => {
-        const li=document.createElement('li');
-        li.classList.add('unbookable');
-        li.innerHTML = '예약 불가';
-        //li.innerHTML = `${count++}부: ${tableTime.ground_time}(예약 완료)`;
-        ul.appendChild(li);
-    //});
+function makeUnBookable(ul){
+    const li=document.createElement('li');
+    li.classList.add('unbookable');
+    li.innerHTML = '예약 불가';
+    ul.appendChild(li);
 }
 
 //예약, 운동장 정보 등 메뉴 선택이벤트 활성화
@@ -38,17 +35,11 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
     let weekLine=0; //7이 될때 마다 tr생성
     let date=1; //날짜
     let tr;
-    //console.log('reservationData',reservationData);
-    //console.log('timetable',timeTable);
 
     const currentDate= new Date();
-    //console.log('currentDate',currentDate.getDate());
-    //console.log(timeTable);
-    //console.log(reservationData);
-    
     const tbody=document.querySelector('.js-tbodyDate');//tr 생성하기 위해서
-    
     const forRange=lastDate+(firstDay-dayCnt);//firstDay-dayCnt만큼 반복문을 소모했으니깐, lastDate만큼 반복하기 위해서 더해줘야지
+
     //firstDay-dayCnt가 달력의 맨 첫줄의 일요일부터 실제 1일이 시작하는 요일까지의 간격. 
     //그리고 그 간격만큼 반복문을 소모한거니깐 lastDate(달의 마지막 일)까지 출력이 부족함.
     //그래서 반복문을 마지막날 + (처음 달력의 일요일 부터 1일이 시작하는 요일까지의 간격, 출력하기위해) 
@@ -87,7 +78,7 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
             //2. 일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
             if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) ||
             (date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
-                makeUnBookable(timeTable, ul, count);
+                makeUnBookable(ul);
             }
 
             else{
@@ -115,8 +106,7 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
                         li.addEventListener('click',function(){
                             const reservationConfirm = window.confirm('예약을 진행하시겠습니까?');
 
-                            if(reservationConfirm){
-                                
+                            if(reservationConfirm){   
                                 const groundId = ground_id;
                                 bookReservation(year, month, td.id, tableTime.ground_time, groundId);
                             }
@@ -159,9 +149,7 @@ function initDate(date){
     
     const firstDay=new Date(year,month-1,1);  
     const lastDay = new Date(year,month,0);  
-    //console.log("initDatemonth",month);
-    //console.log("initDatefirstDay",firstDay);
-    //console.log("initDatelastDate",lastDay);
+
     const dateObj={
         year,
         month,
@@ -206,9 +194,7 @@ function Calendar({ground_id, timeTable}){
     const [reservationData, setReservationData]=useState(null);
     
     const {year,month,firstDay,lastDate}=initDate(date);
-    //console.log(year,month,firstDay,lastDate)
-    //console.log('지금', new Date(20,0)); //1920년 1월 
-    //console.log("initDateMonth",month);  
+
                                             
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
@@ -231,38 +217,35 @@ function Calendar({ground_id, timeTable}){
     },[reservationData]);
 
     return(
-        <>
+        <div className="ground_calendar_wrap">
             <ul className="choiceList">
                 <li className="js-choiceReservationInfo">예약</li>
-                
             </ul>
-            <div className="reservation_wrap">
-                <div className='calendar'>
-                    <div className="calendarHeader">
-                        <span className="js-previousMonth">◀</span>
-                        <span className="js-tableYear"></span>
-                        <span className="js-tableMonth"></span>
-                        <span className='js-nextMonth'>▶</span>
-                        
-                    </div>
-                    <table className="calendarTable">
-                        <thead>
-                            <tr>
-                                <th id="0">일</th>
-                                <th id="1">월</th>
-                                <th id="2">화</th>
-                                <th id="3">수</th>
-                                <th id="4">목</th>
-                                <th id="5">금</th>
-                                <th id="6">토</th>
-                            </tr>
-                        </thead>
-                        <tbody className="js-tbodyDate"></tbody> 
-                    </table>
+            
+            <div className='calendar'>
+                <div className="calendarHeader">
+                    <span className="js-previousMonth">◀</span>
+                    <span className="js-tableYear"></span>
+                    <span className="js-tableMonth"></span>
+                    <span className='js-nextMonth'>▶</span>
+                    
                 </div>
+                <table className="calendarTable">
+                    <thead>
+                        <tr>
+                            <th id="0">일</th>
+                            <th id="1">월</th>
+                            <th id="2">화</th>
+                            <th id="3">수</th>
+                            <th id="4">목</th>
+                            <th id="5">금</th>
+                            <th id="6">토</th>
+                        </tr>
+                    </thead>
+                    <tbody className="js-tbodyDate"></tbody> 
+                </table>
             </div>
-            <div className='clear'></div>
-        </>
+        </div>
     );
 }
   

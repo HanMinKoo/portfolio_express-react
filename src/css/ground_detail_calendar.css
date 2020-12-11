@@ -1,16 +1,19 @@
+.ground_calendar_wrap{
+    width:1200px;
+    margin: 0 auto;
+}
+
 li{
     list-style: none;
 }
 
 .bookable, .unbookable{
+    clear: both;
     margin-bottom: 20px;
-    font-size: 20px;
 }
 .date{
-    position: relative;
-    top:-10px;
-    left:-70px;
-    
+    float: left;
+    margin-bottom: 5%;
 }
 .calendar{
     padding: 2% 0%;
@@ -48,24 +51,11 @@ li{
     cursor: pointer;
 }
 
-
-
-.clear{
-    clear: both;
-}
-
-.reservation_wrap{
-    width:1200px;
-    margin: 0 auto;
-}
 .choiceList{
-    width: 1200px;
-    margin: 0 auto;
     list-style: none;
     border-bottom: 1px solid gray;
     padding:2% 0%;
     font-size: 22px;
-    
 }
 .choiceList li{
     display: inline;
@@ -80,6 +70,17 @@ li{
 
 .js-previousMonth, .js-nextMonth{
     cursor: pointer;
-
     padding: 6px 12px;
+}
+
+@media screen and (max-width:1200px){
+    .ground_calendar_wrap{
+        width:90%;
+    }  
+    .calendarTable{
+        width: 100%;
+    }
+    .calendarTable thead tr th, .calendarTable tbody tr td{
+        font-size: 15px;
+    }
 }
