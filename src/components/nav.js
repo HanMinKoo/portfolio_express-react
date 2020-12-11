@@ -4,7 +4,22 @@ import  {Link} from "react-router-dom";
 import axios from 'axios';
 import hamburgerBtn from '../images/hamburger.png';
 
-
+//이 함수만든 이유는 반응형에서 햄버거 바가 생겨서 Link 메뉴를 눌렀어.
+//그런데 페이지가 이동 해도 햄버거바로 활성화된 메뉴들이 다시 비활성화 되지 않아.
+//그래서 그게 불편해서 비활성화 시킬려고 이 함수를 만듬. 
+function actvieMenuLink(){
+    const menu = document.querySelector('.navbar_menu');
+    const icon = document.querySelector('.navbar_account');
+    const menuLink = document.querySelectorAll('.js-link');
+    
+    for(let i=0; i<menuLink.length; i++){
+        console.log("test");
+        menuLink[i].addEventListener('click', () =>{
+            menu.classList.remove('active');
+            icon.classList.remove('active');
+        });
+    }
+}
 
 function initHamburgerBtn(){
     const hamburgerBtn=document.querySelector('.js-navbar_hamburgerBtn');
@@ -42,8 +57,8 @@ const initJSX = (account) =>{
     else{
         navbarAccount=
             <ul className="navbar_account">
-                <li><Link to='/login'>로그인</Link></li>
-                <li id="navbar_account_join"><Link to='/join'>회원가입</Link></li>
+                <li className="js-link"><Link to='/login'>로그인</Link></li>
+                <li className="js-link navbar_account_join"><Link to='/join'>회원가입</Link></li>
             </ul>
     }
     return navbarAccount;
@@ -92,11 +107,13 @@ const Nav = () =>{
     useEffect(()=>{
         fetchloginInfo(setAccount);
         initHamburgerBtn();
+        actvieMenuLink();
     },[]);
     useEffect(()=>{
         if(account === '')
             return;
-        else clickLogoutEvent(setAccount);
+        else 
+            clickLogoutEvent(setAccount);
     });
     return(
         <>
@@ -105,9 +122,9 @@ const Nav = () =>{
                     <Link to="/">MK GROUND</Link>
                 </div>
                 <ul className="navbar_menu">
-                    <li><Link to="/">홈</Link></li>
-                    <li><Link to="/ground" >운동장 예약</Link></li>
-                    <li><Link to="/inquire">문의하기</Link></li>
+                    <li className="js-link"><Link to="/">홈</Link></li>
+                    <li className="js-link"><Link to="/ground" >운동장 예약</Link></li>
+                    <li className="js-link"><Link to="/inquire">문의하기</Link></li>
                 </ul>
                 {loginInfojsx}
                 <li className="navbar_hamburgerBtn js-navbar_hamburgerBtn">

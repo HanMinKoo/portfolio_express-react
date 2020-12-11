@@ -37,6 +37,7 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 }
 .navbar_menu li a{
     padding: 8px 12px;
+
 }
 .navbar_menu li:hover{
     background-color: #2ecc71;
@@ -49,14 +50,16 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 }
 .navbar_account li{
     list-style: none;
-    padding:8px 12px;
+    padding:8px 10px;
 }
 
-#navbar_account_join{
+.navbar_account_join{
     background-color: #2ecc71;
+    
     border-radius: 8px;
 }
-#navbar_account_join a{
+.navbar_account_join a{
+    padding: 8px 12px;
     color:white;
 }
 .navbar_hamburgerBtn{
@@ -82,9 +85,13 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
         text-align: center;
         border-bottom: 1px solid black;
     }
+
+    /*a태그는 텍스트 위치로만 클릭 범위가 잡힌다. 이걸 해결하기 위해 padding값을 줘서 해결할 순 있지만 말도 안되는 노가다를 해야한다*/
+    /*아주 좋은 방법은 a태그의 display 속성을 block로 설정 해주면 자연스럽게 클릭범위를 블럭단위로 넓힐 수 있다!*/
     .navbar_menu li a{
-        padding: 8px 250px;
+        display: block;
     }
+
     .navbar_account{
         margin-top: 3%;
         display: none;
@@ -107,6 +114,3 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
         display: flex;
     }
 }
-
-@media screen and (max-width:650px){.navbar_menu li a{padding: 8px 200px;}}
-@media screen and (max-width:550px){.navbar_menu li a{padding: 8px 100px;}}
