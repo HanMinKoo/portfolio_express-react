@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 const submitForm = (userName, phoneNumber, content, setInquire) =>{
     axios({
         method: 'post',
-        url: '/inquire/process',
+        url: '/inquire/progress',
         data:{userName, phoneNumber, content},
     }).then((res)=>{
         //alert('TEST');

@@ -12,7 +12,7 @@ const Ground_Detail = ({location,match}) => {
   //그리고 그 year,month를 groundTimeTable에 넘기고, 거기서 form을 만들어서 클릭누르면 ㄱㄱ서버로 
   //const [yearMonth]
   const query = queryString.parse(location.search);
-  const id = query.number;
+  const groundId = query.number;
 
   let jsx='';
 
@@ -20,15 +20,15 @@ const Ground_Detail = ({location,match}) => {
 
   useEffect(()=>{
    
-    fetchGroundInfoAndTimeList(id,setGroundInfoAndTimeList);
-    fetchGroundImg(id,setGroundImg);
+    fetchGroundInfoAndTimeList(groundId,setGroundInfoAndTimeList);
+    fetchGroundImg(groundId,setGroundImg);
   },[]);
   if(groundInfo !== '' && groundImg !== '')
   {
     jsx=
     <>
       <GroundInfo groundInfoData={groundInfo.groundList} groundImgData={groundImg}></GroundInfo>
-      <Calendar ground_id={id} timeTable={groundInfo.groundTimeTable}></Calendar>
+      <Calendar ground_id={groundId} timeTable={groundInfo.groundTimeTable}></Calendar>
     </>
   }
   else if(groundInfo === 'notLogin'){

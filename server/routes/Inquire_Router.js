@@ -1,17 +1,19 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
-
-const inquireDB= require('../models/Inquire_DB');
+//const inquireDB= require('../models/Inquire_DB');
+const connectionDB= require('../models/connection_DB.js');
 
 const router = express.Router();
 require('dotenv').config();
 
 
-router.post('/process', (req, res, next)=> {
-
+router.post('/progress', (req, res, next)=> {
+ 
     let userName=req.body.userName;
     let phoneNumber=req.body.phoneNumber;
     let content=req.body.content;
+
+    console.log(userName,phoneNumber,content);
     let infoCheck='OK';
 
     let transporter = nodemailer.createTransport({ 
@@ -39,11 +41,31 @@ router.post('/process', (req, res, next)=> {
         }
         else{
             console.log('Email sent Success: ' , info.response);
-            inquireDB.save(userName,phoneNumber,content,infoCheck);  
+            //inquireDB.save(userName,phoneNumber,content,infoCheck);
+            save(userName,phoneNumber,content,infoCheck);  
             transporter.close();
         }
     });
     res.json({result:'ok'});
 });
+
+function save(userName,phoneNumber,content,infoCheck){
+    const dbCon=connectionDB.connectDB();
+
+    const query= `INSERT INTO web_portfolio1.inquire(name, phone, content, privacy_check) 
+    VALUES('${userName}', '${phoneNumber}', '${content}', '${infoCheck}')`;
+
+    dbCon.query(query, function(err,data){
+        if(err){
+            console.log('table name:inquire / Error: insert query Error : ',err);
+        }
+        else{
+            console.log('table name:inquire / Result: insert Success');
+            console.log(data);
+            
+        }
+        dbCon.end();
+    });
+}
 
 module.exports = router;

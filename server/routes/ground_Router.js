@@ -26,18 +26,8 @@ router.get('/img/:id',(req,res)=>{
 });
 
 
-router.get('/info-reservationlist/:id',(req,res)=>{
+router.get('/information/:id',(req,res)=>{
     const id = req.params.id;
-    console.log('idididididid',id);
-    console.log('info-reservationlist');
-    //console.log("session=", req.session);
-
-
-    //로그인이 되어있지 않은 상태에서 특정 운동장을 조회할 경우
-    // if(id > 0 && (req.session.account === undefined)) {
-    //     res.json({result:'fail', message:'로그인 사용자만 이용할 수 있습니다.'});
-    //     return;
-    // }
     
     const dbCon=connectionDB.connectDB();
 

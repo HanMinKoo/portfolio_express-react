@@ -1,8 +1,5 @@
-
-const mysql=require('mysql');
 const express = require('express');
 const connectionDB= require('../models/connection_DB.js');
-const pool= require('../models/pool_DB.js');
 const router = express.Router();
 
 function printQueryResult(dbCon,err,result,table,action,query){
@@ -41,7 +38,7 @@ router.get('/list',(req,res)=>{
 });
 
 
-router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
+router.post('/progress',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
     console.log("정말정말??", req.body);
 
     if(req.session.account === undefined)
@@ -57,14 +54,7 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
         const dbCon=connectionDB.connectDB();
         
         dbCon.beginTransaction();  //트랜잭션 적용 시작
-        
-        // let query=`select * from web_portfolio1.ground_reservation_list 
-        // where ground_id=${ground_id} and use_date='${use_date}' and use_time='${req.body.groundTime}'`;
 
-        // dbCon.query(query, (err,reservationInfo)=>{ //운동장 id, 예약날짜, 예약시간이 이미 있는지 조회
-        //     printQueryResult(dbCon,err,reservationInfo,'ground_reservation_list','reservation process','select');
-        
-        //     if(reservationInfo[0]===undefined){//예약 정보가 조회 안됐으면(즉, 빈 예약시간이므로 예약 가능)
         const query = `insert into web_portfolio1.ground_reservation_list(user_id,ground_id,use_date,use_time) 
         values('${req.session.user_id}',${ground_id},'${use_date}','${req.body.groundTime}')`;
 
@@ -80,10 +70,6 @@ router.post('/process',(req,res)=>{//get방식은 url query에 값을 form의 �
                 res.json({result:'error', message:'예약 실패. 다시 시도해주세요.', error:err});
             }
         });
-            //}
-            // else //이미 예약된 정보가 있으면 경고문 출력
-            //     res.json({result:'duplicationReservation', message:'이미 예약된 시간입니다.'});
-        //});
     }
     /*****운동장 시간 체크 but 비로그인 상태, 즉 비정상적 접근 ******/
     // else if(req.query.groundTime!==undefined && req.session.account===undefined)

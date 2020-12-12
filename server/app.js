@@ -8,14 +8,14 @@ const mysqlStore= require('express-mysql-session')(session);
 const cors= require('cors');
 
 /*****Router 변수 설정*****/
-const inquireRouter=require('./routes/Inquire_Router.js')
-const joinRouter=require('./routes/join_Router.js');
-const loginRouter=require('./routes/login_Router.js');
-const reservateionRouter=require('./routes/reservation_RouterAndDB.js');
-const myPageRouter=require('./routes/mypage_RouterAndDB.js');
-const adminPageRouter=require('./routes/admingpage_RouterAndDB.js');
-const reservationStateRouter=require('./routes/reservationState_RouterAndDB');
-const groundRouter = require('./routes/ground_Router');
+const inquireRouter=require('./routes/inquire_router.js')
+const joinRouter=require('./routes/join_router.js');
+const loginRouter=require('./routes/login_router.js');
+const reservateionRouter=require('./routes/reservation_router.js');
+const myPageRouter=require('./routes/mypage_router.js');
+const adminPageRouter=require('./routes/admingpage_router.js');
+const reservationStatusRouter=require('./routes/reservationStatus_router');
+const groundRouter = require('./routes/ground_router');
 
 require('dotenv').config();
 const app = express();
@@ -44,9 +44,7 @@ app.use(cors({
   credentials: true
 }));
 
-app.get('/',(req,res)=>{
-  res.send(express.static(path.join(__dirname, '../../build/index.html')));
-});
+
 app.get('/session',(req,res,next)=>{
   console.log(req.session);
   
@@ -65,7 +63,7 @@ app.use('/inquire',inquireRouter);
 app.use('/reservation',reservateionRouter);
 app.use('/mypage',myPageRouter);
 app.use('/adminpage',adminPageRouter);
-app.use('/reservationstate',reservationStateRouter);
+app.use('/reservationstatus',reservationStatusRouter);
 app.use('/ground',groundRouter);
 
 

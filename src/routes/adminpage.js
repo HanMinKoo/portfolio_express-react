@@ -4,32 +4,26 @@ import axios from 'axios';
 
 function deleteReservation(id){
     const tableBody = document.querySelector('tbody');
-    const data={
-        id
-    };
+
     axios({
         method:'delete',
-        url:'/reservationstate',
-        data
+        url:`/reservationstatus/${id}`,
+
     }).then((res)=>{
         const trId = document.getElementById(id);
         tableBody.removeChild(trId);
         alert('삭제되었습니다.');
     });
 }
-function updateReservationState(changeState,id,currentState){
+function updateReservationState(id,currentState){
     if(currentState==='승인 완료'){ //혹시모를 예외처리
         alert('이미 승인 처리된 예약입니다.');
         return;
     }
-    const data={
-        state:changeState,
-        id
-    };
+
     axios({
         method:'put',
-        url:'/reservationstate',
-        data: data
+        url:`/reservationstatus/${id}`
     }).then((res)=>{
         //const result = res.data.result;
         const btnId = id+'button';
@@ -65,7 +59,7 @@ const fetchReservationList = async(setReservationData) =>{
                 <td>{reservationData[i].name}</td>
                 <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
                 <td className = "reservationState" >{reservationData[i].state}</td>
-                <button type="button"  className="cancelBtn" onClick={()=>updateReservationState('cancel', reservationData[i].id)}>취소</button>
+                <button type="button"  className="cancelBtn" onClick={()=>deleteReservation(reservationData[i].id)}>취소</button>
             </tr>;
         }
         else{
@@ -77,7 +71,7 @@ const fetchReservationList = async(setReservationData) =>{
                 <td>{reservationData[i].name}</td>
                 <td>{reservationData[i].use_date} &nbsp; {reservationData[0].use_time} </td>
                 <td className = "reservationState">{reservationData[i].state}</td>
-                <button type="button" id={buttonId} className="approvalBtn" onClick={()=>updateReservationState('approval',reservationData[i].id, reservationData[i].state)}>승인</button>
+                <button type="button" id={buttonId} className="approvalBtn" onClick={()=>updateReservationState(reservationData[i].id, reservationData[i].state)}>승인</button>
                 <button type="button" className="cancelBtn" onClick={()=>deleteReservation(reservationData[i].id)}>취소</button>
             </tr>;
         }

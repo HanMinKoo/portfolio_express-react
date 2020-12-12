@@ -3,12 +3,12 @@ const connectionDB= require('../models/connection_DB.js');
 const router = express.Router();
 
 
-
-router.delete('/',(req,res)=>{
-    console.log(req.body);
-
+//예약 취소
+router.delete('/:id',(req,res)=>{
+    console.log('delete id: ',req.params.id);
+    const id =req.params.id;
+    console.log(typeof(id));
     const db=connectionDB.connectDB();
-    const {id}=req.body;
 
     const query= `delete from ground_reservation_list where id=${id}`;
 
@@ -24,16 +24,13 @@ router.delete('/',(req,res)=>{
         }
     });
 });
-//*****예약 승인, 취소 Router(state값을 통해 승인 또는 취소 선택)*****/
-router.put('/',(req,res)=>{
-    console.log(req.body);
+//*****예약 승인
+router.put('/:id',(req,res)=>{
+    console.log("update id:",req.params.id);
+    const id =req.params.id;
     const db=connectionDB.connectDB();
 
-    const state=req.body.state;
-    console.log(state);
-
-    
-    const query= `update ground_reservation_list set state='승인 완료' where id=${req.body.id}`;
+    const query= `update ground_reservation_list set state='승인 완료' where id=${id}`;
 
     db.query(query,(err,result)=>{
         if(err){

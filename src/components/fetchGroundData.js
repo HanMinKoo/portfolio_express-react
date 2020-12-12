@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 
-const fetchGroundInfoAndTimeList= async(id,setGroundInfoAndTimeList)=>{
+const fetchGroundInfoAndTimeList= async(groundId,setGroundInfoAndTimeList)=>{
 
     //console.log('idididid', id)
-    const groundInfo = await fetch(`/ground/info-reservationlist/${id}`,{method:'get'});
+    const groundInfo = await fetch(`/ground/information/${groundId}`,{method:'get'});
     const groundInfoData = await groundInfo.json();
     //console.log('groundInfoDatagroundInfoDatagroundInfoData',groundInfoData);
     if(groundInfoData.result === 'fail'){
@@ -14,8 +14,8 @@ const fetchGroundInfoAndTimeList= async(id,setGroundInfoAndTimeList)=>{
     setGroundInfoAndTimeList(groundInfoData);
 }
 
-const fetchGroundImg = async(id,setGroundImg)=>{
-    const groundImg = await fetch(`/ground/img/${id}`,{method: 'get'});
+const fetchGroundImg = async(groundId,setGroundImg)=>{
+    const groundImg = await fetch(`/ground/img/${groundId}`,{method: 'get'});
     const groundImgData = await groundImg.json();
     setGroundImg(groundImgData);
 }
@@ -31,7 +31,7 @@ const fetchGroundReservationTimeList = async(id, year,month,setReservationData)=
 const bookReservation = async(year,month,date,ground_time, ground_id)=>{
     axios({
         method:'post',
-        url:'/reservation/process',
+        url:'/reservation/progress',
         data:{
             year,
             month,
@@ -54,13 +54,8 @@ const bookReservation = async(year,month,date,ground_time, ground_id)=>{
             alert("예약이 완료되었습니다.");
             window.location.reload();
         }
-        
-        //console.log('reservationProcess result', result);
-        //console.log('reservationProcess message:', message);
-
       }).catch((error)=>{
         alert("예약 에러!");
-       //console.log('reservationProcess error: ', error);
       });
 }
 export {fetchGroundImg,fetchGroundInfoAndTimeList,fetchGroundReservationTimeList, bookReservation}

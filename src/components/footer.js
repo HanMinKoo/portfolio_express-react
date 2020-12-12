@@ -5,7 +5,7 @@ import '../css/footer.css';
 function Footer(){
     return(
         <ul className="footer">
-            <li>M9SOCCER</li>
+            <li>MK GROUND</li>
             <li>Tell: 010-3454-7128</li>
             <li>Email: alsrnalsrn94@naver.com</li>
             <li>Copyright 2020. MINKOO HAN. all rights reserved.</li>

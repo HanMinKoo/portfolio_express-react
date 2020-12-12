@@ -2,17 +2,21 @@ const express = require('express');
 const crypto = require('crypto');
 
 const router = express.Router();
-const joinDB = require('../models/join_DB.js');
 const connectionDB= require('../models/connection_DB.js');
 
-router.post('/checkduplication',(req,res)=>{
-    console.log("body의 value값",req.body);
+router.get('/duplication/:typevalue',(req,res) => {
+    console.log(req.params.typevalue);
+    const typevalue=req.params.typevalue.split('-');
+    const type = typevalue[0];
+    const value = typevalue[1];
+
     const dbCon=connectionDB.connectDB();
+
     let query;
-    if(req.body.type==='text')
-        query=`select * from web_portfolio1.user where account='${req.body.value}'`;
-    else if(req.body.type==='email')
-        query=`select * from web_portfolio1.user where email='${req.body.value}'`;
+    if(type==='text')
+        query=`select * from web_portfolio1.user where account='${value}'`;
+    else if(type==='email')
+        query=`select * from web_portfolio1.user where email='${value}'`;
 
     dbCon.query(query, (err,userInfo)=>{
         if(err)
@@ -34,8 +38,31 @@ router.post('/progress', (req,res)=>{
     crypto.pbkdf2(userPassword1,'m9m9',8080,64,'sha512',(err,key)=>{
         console.log("base64 인코딩 후 key값:",key.toString('base64'));
         const password=key.toString('base64');
-        joinDB.saveUser(userName, userEmail, password, res, account);
+        saveUser(userName, userEmail, password, res, account);
     });
 });
+
+function saveUser(userName, userEmail, userPassword,response,userId){
+    const dbCon=connectionDB.connectDB();
+
+    const query= `INSERT INTO web_portfolio1.user(account, name, email, password) 
+    VALUES('${userId}','${userName}', '${userEmail}', '${userPassword}')`;
+
+    dbCon.query(query, function(err,data){
+        if(err){
+            console.log('table name:user / Error: insert query Error : ',err);
+            response.json({result:'fail', message:err});
+        }
+        else{
+            console.log('table name:user / Result: insert Success');
+            console.log(data);
+            response.json({result:'success', mesaage:data});
+        }
+        dbCon.end();
+    });
+}
+
+
+
 
 module.exports=router;
