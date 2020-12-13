@@ -14,7 +14,6 @@ const loginRouter=require('./routes/login_router.js');
 const reservateionRouter=require('./routes/reservation_router.js');
 const myPageRouter=require('./routes/mypage_router.js');
 const adminPageRouter=require('./routes/admingpage_router.js');
-const reservationStatusRouter=require('./routes/reservationStatus_router');
 const groundRouter = require('./routes/ground_router');
 
 require('dotenv').config();
@@ -63,7 +62,6 @@ app.use('/inquire',inquireRouter);
 app.use('/reservation',reservateionRouter);
 app.use('/mypage',myPageRouter);
 app.use('/adminpage',adminPageRouter);
-app.use('/reservationstatus',reservationStatusRouter);
 app.use('/ground',groundRouter);
 
 

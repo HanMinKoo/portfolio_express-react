@@ -7,7 +7,7 @@ function deleteReservation(id){
 
     axios({
         method:'delete',
-        url:`/reservationstatus/${id}`,
+        url:`/reservation/${id}`,
 
     }).then((res)=>{
         const trId = document.getElementById(id);
@@ -23,7 +23,8 @@ function updateReservationState(id,currentState){
 
     axios({
         method:'put',
-        url:`/reservationstatus/${id}`
+        //url:`/reservationstatus/${id}`
+        url:`/reservation/status/${id}`
     }).then((res)=>{
         //const result = res.data.result;
         const btnId = id+'button';

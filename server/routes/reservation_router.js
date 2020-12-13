@@ -76,4 +76,48 @@ router.post('/progress',(req,res)=>{//get방식은 url query에 값을 form의 �
     //     res.render('exception',{exception:'비정상적 접근입니다. 로그인 후 이용하세요.'}); 
 });
 
+
+
+
+router.delete('/:id',(req,res)=>{
+    console.log('delete id: ',req.params.id);
+    const id =req.params.id;
+    console.log(typeof(id));
+    const db=connectionDB.connectDB();
+
+    const query= `delete from ground_reservation_list where id=${id}`;
+
+    db.query(query,(err,result)=>{
+        if(err){
+            console.log('table name:ground_reservation_list / Error: delete query Error : ',err);
+            res.json({result:'error'});
+        }
+        else{
+            console.log('table name:ground_reservation_list / Result: delete query Success');
+            console.log(result);
+            res.json({result:'success'});
+        }
+    });
+});
+//*****예약 승인
+router.put('/status/:id',(req,res)=>{
+    console.log("update id:",req.params.id);
+    const id =req.params.id;
+    const db=connectionDB.connectDB();
+
+    const query= `update ground_reservation_list set state='승인 완료' where id=${id}`;
+
+    db.query(query,(err,result)=>{
+        if(err){
+            console.log('table name:ground_reservation_list / Error: update query Error : ',err);
+            res.json({result:'error'});
+        }
+        else{
+            console.log('table name:ground_reservation_list / Result: update query Success');
+            console.log(result);
+            res.json({result:'success'});
+        }
+    });
+});
+
  module.exports=router;

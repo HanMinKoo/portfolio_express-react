@@ -8,7 +8,8 @@ function deleteReservation(id){
     };
     axios({
         method:'delete',
-        url:`/reservationstatus/${id}`,
+        //url:`/reservationstatus/${id}`,
+        url:`/reservation/${id}`,
     }).then((res)=>{
         const trId = document.getElementById(id);
         tableBody.removeChild(trId);
