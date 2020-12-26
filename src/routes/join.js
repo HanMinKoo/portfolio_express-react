@@ -148,7 +148,7 @@ class Join extends Component{
         if(this.state.redirect)
             return <Redirect to='/'/>;
         return(
-            
+ 
             <div className="join_wrap">
                 
                 <h1 className="homeText"><Link to="/">M9SOCCER</Link></h1>
@@ -184,6 +184,7 @@ class Join extends Component{
                     <br></br>
                     <strong><Link to="/login" className="login">로그인</Link> 하러가기</strong>
                 </form>
+
             </div>
         );
     }

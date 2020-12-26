@@ -7,7 +7,7 @@
     position: absolute;
     top:0;
     left:0;
-    width:1920px;
+    width:100%;
     height:800px;
     filter: brightness(50%); 
     z-index: -1;
@@ -79,7 +79,6 @@
     }
     .reviewImage{
         width: 100%;
-        min-width: 550px;
         height: 100%;
     }
     .reviewText{

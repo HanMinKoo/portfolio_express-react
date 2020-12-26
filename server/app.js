@@ -42,10 +42,13 @@ app.use(session({
 app.use(cors({
   credentials: true
 }));
-
+// app.get('/',(req,res)=>{
+//   return res.sendFile(path.join(__dirname, '../build/index.html'));
+// });
 
 app.get('/session',(req,res,next)=>{
   console.log(req.session);
+  console.log(path.join(__dirname, '../build'));
   
   return ((req.session.account!==undefined)? res.json({account:req.session.account, message:'FOUND ACCOUNT'}) :res.json({account:'', message:'NOT FOUND ACCOUNT'}));
 //db에 session이 저장되어있으면 서버 껐다켜도 세션 안풀림. 

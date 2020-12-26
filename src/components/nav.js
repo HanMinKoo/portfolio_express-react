@@ -13,7 +13,7 @@ function actvieMenuLink(){
     const menuLink = document.querySelectorAll('.js-link');
     
     for(let i=0; i<menuLink.length; i++){
-        console.log("test");
+        //console.log("test");
         menuLink[i].addEventListener('click', () =>{
             menu.classList.remove('active');
             icon.classList.remove('active');
@@ -78,6 +78,13 @@ function fetchloginInfo(setAccount){
             console.log('session call error: ', error);
     });
 }
+// function fetchloginInfo(setAccount){
+//     axios({
+//             method:'get',
+//             url:'/'
+//         });
+        
+// }
 function processLogout(setAccount){
     axios({
         method:'get',

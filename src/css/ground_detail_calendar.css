@@ -84,3 +84,9 @@ li{
         font-size: 15px;
     }
 }
+
+@media screen and (max-width:420px){
+    .calendarTable thead tr th, .calendarTable tbody tr td{
+        font-size: 12px;
+    }
+}
