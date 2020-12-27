@@ -2,32 +2,12 @@ import React, {useEffect, useState} from 'react';
 import '../css/ground_detail_calendar.css';
 import {fetchGroundReservationTimeList, bookReservation} from './fetchGroundData.js';
 
-
-
-
 function makeUnBookable(ul){
     const li=document.createElement('li');
     li.classList.add('unbookable');
     li.innerHTML = '예약 불가';
     ul.appendChild(li);
 }
-
-//예약, 운동장 정보 등 메뉴 선택이벤트 활성화
-function initChoiceInfoMenu(){
-    const reservationInfo = document.querySelector('.js-choiceReservationInfo');
-    //const groundInfo = document.querySelector('.js-choiceGroundInfo');
-
-    reservationInfo.addEventListener('click', function(){
-        //groundInfo.classList.remove('choiceInfo');
-        reservationInfo.classList.add('choiceInfo');
-    });
-    // groundInfo.addEventListener('click', function(){
-    //     //bookReservation(2020, 11, 27, '10:00 ~ 12:00', 1);
-    //     reservationInfo.classList.remove('choiceInfo');
-    //     groundInfo.classList.add('choiceInfo');
-    // });
-}
-
 
 function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,ground_id){
     //console.log('makeCalendar');
@@ -199,7 +179,7 @@ function Calendar({ground_id, timeTable}){
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
-        initChoiceInfoMenu();
+        //initChoiceInfoMenu();
         fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
 
@@ -218,9 +198,6 @@ function Calendar({ground_id, timeTable}){
 
     return(
         <div className="ground_calendar_wrap">
-            <ul className="choiceList">
-                <li className="js-choiceReservationInfo">예약</li>
-            </ul>
             
             <div className='calendar'>
                 <div className="calendarHeader">

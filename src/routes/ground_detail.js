@@ -1,20 +1,19 @@
-import React, {createElement, useEffect,useState} from 'react';
+import React, {useEffect,useState} from 'react';
 import queryString from 'query-string';
 import GroundInfo from '../components/ground_detail_groundInfo';
 import {fetchGroundImg,fetchGroundInfoAndTimeList} from '../components/fetchGroundData.js';
 import Calendar from '../components/ground_detail_calendar';
+import Review from '../components/ground_detail_review';
 import { Redirect } from 'react-router-dom';
-
+import '../css/ground_detail.css';
 
 const initMenu =  () =>{
-  const menuList = document.querySelector('.menuList');
-  //const calendar = document.querySelector('.calendar');
-  //const review = document.querySelector('.review');
-  const menuComponent = document.querySelector('.menuComponent');
+  const menuList = document.querySelector('.js-menuList');
+  const menuComponent = document.querySelector('.js-menuComponent');
   
   const menuLi = menuList.childNodes;
   const menuComponentChildren = menuComponent.childNodes;
-  console.log(menuComponentChildren[0])
+  console.log(menuComponentChildren[0]);
 
 
   // //메뉴 눌렀을 때, 누른 거만 visible 처리하고, 나머지는 none처리할 거임.
@@ -24,14 +23,19 @@ const initMenu =  () =>{
   for(let i=0; i<menuLi.length; i++){
     menuLi[i].addEventListener('click', () => {
       for(let j=0; j<menuLi.length; j++){
-        (i === j) ? menuComponentChildren[j].classList.add('visible') : menuComponentChildren[j].classList.remove('visible');
+        if(i === j ){
+          menuComponentChildren[j].classList.remove('unVisible'); //unvisible 효과 삭제')
+          menuLi[j].classList.add('select'); //메뉴 선택표시(밑에 검은색 border)
+        }
+        else{
+          menuComponentChildren[j].classList.add('unVisible');
+          menuLi[j].classList.remove('select');
+        }
+        (i === j) ? menuComponentChildren[j].classList.remove('unVisible') : menuComponentChildren[j].classList.add('unVisible');
         console.log("i, j",i,j)
       }
     });
   }
-  // console.log(ulChildren[0]);
-
-   
 }
 
 const Ground_Detail = ({location,match}) => {
@@ -62,18 +66,16 @@ const Ground_Detail = ({location,match}) => {
       
       
       <div className="menu">
-        <ul className='menuList'>
-          <li>예약</li>
+        <ul className='js-menuList menuList'>
+          <li className='select'>예약</li>
           <li>사용 후기</li>
         </ul>
-        <div className="menuComponent">
-
-        
-          <div className = 'calendar'>
+        <div className="js-menuComponent menuComponent">
+          <div className = 'calendarComponent ' >
             <Calendar ground_id={groundId} timeTable={groundInfo.groundTimeTable}></Calendar>
           </div>
-          <div className = "review">
-            <h1>teststestestteststestestteststestestteststestestteststestest</h1>
+          <div className = "reviewComponent unVisible">
+            <Review></Review>
           </div>
         </div>
       </div>

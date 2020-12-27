@@ -15,6 +15,7 @@ const reservateionRouter=require('./routes/reservation_router.js');
 const myPageRouter=require('./routes/mypage_router.js');
 const adminPageRouter=require('./routes/admingpage_router.js');
 const groundRouter = require('./routes/ground_router');
+const reviewRouter = require('./routes/review_router');
 
 require('dotenv').config();
 const app = express();
@@ -66,7 +67,7 @@ app.use('/reservation',reservateionRouter);
 app.use('/mypage',myPageRouter);
 app.use('/adminpage',adminPageRouter);
 app.use('/ground',groundRouter);
-
+app.use('/review', reviewRouter);
 
 
 app.use(function(req, res, next) {

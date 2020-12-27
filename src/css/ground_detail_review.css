@@ -1,0 +1,26 @@
+.review_wrap{
+    width: 1200px;
+    border:1px solid black;
+    margin: 0 auto;
+}
+.reviewForm{
+    display: flex;
+}
+.inputReviewText{
+    border:3px solid black;
+    margin: 0%;
+    width: 70%;
+    height:80px;
+    margin-right: 5%;
+    
+}
+.reviewButton{
+    width: 10%;
+    background-color:#2ecc71;
+    border-color:  #2ecc71;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
