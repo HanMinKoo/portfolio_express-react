@@ -59,4 +59,14 @@ router.get('/information/:id',(req,res)=>{
         }              
     });
  });
+
+router.get('/review/:id',(req,res)=>{
+    const dbCon=connectionDB.connectDB();
+    const id = req.params.id;
+    const query = `select * from ground_review where ground_id=${id}`;
+    dbCon.query(query, (err,data)=>{
+
+    });
+    
+});
 module.exports = router;

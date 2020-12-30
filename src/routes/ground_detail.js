@@ -75,7 +75,7 @@ const Ground_Detail = ({location,match}) => {
             <Calendar ground_id={groundId} timeTable={groundInfo.groundTimeTable}></Calendar>
           </div>
           <div className = "reviewComponent unVisible">
-            <Review></Review>
+            <Review ground_id={groundId}></Review>
           </div>
         </div>
       </div>
