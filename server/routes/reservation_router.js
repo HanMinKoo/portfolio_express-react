@@ -38,7 +38,7 @@ router.get('/list',(req,res)=>{
 });
 
 
-router.post('/progress',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
+router.post('/',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
     console.log("정말정말??", req.body);
 
     if(req.session.account === undefined)

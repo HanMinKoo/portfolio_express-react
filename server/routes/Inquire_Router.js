@@ -7,7 +7,7 @@ const router = express.Router();
 require('dotenv').config();
 
 
-router.post('/progress', (req, res, next)=> {
+router.post('/', (req, res, next)=> {
  
     let userName=req.body.userName;
     let phoneNumber=req.body.phoneNumber;

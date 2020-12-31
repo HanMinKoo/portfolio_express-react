@@ -13,7 +13,7 @@ class Login extends Component{
     handleLogin = (loginInfo) => {
         axios({
             method: 'post',
-            url: `/login/progress`,
+            url: `/login`,
             data:loginInfo,
             withCredentials:true
         })

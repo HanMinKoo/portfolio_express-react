@@ -31,7 +31,7 @@ router.get('/duplication/:typevalue',(req,res) => {
     });
 });
 
-router.post('/progress', (req,res)=>{
+router.post('/', (req,res)=>{
     console.log('회원가입 req body:',req.body);
     const {userName, userEmail, account, userPassword1} = req.body;
     

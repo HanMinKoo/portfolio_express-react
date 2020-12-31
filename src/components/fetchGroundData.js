@@ -31,7 +31,7 @@ const fetchGroundReservationTimeList = async(id, year,month,setReservationData)=
 const bookReservation = async(year,month,date,ground_time, ground_id)=>{
     axios({
         method:'post',
-        url:'/reservation/progress',
+        url:'/reservation',
         data:{
             year,
             month,

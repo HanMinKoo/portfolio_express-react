@@ -79,7 +79,7 @@ class Join extends Component{
      
         axios({
             method:'post',
-            url:'/join/progress',
+            url:'/join',
             data:userInfo
         }).then((res)=>{
            

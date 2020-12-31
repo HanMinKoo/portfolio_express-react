@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const router=express.Router();
 const connectionDB= require('../models/connection_DB.js');
 
-router.post('/progress',(req,res)=>{
+router.post('/',(req,res)=>{
     crypto.pbkdf2(req.body.password,'m9m9',8080,64,'sha512',(err,key)=>{
         console.log(key.toString('base64'));
         const password=key.toString('base64');

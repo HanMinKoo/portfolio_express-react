@@ -71,27 +71,18 @@ function fetchloginInfo(setAccount){
         })
         .then((res)=>{
             const {account} = res.data;
-            //console.log("account", account);
-            //console.log('session call: ',message);
             setAccount(account);
         }).catch((error)=>{
             console.log('session call error: ', error);
     });
 }
-// function fetchloginInfo(setAccount){
-//     axios({
-//             method:'get',
-//             url:'/'
-//         });
-        
-// }
+
 function processLogout(setAccount){
     axios({
         method:'get',
         url:'/logout'
     })
     .then((res)=>{
-        //console.log('res: ',res);
         const {result} = res.data;
         setAccount(result);
     }).catch((error)=>{
