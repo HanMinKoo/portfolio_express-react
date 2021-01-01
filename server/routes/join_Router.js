@@ -4,32 +4,60 @@ const crypto = require('crypto');
 const router = express.Router();
 const connectionDB= require('../models/connection_DB.js');
 
-router.get('/duplication/:typevalue',(req,res) => {
-    console.log(req.params.typevalue);
-    const typevalue=req.params.typevalue.split('-');
-    const type = typevalue[0];
-    const value = typevalue[1];
+// router.get('/duplication/:typevalue',(req,res) => {
+//     console.log(req.params.typevalue);
+//     const typevalue=req.params.typevalue.split('-');
+//     const type = typevalue[0];
+//     const value = typevalue[1];
 
+//     const dbCon=connectionDB.connectDB();
+
+//     let query;
+//     if(type==='text')
+//         query=`select * from web_portfolio1.user where account='${value}'`;
+//     else if(type==='email')
+//         query=`select * from web_portfolio1.user where email='${value}'`;
+
+//     dbCon.query(query, (err,userInfo)=>{
+//         if(err)
+//             console.log('table name:user / Error: select query Error : ',err);
+//         else{
+//             console.log('table name:user / Result: select query Success');
+//             console.log(userInfo[0]);
+            
+//             (userInfo[0]===undefined) ? res.json({result:"notFound", message:'사용 가능합니다.'}) : res.json({result:"found", message:'이미 존재합니다.'}) 
+//         }
+//         dbCon.end();
+//     });
+// });
+
+router.get('/duplication/:email',(req,res)=>{
+    const email = req.params.email;
+    checkDuplication('email', email, res);
+});
+
+router.get('/duplication/:id',(req,res)=>{
+    const id = req.params.id;
+    checkDuplication('id', id, res);
+});
+
+function checkDuplication(type, data, res){
     const dbCon=connectionDB.connectDB();
+    const query = `select * from web_portfolio1.user where ${type}='${data}'`;
 
-    let query;
-    if(type==='text')
-        query=`select * from web_portfolio1.user where account='${value}'`;
-    else if(type==='email')
-        query=`select * from web_portfolio1.user where email='${value}'`;
-
-    dbCon.query(query, (err,userInfo)=>{
+    dbCon.query(query, (err,result)=>{
         if(err)
             console.log('table name:user / Error: select query Error : ',err);
         else{
             console.log('table name:user / Result: select query Success');
-            console.log(userInfo[0]);
+            console.log(result[0]);
             
-            (userInfo[0]===undefined) ? res.json({result:"notFound", message:'사용 가능합니다.'}) : res.json({result:"found", message:'이미 존재합니다.'}) 
+            (result[0]===undefined) ? res.json({result:"notFound", message:`사용 가능한 ${type}입니다.`}) : res.json({result:"found", message:`이미 존재하는 ${type}입니다.`}) 
         }
         dbCon.end();
     });
-});
+}
+
 
 router.post('/', (req,res)=>{
     console.log('회원가입 req body:',req.body);

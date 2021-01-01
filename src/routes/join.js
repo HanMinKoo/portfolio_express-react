@@ -143,6 +143,8 @@ class Join extends Component{
         });
 
     }
+
+    
    
     render(){
         if(this.state.redirect)
@@ -157,10 +159,10 @@ class Join extends Component{
                     <input type="text" name="userName"></input>
                 
                     <label>이메일</label>
-                    <button type="button" onClick={()=>this.checkDuplication('email')} id="duplicationChk">중복체크</button>
+                    <button type="button" onClick={()=>this.checkDuplication('email')}  >중복체크</button>
                     <span className="js-duplicateTextSpanEmail"></span>
                 
-                    <input type="email" name="userEmail" className="js-userEmail" ></input>
+                    <input type="email" name="userEmail" className="js-userEmail" onKeyUp={(event)=>checkEmail(event)}></input>
 
                     
                     <label>아이디</label>
@@ -188,6 +190,33 @@ class Join extends Component{
             </div>
         );
     }
+}
+
+function checkEmail(event){ //onKeyUp 이벤트일 때 발동. 
+    //keyDown 이랑 keyPress 이벤트는 현재 누른 값이 input창에 입력이 되기 전에 value 값을 불러와서 현재 누른 값을 찾지 못한다. 
+    const currentEmailInput = document.querySelector('.js-userEmail').value;
+    const emailRegExp=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    
+    if(emailRegExp.test(currentEmailInput)){
+        console.log('ok');
+        const validationResult = checkEmailDuplication(currentEmailInput);
+    }
+    else{
+        console.log(currentEmailInput);
+    }
+}
+
+function checkEmailDuplication(email){
+    axios({
+        method:'get',
+        url: `/join/duplication/${email}`,
+    }).then((res)=>{
+        
+    }).catch((error)=>{
+        alert('중복처리 오류');
+        console.log('회원가입 중복체크 error: ', error);
+    });
+    
 }
 
 export default Join;
