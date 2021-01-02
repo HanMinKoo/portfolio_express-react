@@ -38,3 +38,6 @@ input{
     color:blue;
     margin-left: 3%;
 }
+.emailValidationText{
+    border:3px solid black;
+}

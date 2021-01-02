@@ -31,14 +31,11 @@ const connectionDB= require('../models/connection_DB.js');
 //     });
 // });
 
-router.get('/duplication/:email',(req,res)=>{
-    const email = req.params.email;
-    checkDuplication('email', email, res);
-});
-
-router.get('/duplication/:id',(req,res)=>{
-    const id = req.params.id;
-    checkDuplication('id', id, res);
+router.get('/duplication/:value',(req,res)=>{
+    const value = req.params.value;
+    const [inputData, type] = value.split('-');
+    console.log(inputData, type);
+    checkDuplication(type, inputData, res);
 });
 
 function checkDuplication(type, data, res){

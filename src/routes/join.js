@@ -162,14 +162,15 @@ class Join extends Component{
                     <button type="button" onClick={()=>this.checkDuplication('email')}  >중복체크</button>
                     <span className="js-duplicateTextSpanEmail"></span>
                 
-                    <input type="email" name="userEmail" className="js-userEmail" onKeyUp={(event)=>checkEmail(event)}></input>
-
+                    <input type="email" name="userEmail" className="js-userEmail" onKeyUp={()=>pressEmailInput('email')}></input>
+                    <span className="js-emailValidationText validationText"></span>
                     
                     <label>아이디</label>
                     <button type="button" onClick={()=>this.checkDuplication('id')} >중복체크</button>
                     <span className="js-duplicationTextSpanId"></span>
                     
-                    <input type="text" name="account" className="js-account"></input>
+                    <input type="text" name="account" className="js-account" onKeyUp={()=>pressAccountInput('account')}></input>
+                    <span className="js-accountValidationText validationText"></span>
                     <div className="check_font" ></div>
             
                     <label>비밀번호</label>
@@ -192,31 +193,54 @@ class Join extends Component{
     }
 }
 
-function checkEmail(event){ //onKeyUp 이벤트일 때 발동. 
-    //keyDown 이랑 keyPress 이벤트는 현재 누른 값이 input창에 입력이 되기 전에 value 값을 불러와서 현재 누른 값을 찾지 못한다. 
-    const currentEmailInput = document.querySelector('.js-userEmail').value;
-    const emailRegExp=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    
-    if(emailRegExp.test(currentEmailInput)){
-        console.log('ok');
-        const validationResult = checkEmailDuplication(currentEmailInput);
-    }
+function pressEmailInput(){
+    const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const eamilInput = document.querySelector('.js-userEmail').value;
+    const validationText = document.querySelector('.js-emailValidationText');
+    const validationEmailRadioBtn = document.querySelector('.js-duplicationCheckRadioEmail');
+
+    checkValidation(emailRegExp, eamilInput, validationText, validationEmailRadioBtn, 'email');
+}
+
+function pressAccountInput(){
+    const accountRegExp = /^[a-zA-Z0-9]{6,12}/i;
+    const accountInput = document.querySelector('.js-account').value;
+    const validationText = document.querySelector('.js-accountValidationText');
+    const validationAccountRadioBtn = document.querySelector('.js-duplicationCheckRadioId');
+
+    checkValidation(accountRegExp, accountInput, validationText, validationAccountRadioBtn, 'account');
+}
+
+function checkValidation(regExp, input, text, radioBtn, type){
+    if(regExp.test(input))
+        checkEmailDuplication(input, text, radioBtn,type);
     else{
-        console.log(currentEmailInput);
+        text.innerHTML = 'test';
+        radioBtn.value= false;
     }
 }
 
-function checkEmailDuplication(email){
+function checkEmailDuplication(input, validationResultText, validationRadioBtn, type){
+    const value = `${input}-${type}`;
+    console.log(value);
     axios({
         method:'get',
-        url: `/join/duplication/${email}`,
-    }).then((res)=>{
-        
+        url: `/join/duplication/${value}`,
+    })
+    .then((res)=>{
+        const {result, message} = res.data;
+        if(result === 'notFound'){
+            validationResultText.innerHTML = message;
+            validationRadioBtn.value = true;
+        }
+        else if(result === 'found'){
+            validationResultText.innerHTML = message;
+            validationRadioBtn.value = false;
+        }
     }).catch((error)=>{
         alert('중복처리 오류');
         console.log('회원가입 중복체크 error: ', error);
     });
-    
 }
 
 export default Join;
