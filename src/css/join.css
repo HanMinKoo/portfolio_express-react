@@ -8,8 +8,7 @@
     width:400px;
     margin-top: 10%;
 }
-input{
-    display:block;
+.joinForm>input{
     margin-bottom:8%;
     width:400px;
     height: 40px;
@@ -27,7 +26,7 @@ input{
     text-align: center;
     color:blue;
 }
-.duplicationRadioId, .duplicationRadioEmail{
+.duplicationRadioBtn{
     display: none;
 }
 .duplicationFound{
@@ -38,6 +37,13 @@ input{
     color:blue;
     margin-left: 3%;
 }
-.emailValidationText{
-    border:3px solid black;
+.validationText{
+    margin: -8% 0% 8% 0%;
+    display: block;
+}
+.validationNotPassed{
+    color: red;
+}
+.validationPassed{
+    color: #2ecc71;
 }

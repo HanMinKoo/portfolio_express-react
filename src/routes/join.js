@@ -14,67 +14,6 @@ class Join extends Component{
         return false;
     }
 
-    checkDuplication(type){
-        let element;
-        (type ==='email') ? element = document.querySelector(".js-userEmail") :
-            element = document.querySelector(".js-account");
-
-        if(element.value === ''){ 
-           alert(`${type}을 입력해주세요.`);
-           return;
-        }
-   
-        /****type: email 또는 id, value: email 또는 id input에 입력된 값****/
-        const typeValue={ 
-            //type:element.type,
-            value:element.value
-        };
-        axios({
-            method:'get',
-            url: `/join/duplication/${element.type}-${element.value}`,
-            //url:'/join/element.value',
-            data:typeValue,
-        }).then((res)=>{
-            const {result, message} = res.data;
-
-            /****중복 여부 결과 문구 나타내는 span ****/
-            const duplicationTextId = document.querySelector('.js-duplicationTextSpanId');
-            const duplicationTextEmail = document.querySelector('.js-duplicateTextSpanEmail');
-
-            /****중복체크 했는지 확인하는 input radio  ****/
-            const duplicationRadioId = document.querySelector('.js-duplicationCheckRadioId');
-            const duplicationRadioEmail = document.querySelector('.js-duplicationCheckRadioEmail');
-      
-            if(result==='notFound'){
-                (type === 'email') ? 
-                    this.setDuplicateNotFoundMessage(duplicationTextEmail, message,duplicationRadioEmail) :
-                        this.setDuplicateNotFoundMessage(duplicationTextId, message,duplicationRadioId);
-            }
-            else{
-                (type==='email') ? 
-                    this.setDuplicateFoundMessage(duplicationTextEmail, message, duplicationRadioEmail) : 
-                        this.setDuplicateFoundMessage(duplicationTextId, message, duplicationRadioId);
-            }
-        }).catch((error)=>{
-            alert('중복처리 오류');
-            console.log('회원가입 중복체크 error: ', error);
-        });
-   }
-//1. 중복 여부 결과에 따른 텍스트 셋팅 
-//2. 매개변수(span태그, 메시지, input radio 태그, input radio ture/false 값, css 클래스명) ****/
-   setDuplicateNotFoundMessage(duplicateText, message, duplicateCheckRadio){
-       duplicateCheckRadio.checked=true;
-       duplicateText.classList.remove('duplicationFound');
-       duplicateText.classList.add('duplicationNotFound');
-       duplicateText.innerHTML=message;     
-   }
-   setDuplicateFoundMessage(duplicateText, message, duplicateCheckRadio){
-        duplicateCheckRadio.checked=false;
-        duplicateText.classList.remove('duplicationNotFound');
-        duplicateText.classList.add('duplicationFound');
-        duplicateText.innerHTML=message;
-    }
-   
     handleJoin=(userInfo)=>{
      
         axios({
@@ -159,28 +98,25 @@ class Join extends Component{
                     <input type="text" name="userName"></input>
                 
                     <label>이메일</label>
-                    <button type="button" onClick={()=>this.checkDuplication('email')}  >중복체크</button>
                     <span className="js-duplicateTextSpanEmail"></span>
                 
                     <input type="email" name="userEmail" className="js-userEmail" onKeyUp={()=>pressEmailInput('email')}></input>
                     <span className="js-emailValidationText validationText"></span>
                     
                     <label>아이디</label>
-                    <button type="button" onClick={()=>this.checkDuplication('id')} >중복체크</button>
                     <span className="js-duplicationTextSpanId"></span>
                     
                     <input type="text" name="account" className="js-account" onKeyUp={()=>pressAccountInput('account')}></input>
-                    <span className="js-accountValidationText validationText"></span>
-                    <div className="check_font" ></div>
-            
+                    <span className="js-accountValidationResultText validationText"></span>
+
                     <label>비밀번호</label>
-                    
                     <input type="password" name="userPassword1"></input>
+
                     <label>비밀번호 확인</label>
-                    
                     <input type="password" name="userPassword2"></input>
-                    <input className="js-duplicationCheckRadioId duplicationRadioId"  type="radio" name="duplicationIdChk" value="" ></input>
-                    <input className="js-duplicationCheckRadioEmail duplicationRadioEmail" type="radio" name="duplicationEmailChk" value="" ></input>
+
+                    <input className="js-duplicationCheckRadioAccount duplicationRadioBtn"  type="radio" name="duplicationIdChk" value="" ></input>
+                    <input className="js-duplicationCheckRadioEmail duplicationRadioBtn" type="radio" name="duplicationEmailChk" value="" ></input>
                     
                     <button type= "submit" className="joinBtn">가입하기</button> 
                     <br></br>
@@ -204,43 +140,78 @@ function pressEmailInput(){
 
 function pressAccountInput(){
     const accountRegExp = /^[a-zA-Z0-9]{6,12}/i;
-    const accountInput = document.querySelector('.js-account').value;
-    const validationText = document.querySelector('.js-accountValidationText');
-    const validationAccountRadioBtn = document.querySelector('.js-duplicationCheckRadioId');
+    const accountInputValue = document.querySelector('.js-account').value;
+    const validationResult = document.querySelector('.js-accountValidationResultText');
+    const accountValidationRadioBtn = document.querySelector('.js-duplicationCheckRadioAccount');
+    const validationNotPassedText = '유효한 데이터만 입력하세요';
 
-    checkValidation(accountRegExp, accountInput, validationText, validationAccountRadioBtn, 'account');
+    checkValidation(accountRegExp, accountInputValue, validationResult, accountValidationRadioBtn, 'account')
+    .then((resultBoolean)=>{
+        if(resultBoolean){ //dom 조작 함수 호출하기
+
+        }
+        else{
+
+        }
+    });
+    // if(!(checkValidation(accountRegExp, accountInputValue, validationResult, accountValidationRadioBtn, 'account'))){//유효성 검사 통과 못하면
+    // //undefined가 ! 만나면 true가 됨
+    //     if(validationResult.innerHTML !== validationNotPassedText) //이미 저 글씨인데 계속 입력하면 dom 조작 빈번히 일어남. 
+    //         validationResult.innerHTML = validationNotPassedText;
+
+        
+    //     validationResult.classList.add('validationNotPassed');
+    //     validationResult.classList.remove('validationPassed');
+    // }
+    // else{
+    //     validationResult.classList.remove('validationNotPassed');
+    //     validationResult.classList.add('validationPassed');
+    // }
 }
 
 function checkValidation(regExp, input, text, radioBtn, type){
-    if(regExp.test(input))
-        checkEmailDuplication(input, text, radioBtn,type);
-    else{
-        text.innerHTML = 'test';
-        radioBtn.value= false;
-    }
+    return new Promise((solve, reject)=>{   //비동기 처리니깐 true를 반환할 수가 없음. then된 곳에서 return true하면 그 then의 콜백에 true가 반횐되는거니깐..
+        //그래서 Promise를 만듬. Promise를 안만들고 then에서 dom 조작하는 함수를 만들어 호출할 수 있지만, 유효성을 검사하는 함수에서 조작하기에는 어울린것 같지 않음.
+        if(regExp.test(input)){
+
+            checkEmailDuplication(input, type)
+            .then((res)=>{
+                const {result, message} = res.data;
+                text.innerHTML = message;
+                (result === 'notFound') ? radioBtn.checked = true : radioBtn.checked = false;
+                solve(true);
+            })
+            .catch(error => {
+                alert('중복처리 오류');
+                console.log('회원가입 중복체크 error: ', error);
+            });
+        }
+        else{
+            radioBtn.checked= false;
+            solve(false);
+        }
+    });
+    
 }
 
-function checkEmailDuplication(input, validationResultText, validationRadioBtn, type){
+function checkEmailDuplication(input, type){
     const value = `${input}-${type}`;
-    console.log(value);
-    axios({
-        method:'get',
-        url: `/join/duplication/${value}`,
-    })
-    .then((res)=>{
-        const {result, message} = res.data;
-        if(result === 'notFound'){
-            validationResultText.innerHTML = message;
-            validationRadioBtn.value = true;
-        }
-        else if(result === 'found'){
-            validationResultText.innerHTML = message;
-            validationRadioBtn.value = false;
-        }
-    }).catch((error)=>{
-        alert('중복처리 오류');
-        console.log('회원가입 중복체크 error: ', error);
+
+    return new Promise((solve, reject) => {
+        axios({
+            method:'get',
+            url: `/join/duplication/${value}`,
+        })
+        .then((res)=>{
+            solve(res);
+        })
+        .catch((error)=>{
+            reject(error);
+        });
+
     });
 }
+
+//dom 조작 함수 만들기
 
 export default Join;

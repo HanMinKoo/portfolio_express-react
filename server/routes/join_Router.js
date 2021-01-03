@@ -34,7 +34,7 @@ const connectionDB= require('../models/connection_DB.js');
 router.get('/duplication/:value',(req,res)=>{
     const value = req.params.value;
     const [inputData, type] = value.split('-');
-    console.log(inputData, type);
+
     checkDuplication(type, inputData, res);
 });
 
