@@ -97,17 +97,13 @@ class Join extends Component{
                     <label>이름</label>
                     <input type="text" name="userName"></input>
                 
-                    <label>이메일</label>
-                    <span className="js-duplicateTextSpanEmail"></span>
-                
+                    <label>이메일</label>         
                     <input type="email" name="userEmail" className="js-userEmail" onKeyUp={()=>pressEmailInput('email')}></input>
-                    <span className="js-emailValidationText validationText"></span>
+                    <span className="js-emailValidationResultSpan validationText"></span>
                     
                     <label>아이디</label>
-                    <span className="js-duplicationTextSpanId"></span>
-                    
                     <input type="text" name="account" className="js-account" onKeyUp={()=>pressAccountInput('account')}></input>
-                    <span className="js-accountValidationResultText validationText"></span>
+                    <span className="js-accountValidationResultSpan validationText"></span>
 
                     <label>비밀번호</label>
                     <input type="password" name="userPassword1"></input>
@@ -131,87 +127,92 @@ class Join extends Component{
 
 function pressEmailInput(){
     const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    const eamilInput = document.querySelector('.js-userEmail').value;
-    const validationText = document.querySelector('.js-emailValidationText');
+    const eamilInputValue = document.querySelector('.js-userEmail').value;
+    const validationResultSpan = document.querySelector('.js-emailValidationResultSpan');
     const validationEmailRadioBtn = document.querySelector('.js-duplicationCheckRadioEmail');
+    const validationNotPassedText = '유효한 이메일을 작성해주세요.';
 
-    checkValidation(emailRegExp, eamilInput, validationText, validationEmailRadioBtn, 'email');
+    checkValidation(emailRegExp, eamilInputValue, 'email')
+    .then((res)=>{
+        if(res === 'validationFail'){
+            res = {data:{result:res, message:''}};
+        }   
+        printValidationResult(validationNotPassedText, validationResultSpan, validationEmailRadioBtn, res); 
+    });
 }
 
 function pressAccountInput(){
     const accountRegExp = /^[a-zA-Z0-9]{6,12}/i;
     const accountInputValue = document.querySelector('.js-account').value;
-    const validationResult = document.querySelector('.js-accountValidationResultText');
+    const validationResultSpan = document.querySelector('.js-accountValidationResultSpan');
     const accountValidationRadioBtn = document.querySelector('.js-duplicationCheckRadioAccount');
-    const validationNotPassedText = '유효한 데이터만 입력하세요';
+    const validationNotPassedText = '영문/숫자 조합, 6 ~ 12 글자수로 구성해주세요';
 
-    checkValidation(accountRegExp, accountInputValue, validationResult, accountValidationRadioBtn, 'account')
-    .then((resultBoolean)=>{
-        if(resultBoolean){ //dom 조작 함수 호출하기
-
-        }
-        else{
-
-        }
+    checkValidation(accountRegExp, accountInputValue, 'account')
+    .then((res)=>{
+        if(res === 'validationFail'){
+            res = {data:{result:res, message:''}};
+        }   
+        printValidationResult(validationNotPassedText, validationResultSpan, accountValidationRadioBtn, res); 
     });
-    // if(!(checkValidation(accountRegExp, accountInputValue, validationResult, accountValidationRadioBtn, 'account'))){//유효성 검사 통과 못하면
-    // //undefined가 ! 만나면 true가 됨
-    //     if(validationResult.innerHTML !== validationNotPassedText) //이미 저 글씨인데 계속 입력하면 dom 조작 빈번히 일어남. 
-    //         validationResult.innerHTML = validationNotPassedText;
-
-        
-    //     validationResult.classList.add('validationNotPassed');
-    //     validationResult.classList.remove('validationPassed');
-    // }
-    // else{
-    //     validationResult.classList.remove('validationNotPassed');
-    //     validationResult.classList.add('validationPassed');
-    // }
 }
 
-function checkValidation(regExp, input, text, radioBtn, type){
-    return new Promise((solve, reject)=>{   //비동기 처리니깐 true를 반환할 수가 없음. then된 곳에서 return true하면 그 then의 콜백에 true가 반횐되는거니깐..
-        //그래서 Promise를 만듬. Promise를 안만들고 then에서 dom 조작하는 함수를 만들어 호출할 수 있지만, 유효성을 검사하는 함수에서 조작하기에는 어울린것 같지 않음.
+/*유효성 검사 및 중복 체크*/
+function checkValidation(regExp, input,type){
+    return new Promise((solve, reject)=>{ 
         if(regExp.test(input)){
-
-            checkEmailDuplication(input, type)
-            .then((res)=>{
-                const {result, message} = res.data;
-                text.innerHTML = message;
-                (result === 'notFound') ? radioBtn.checked = true : radioBtn.checked = false;
-                solve(true);
+            //input 값 중복 체크 API 요청(함수로 만드는게 코드 가독성이 좋을지 모르겠지만, 쓸데없이 길어짐...)
+            const value = `${input}-${type}`;
+            axios({
+                method:'get',
+                url: `/join/duplication/${value}`,
             })
-            .catch(error => {
-                alert('중복처리 오류');
-                console.log('회원가입 중복체크 error: ', error);
+            .then((res)=>{
+                solve(res); //then된 곳에서 return true하면 그 then의 콜백에 true가 반횐됨. 그래서 Promise 이용
+            })
+            .catch((error)=>{
+                reject(error);
             });
         }
         else{
-            radioBtn.checked= false;
-            solve(false);
+            solve('validationFail');
         }
     });
     
 }
 
-function checkEmailDuplication(input, type){
-    const value = `${input}-${type}`;
+function printValidationResult(text, resultSpan, radioBtn, res){
 
-    return new Promise((solve, reject) => {
-        axios({
-            method:'get',
-            url: `/join/duplication/${value}`,
-        })
-        .then((res)=>{
-            solve(res);
-        })
-        .catch((error)=>{
-            reject(error);
-        });
-
-    });
+    const {result, message} = res.data;
+ 
+    //dom 조작 최소하 하기위해 조건문 설정, 
+    if(result === 'notFound'){
+        if(radioBtn.checked === false){ //found에서 notFound, validationFail에서 notFound : false -> true / notFound 반복: 이미 true. 조작 X
+            radioBtn.checked = true;
+            resultSpan.innerHTML = message;
+            //console.log('notFound');
+        }      
+    }
+    else if(result === 'found'){ 
+        if(radioBtn.checked === true){ //notfound에서 found: true -> false 
+            radioBtn.checked = false;
+            //console.log('found');
+        }
+        else if(radioBtn.checked === false) //validationFild에서 found: false -> false, found에서 found: html만 변경
+            {resultSpan.innerHTML = message;
+                //console.log('found message change');
+            }
+    }
+    else if('validationFail'){ //NOT FOUND 였다가 유효하지 않으면?: true -> false / 계속 유효하지 않거나, found 상태면?: 계속 false니깐 조작 X
+        if(radioBtn.checked === true){
+            radioBtn.checked = false;
+            //console.log('validationFail')
+        }
+        if(resultSpan.innerHTML !== text){
+            resultSpan.innerHTML = text;
+            //console.log("'validationFail message change");
+        }
+    }  
 }
-
-//dom 조작 함수 만들기
 
 export default Join;
