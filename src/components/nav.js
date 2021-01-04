@@ -120,7 +120,7 @@ const Nav = () =>{
                     <Link to="/">MK GROUND</Link>
                 </div>
                 <ul className="navbar_menu">
-                    <li className="js-link"><Link to="/">홈</Link></li>
+                    <li className="js-link menuTop"><Link to="/">홈</Link></li>
                     <li className="js-link"><Link to="/ground" >운동장 예약</Link></li>
                     <li className="js-link"><Link to="/inquire">문의하기</Link></li>
                 </ul>

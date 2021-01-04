@@ -4,7 +4,7 @@
     align-items: center;
     background-color: #34495e;
     padding: 10px 30px;
-    position: fixed;  
+    position: sticky;  
     width: 100%;
     top:0;
     z-index: 1;
@@ -23,6 +23,7 @@
     
 }
 
+
 .navbar_menu li{
     padding:8px 12px; /*margin을 넣으면 박스 자체가 작아진다*/ 
 }
@@ -32,8 +33,6 @@
 }
 .navbar_menu li a{
     padding: 8px 12px;
-    
-
 }
 .navbar_menu li a:hover{
     background-color: #2ecc71;
@@ -53,12 +52,10 @@
 
 .navbar_account_join{
     background-color: #2ecc71;
-    
     border-radius: 10px;
 }
 .navbar_account_join a{
-    padding: 6px 8px;
-
+    padding: 8px 8px;
 }
 .navbar_hamburgerBtn{
     display:none;
@@ -81,12 +78,16 @@
         display: none;
         flex-direction: column;
         width: 100%;
+        margin: 3% 0%;
     }
     .navbar_menu li{
         width: 100%;
         text-align: center;
         border-bottom: 1px solid black;
-        padding: 8px 0px;
+        padding: 0px 0px;
+    }
+    .menuTop{
+        border-top:1px solid black;
     }
 
     /*a태그는 텍스트 위치로만 클릭 범위가 잡힌다. 이걸 해결하기 위해 padding값을 줘서 해결할 순 있지만 말도 안되는 노가다를 해야한다*/
@@ -96,7 +97,6 @@
     }
 
     .navbar_account{
-        margin-top: 3%;
         display: none;
         width:100%;
         justify-content: center;
