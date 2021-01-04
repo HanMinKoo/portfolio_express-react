@@ -1,3 +1,16 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+body{
+    font-family: 'Noto Sans KR', sans-serif;
 }
+
+*{
+  margin:0; 
+  padding:0;
+  box-sizing: border-box;
+}
+
+li{
+  list-style: none;
+}
+
+a{text-decoration: none;}

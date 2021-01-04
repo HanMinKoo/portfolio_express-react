@@ -1,23 +1,17 @@
-body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
-
-
-
 .navbar{
-   /* margin: 0 auto;
-    width: 1200px;*/
     display:flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ecf0f1;
-    padding: 8px 12px;
-    position: sticky;  /*top,left,right,bottom 중 한개의 속성이 필수.*/
+    background-color: #34495e;
+    padding: 10px 30px;
+    position: fixed;  
+    width: 100%;
     top:0;
     z-index: 1;
-    
+    font-size: 20px; 
 }
 .navbar_logo{
-    font-size:24px;  /*awesome logo는 font임*/
-    padding:8px 12px;
+    font-size: 1.4em;
 }
 
 
@@ -26,6 +20,7 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
     list-style: none;
     padding-left: 0px;
     font-size:1.2em;
+    
 }
 
 .navbar_menu li{
@@ -33,34 +28,37 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
 }
 
 .navbar_menu li a , .navbar_logo a{
-    color:black;
+    color: white;
 }
 .navbar_menu li a{
     padding: 8px 12px;
+    
 
 }
-.navbar_menu li:hover{
+.navbar_menu li a:hover{
     background-color: #2ecc71;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .navbar_account{
     display:flex;
-    padding-left: 0px;
 }
 .navbar_account li{
     list-style: none;
     padding:8px 10px;
 }
+.navbar_account>li>a{
+    color:white;
+}
 
 .navbar_account_join{
     background-color: #2ecc71;
     
-    border-radius: 8px;
+    border-radius: 10px;
 }
 .navbar_account_join a{
-    padding: 8px 12px;
-    color:white;
+    padding: 6px 8px;
+
 }
 .navbar_hamburgerBtn{
     display:none;
@@ -74,6 +72,10 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
     .navbar{
         flex-direction: column;
         align-items: flex-start;
+        padding:10px 0px; 
+    }
+    .navbar_logo{
+        margin-left: 5%;
     }
     .navbar_menu{
         display: none;
@@ -84,6 +86,7 @@ body{margin:0; font-family: 'Noto Sans KR', sans-serif;}
         width: 100%;
         text-align: center;
         border-bottom: 1px solid black;
+        padding: 8px 0px;
     }
 
     /*a태그는 텍스트 위치로만 클릭 범위가 잡힌다. 이걸 해결하기 위해 padding값을 줘서 해결할 순 있지만 말도 안되는 노가다를 해야한다*/
