@@ -186,9 +186,13 @@ function pressPasswordInput(){
     
     const passwordRegExp = /^[a-z0-9A-Z]{8,20}/;
     const passwordInputValue = document.join_form.userPassword1.value;
+    const passwordValue2 = document.join_form.userPassword2.value;
     const validationResultSpan = document.querySelector('.js-passwordValidationResultSpan');
     const validationPassedText = '사용 가능한 비밀번호 입니다.';
     const validationNotPassedText = '유효한 비밀번호를 입력하세요.(영문 대소문자 숫자조합(8~20글자))';
+    const passwordCheckRadioBtn = document.querySelector('.js-passwordSameRadio');
+    const password2ResultSpan = document.querySelector('.js-passwordSameCheckSpan');
+
     if(passwordRegExp.test(passwordInputValue)){
         if(validationResultSpan.innerHTML !== validationPassedText){
             validationResultSpan.innerHTML = validationPassedText;
@@ -203,6 +207,14 @@ function pressPasswordInput(){
             validationResultSpan.classList.remove('validationPassed');
         }
     }
+    if(passwordInputValue !== passwordValue2){
+        if(passwordCheckRadioBtn.checked){ //비밀번호가 다른데 체크가 된 경우, 처음에 비밀번호 일치 시켰다가 첫번째 비밀번호 변경하면 이렇게됨.
+            passwordCheckRadioBtn.checked = false;
+            password2ResultSpan.innerHTML = '비밀번호가 일치하지 않습니다.';
+            password2ResultSpan.classList.add('validationNotPassed');
+            password2ResultSpan.classList.remove('validationPassed');
+        }
+    }
 
 }
 
@@ -215,7 +227,7 @@ function checkPasswordSame(){
 
     if(password1 !== password2){
         if(passwordResultSpan.innerHTML !== resultText ){ //이 조건문을 안걸면 비밀번호 일치하지 않을 때 마다 돔 조작 됨.
-            passwordResultSpan.innerHTML = '비밀번호가 일치하지 않습니다.'
+            passwordResultSpan.innerHTML = '비밀번호가 일치하지 않습니다.';
             passwordResultSpan.classList.add('validationNotPassed');
             passwordResultSpan.classList.remove('validationPassed');
             passwordCheckRadioBtn.checked = false;
