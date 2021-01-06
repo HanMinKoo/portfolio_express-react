@@ -55,10 +55,6 @@
  - 운동장 예약 관련 문의 사항을 이메일로 받고자 문의하기 기능을 만들었습니다.
 
 
-## DB ERD
-
-![ERD](https://user-images.githubusercontent.com/46620616/103676731-ca3b4b80-4fc4-11eb-85d0-8a7378011976.JPG)
-
 
 ## 주요 소스 코드 폴더 및 파일 설명
 
