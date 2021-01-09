@@ -56,7 +56,8 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
             //****현재 날짜보다 이전의 날짜는 모두 예약 못하게 막기.(예약 완료로 표시)  ****/
             //1. 지난 달, 또는 지난 년도이거나 또는
             //2. 일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
-            if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) ||
+            console.log(currentDate.getFullYear(), year, currentDate.getMonth()+1 ,month);
+            if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) || currentDate.getFullYear() > year||
             (date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
                 makeUnBookable(ul);
             }
@@ -179,12 +180,13 @@ function Calendar({ground_id, timeTable}){
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
-        //initChoiceInfoMenu();
         fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
+    
 
     useEffect(()=>{
-        //맨 처음 마운트 되고 모든useEffect가 실행되는데, 동시에 reservationData 의 useEffect 까지 실행 되니 달력이 2번그려지게된다(reservationData를 두번 호출한꼴이됨). 그러니깐 reservationData !== null처리해서 처음 실행되는거막기.
+        //맨 처음 마운트 되고 모든useEffect가 실행된다.[date]같이 date state만 변하는 것도 무조건 실행된다.
+        //맨 처음 마운트 되고 모든useEffect가 실행된다. 동시에 reservationData 의 useEffect 까지 실행 되니 달력이 2번그려지게된다(reservationData를 두번 호출한꼴이됨). 그러니깐 reservationData !== null처리해서 처음 실행되는거막기.
         if(reservationData !== null){
             fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
         }
