@@ -10,6 +10,7 @@ function makeUnBookable(ul){
 }
 
 function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,ground_id){
+
     //console.log('makeCalendar');
     let dayCnt=0; //1일이 시작하는 요일 계산하기 위해 선언한 변수
     let weekLine=0; //7이 될때 마다 tr생성
@@ -56,7 +57,7 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
             //****현재 날짜보다 이전의 날짜는 모두 예약 못하게 막기.(예약 완료로 표시)  ****/
             //1. 지난 달, 또는 지난 년도이거나 또는
             //2. 일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
-            console.log(currentDate.getFullYear(), year, currentDate.getMonth()+1 ,month);
+           
             if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) || currentDate.getFullYear() > year||
             (date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
                 makeUnBookable(ul);
@@ -141,35 +142,68 @@ function initDate(date){
     return dateObj;
 }
 
+
+//현실 날짜 보다 이전 날짜면 지난 달의 예약 현황을 불러오기 위한 api 요청을 할 필요가 없다.
+//어차피 예약 불가가 출력되니깐 바로 달력을 그려주기만 하면된다.
+//만약 현실 날짜 기준 이전 날짜가 아니면, false를 반환해준다. 
+//즉, 이 함수의 역할은 현실 보다 이전 날짜는 setDate를 업데이트를 안시켜서 예약 현황 데이터 불러오기 위한 api 요청 안하게 하는것.
+function checkPreviousYearMonth(year,month,currentYear,currentMonth){
+    const tmpDate = new Date(year,month);
+    const  changeDate= initDate(tmpDate);
+    console.log('변경 날짜',changeDate);
+
+    if(currentYear > changeDate.year || (currentYear>= changeDate.year && currentMonth>changeDate.month)){
+        makeCalendar(year,month,changeDate.firstDay,changeDate.lastDate,0,0,0);
+        changeCalendarHeader(changeDate.year,changeDate.month);
+        return true;
+    }
+    else   
+        return false;
+
+}
+
+
+
 function changeYearMonth(year,month,setDate){
     const previousMonth=document.querySelector('.js-previousMonth');
     const nextMonth=document.querySelector('.js-nextMonth');
+    const currentYear = year;
+    const currentMonth = month;
     
-    previousMonth.addEventListener('click',()=>{
+    previousMonth.addEventListener('click',()=>{ // 이전 달 클릭시 서버에 요청 안하고 바로 make calendar 그려버리기
         const tbody=document.querySelector('.js-tbodyDate');
-        //console.log('이전달 클릭');
+
         while(tbody.hasChildNodes()){
             tbody.removeChild(tbody.firstChild);
         }
         month -= 2;
-        //console.log('이전달 month -2', month);
-        setDate(new Date(year,month++));
-        //console.log('이전달 month ++', month);
+        
+        // 현실 날짜가 2021년 4월1일이면, 2020년인지, 2021년 1,2,3월인지, 즉 이미 이전의 날인지 체크
+        //만약 2021년 6월로 이동한 상태에서 다시 2021년 5월로 이동하면, 현실 날짜 기준 이전 날짜가 아니니깐 
+        //setDate가 업데이트 되서 api 요청이 될 것이다.
+        //이전 달이면 달력 그린 후, month 증가시키기.
+        (checkPreviousYearMonth(year,month,currentYear,currentMonth))
+            ? month++ : setDate(new Date(year,month++));
     });
 
-    nextMonth.addEventListener('click',(event)=>{   
+    nextMonth.addEventListener('click',()=>{   
         const tbody=document.querySelector('.js-tbodyDate');
-        //console.log('이후달 클릭');
+
         while(tbody.hasChildNodes()){
             tbody.removeChild(tbody.firstChild);
         }
-        //console.log('다음달 month ', month);
-        setDate(new Date(year,month++));
-        //console.log('다음달 month++ ', month);
+
+        //다음 달 클릭 버튼에서 이 설정을 해준 이유는
+        //현재 날짜가 2021 년4월 1일인데, 2021년 2월 달력으로 이동했다 치자.
+        //그 후, 2021년 3월로 이동을 했다 친다. 그러면 이 조건이 설정 되어 있지 않으면
+        //예약 현황을 불러오기 위해 api 요청을 하게된다.(setDate 업데이트 된 후, fetch 진행)
+        //그래서 이 조건문을 통해 다음 달 클릭을 했어도 현재 날짜 보다 이전의 년 월이면 api 요청 x
+        (checkPreviousYearMonth(year,month,currentYear,currentMonth))
+            ? month++ : setDate(new Date(year,month++));
     });
 }
 
-function Calendar({ground_id, timeTable}){
+function Calendar({ground_id, timeTable}){ //컴포넌트가 마운트 되면 모든 useEffect가 실행된다([date], [reservation] 포함)
      
     const [date,setDate]= useState(new Date());
     const [reservationData, setReservationData]=useState(null);
@@ -180,16 +214,15 @@ function Calendar({ground_id, timeTable}){
     //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
-        fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+        //fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
     
 
     useEffect(()=>{
-        //맨 처음 마운트 되고 모든useEffect가 실행된다.[date]같이 date state만 변하는 것도 무조건 실행된다.
         //맨 처음 마운트 되고 모든useEffect가 실행된다. 동시에 reservationData 의 useEffect 까지 실행 되니 달력이 2번그려지게된다(reservationData를 두번 호출한꼴이됨). 그러니깐 reservationData !== null처리해서 처음 실행되는거막기.
-        if(reservationData !== null){
+        //if(reservationData !== null){
             fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
-        }
+        //}
     },[date]);
     useEffect(()=>{
         if(reservationData !== null){
