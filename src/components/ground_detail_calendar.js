@@ -18,6 +18,7 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
     let tr;
 
     const currentDate= new Date();
+
     const tbody=document.querySelector('.js-tbodyDate');//tr 생성하기 위해서
     const forRange=lastDate+(firstDay-dayCnt);//firstDay-dayCnt만큼 반복문을 소모했으니깐, lastDate만큼 반복하기 위해서 더해줘야지
 
@@ -54,19 +55,21 @@ function makeCalendar(year,month,firstDay,lastDate,reservationData,timeTable,gro
 
             let count=1;
             
-            //****현재 날짜보다 이전의 날짜는 모두 예약 못하게 막기.(예약 완료로 표시)  ****/
-            //1. 지난 달, 또는 지난 년도이거나 또는
-            //2. 일자가 현재 일자보다 이전이면서, 이번년, 이번달인 경우
-           
-            if((currentDate.getFullYear() >= year && currentDate.getMonth()+1 > month) || currentDate.getFullYear() > year||
-            (date < currentDate.getDate()) && (currentDate.getFullYear() === year && currentDate.getMonth()+1 === month)){
+            const loopDate =new Date(year, month-1, date);
+            
+            
+            //1. 현재 날짜보다 이전의 날짜는 예약 불가 처리(예약 완료로 표시)/
+            //이상하게 currentDate > loopDate가 년,월,일 시간 까지 같아도 currentDate가 더 크다고 처리된다. 그래서 현재 날짜도 예약 불가 되서
+            //조건문으로 현재 날짜랑 반복문의 날짜가 같으면 예약 가능하다고 처리.
+            if(currentDate > loopDate &&
+                !(currentDate.getFullYear() === year && currentDate.getMonth()+1 === month && currentDate.getDate() === date)){
                 makeUnBookable(ul);
             }
-
+                
             else{
                 //1.해당 달의 모든 예약 현황 중 현재 날짜(date)에 맞는 예약 현황만 따로 배열로 만들기
                 const dateReservationList= reservationData.filter(reservation => 
-                    reservation.use_date === `${year}년${month}월${date}일`);      
+                    reservation.use_date === `${year}-${month}-${date}`);    
                 
                 //2. forEach를 통해 현재 운동장의 이용 시간대를 순회.
                 //3. 현재 날짜의 운동장 예약 현황(dateReservationList)에 순회하는 시간대가 존재하면(find 메소드)
@@ -210,19 +213,16 @@ function Calendar({ground_id, timeTable}){ //컴포넌트가 마운트 되면 �
     
     const {year,month,firstDay,lastDate}=initDate(date);
 
-                                            
-    //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
+                                        
     useEffect(()=>{
         changeYearMonth(year,month,setDate);
-        //fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
     },[]);
     
-
+    //fetchGroundReservationTimeList 달력의 날짜 바꿀 때 마다 실행시켜야됨
     useEffect(()=>{
         //맨 처음 마운트 되고 모든useEffect가 실행된다. 동시에 reservationData 의 useEffect 까지 실행 되니 달력이 2번그려지게된다(reservationData를 두번 호출한꼴이됨). 그러니깐 reservationData !== null처리해서 처음 실행되는거막기.
-        //if(reservationData !== null){
-            fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
-        //}
+        fetchGroundReservationTimeList(ground_id,date.getFullYear(),date.getMonth()+1,setReservationData);
+
     },[date]);
     useEffect(()=>{
         if(reservationData !== null){

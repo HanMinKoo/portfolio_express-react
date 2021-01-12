@@ -23,7 +23,7 @@ router.get('/list',(req,res)=>{
     const dbCon=connectionDB.connectDB();
     const {ground_id, year, month}=req.query;
 
-    const query=`select * from ground_reservation_list where ground_id=${ground_id} and use_date like '${year}년${month}월%'`;
+    const query=`select * from ground_reservation_list where ground_id=${ground_id} and use_date like '${year}-${month}%'`;
 
     dbCon.query(query, (err,groundTimeList)=>{
         if(err)
@@ -47,7 +47,7 @@ router.post('/',(req,res)=>{//get방식은 url query에 값을 form의 데이터
     //const dbCon=connectionDB.connectDB();
 
     const ground_id=req.body.ground_id;
-    const use_date = `${req.body.year}년${req.body.month}월${req.body.day}일`;
+    const use_date = `${req.body.year}-${req.body.month}-${req.body.day}`;
 
     /*****로그인 상태에서 운동장 시간, 날짜 모두 선택하고 예약하기 버튼 눌렀을 경우(예약 진행)******/
     if(req.body.groundTime!==undefined && req.session.account!==undefined){    

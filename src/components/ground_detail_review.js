@@ -17,12 +17,14 @@ const Review = (ground_id) =>{
     },[]);//나중에 review 입력할 때 마다 불러와야할것같은데.
     return(
         <div className="review_wrap">
-
+            <h1>준비 중입니다.</h1>
+            {/* 
             <h1>test</h1>
             <form  className="reviewForm">
                 <input type="text" maxLength="998" className="inputReviewText"/>
                 <button className="reviewButton">등록</button>
             </form>
+            */}
         </div>
     );
 }

@@ -26,13 +26,35 @@ const fetchReservationList = async(setMyReservationList) =>{
 
 function initJSX(myReservationList){
     let jsx = [];
+    
+    
+    // const testDate = new Date(2021,1,10); //Date(년도, 월-1, 일)
+    // if(currentDate>testDate){
+    //     console.log(currentDate,testDate);
+    // }
+
     const {account, reservationList} = myReservationList; 
     
     //console.log('mypage data',reservationList);
 
-    for(let i = 0; i<reservationList.length; i++){   
-        if(reservationList[0].name === undefined)
+    for(let i = 0; i<reservationList.length; i++){
+        //const reservationSplitUseDate=reservationList[i].use_date.split('-');
+
+        const compareDateResult = compareToCurrentAndReservationDate(reservationList[i].use_date.split('-'));
+
+        //console.log(reservationSplitUseDate);
+        if(reservationList[0].name === undefined)  //여기서  reservationList[0].name 은 운동장 이름
             jsx = reservationList[0].text;
+        else if(!compareDateResult){ //일단은 테스트로 ! 박아둠.
+            jsx[i]=
+                <tr id = {reservationList[i].id} key={reservationList[i].id}>
+                    <td>{reservationList[i].id}</td>
+                    <td>{reservationList[i].name}</td>
+                    <td>{reservationList[i].use_date} &nbsp; {reservationList[i].use_time}</td>
+                    <td>{reservationList[i].state}</td>
+                    <td><button type='button' onClick={()=>deleteReservation(reservationList[i].id)}>리뷰 작성</button></td>
+                </tr>
+        }
         else{
             jsx[i]=
             
@@ -43,12 +65,20 @@ function initJSX(myReservationList){
                     <td>{reservationList[i].state}</td>
                     <td><button type='button' onClick={()=>deleteReservation(reservationList[i].id)}>취소</button></td>
                 </tr>
-            
-        
         }
     }
     return [account, jsx];
 }
+function compareToCurrentAndReservationDate(date){
+    const [year,month,day] = date;
+    
+    const currentDate = new Date();
+    const reservationDate = new Date(year, month-1, day); //Date(년도, 월-1, 일)
+
+    //console.log(reservationDate);
+    return (currentDate > reservationDate) ? true : false;
+}
+
 
 const Mypage = () =>{
 

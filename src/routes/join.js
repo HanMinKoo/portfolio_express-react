@@ -95,11 +95,12 @@ function pressEmailInput(){
 }
 
 function pressAccountInput(){
-    const accountRegExp = /^[a-zA-Z0-9]{6,12}/i;
+   
+    const accountRegExp = /^[A-Za-z0-9+]{6,12}$/;
     const accountInputValue = document.querySelector('.js-account').value;
     const validationResultSpan = document.querySelector('.js-accountValidationResultSpan');
     const accountValidationRadioBtn = document.querySelector('.js-duplicationCheckRadioAccount');
-    const validationNotPassedText = '영문/숫자 조합, 6 ~ 12 글자수로 구성해주세요';
+    const validationNotPassedText = '영문 혹은 영문/숫자 조합, 6 ~ 12 글자수로 구성해주세요';
 
     checkValidation(accountRegExp, accountInputValue, 'account')
     .then((res)=>{

@@ -21,11 +21,11 @@ const fetchGroundImg = async(groundId,setGroundImg)=>{
 }
 
 const fetchGroundReservationTimeList = async(id, year,month,setReservationData)=>{
-    //console.log("아이디 날짜 달",id,year,month);
+    console.log("아이디 날짜 달",id,year,month);
     const groundReservationList = await fetch(`/reservation/list/?ground_id=${id}&year=${year}&month=${month}`);
     const groundReservationListData = await groundReservationList.json();
     //console.log('운동장 예약시간리스트 fetch완료: ',groundReservationListData); 
-
+    console.log(groundReservationListData);
     setReservationData(groundReservationListData[0]);
 }
 const bookReservation = async(year,month,date,ground_time, ground_id)=>{
