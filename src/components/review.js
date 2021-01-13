@@ -3,12 +3,10 @@ import queryString from 'query-string';
 import axios from 'axios';
 import '../css/review.css';
 
-function submitReview(reviewText, groundId, useDate, useTime){
+function submitReview(reviewText, groundId){
     const data = {
         reviewText,
-        groundId,
-        useDate,
-        useTime
+        groundId
     };
     axios({
         method: 'post',
@@ -21,24 +19,24 @@ function submitReview(reviewText, groundId, useDate, useTime){
     .catch(error => console.log('review ERROR',error));
 }
 
-function checkReview(event,review, groundId, useDate, useTime){
+function checkReview(event,reviewRef, reservationId){
     event.preventDefault();
-    const reviewTextInput = review.current.value;
+    const reviewTextInput = reviewRef.current.value;
     const reviewAlertText = '리뷰를 입력해주세요.'; 
 
     if(reviewTextInput === '')
         alert(reviewAlertText);
     else
-        submitReview(reviewTextInput, groundId, useDate, useTime)
+        submitReview(reviewTextInput, reservationId)
 }
 
 const Review = ({location}) =>{
-    const {groundid, usedate, usetime} = queryString.parse(location.search);
+    const {reservationid} = queryString.parse(location.search);
     const reviewTextRef = useRef();
-    //console.log(groundid, usedate, usetime);
+    console.log(reservationid);
     return(
         <div className = "review_wrap">
-            <form className="review_form" onSubmit={(e)=>checkReview(e,reviewTextRef,groundid,usedate,usetime)}>
+            <form className="review_form" onSubmit={(e)=>checkReview(e,reviewTextRef,reservationid)}>
                 <label htmlFor="reviewTextLabel" className="reviewTextLabel">리뷰 작성</label>
                 <input type="text" maxLength="300" className="reviewTextInput" placeholder="300자 이하의 리뷰를 남겨주세요." ref={reviewTextRef}/>
                 <button type="submit" className="reviewButton">작성</button>

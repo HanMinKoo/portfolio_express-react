@@ -68,12 +68,10 @@ router.post('/',(req,res)=>{//get방식은 url query에 값을 form의 데이터
             }
             else{
                 res.json({result:'error', message:'예약 실패. 다시 시도해주세요.', error:err});
+                dbCon.end(); //210103 추가.
             }
         });
     }
-    /*****운동장 시간 체크 but 비로그인 상태, 즉 비정상적 접근 ******/
-    // else if(req.query.groundTime!==undefined && req.session.account===undefined)
-    //     res.render('exception',{exception:'비정상적 접근입니다. 로그인 후 이용하세요.'}); 
 });
 
 

@@ -4,33 +4,6 @@ const crypto = require('crypto');
 const router = express.Router();
 const connectionDB= require('../models/connection_DB.js');
 
-// router.get('/duplication/:typevalue',(req,res) => {
-//     console.log(req.params.typevalue);
-//     const typevalue=req.params.typevalue.split('-');
-//     const type = typevalue[0];
-//     const value = typevalue[1];
-
-//     const dbCon=connectionDB.connectDB();
-
-//     let query;
-//     if(type==='text')
-//         query=`select * from web_portfolio1.user where account='${value}'`;
-//     else if(type==='email')
-//         query=`select * from web_portfolio1.user where email='${value}'`;
-
-//     dbCon.query(query, (err,userInfo)=>{
-//         if(err)
-//             console.log('table name:user / Error: select query Error : ',err);
-//         else{
-//             console.log('table name:user / Result: select query Success');
-//             console.log(userInfo[0]);
-            
-//             (userInfo[0]===undefined) ? res.json({result:"notFound", message:'사용 가능합니다.'}) : res.json({result:"found", message:'이미 존재합니다.'}) 
-//         }
-//         dbCon.end();
-//     });
-// });
-
 router.get('/duplication/:value',(req,res)=>{
     const value = req.params.value;
     const [inputData, type] = value.split('-');
