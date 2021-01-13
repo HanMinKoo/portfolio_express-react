@@ -187,6 +187,7 @@ function changeYearMonth(year,month,setDate){
         //이전 달이면 달력 그린 후, month 증가시키기.
         (checkPreviousYearMonth(year,month,currentYear,currentMonth))
             ? month++ : setDate(new Date(year,month++));
+
     });
 
     nextMonth.addEventListener('click',()=>{   
@@ -203,6 +204,7 @@ function changeYearMonth(year,month,setDate){
         //그래서 이 조건문을 통해 다음 달 클릭을 했어도 현재 날짜 보다 이전의 년 월이면 api 요청 x
         (checkPreviousYearMonth(year,month,currentYear,currentMonth))
             ? month++ : setDate(new Date(year,month++));
+
     });
 }
 

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 function deleteReservation(id){
@@ -26,33 +27,29 @@ const fetchReservationList = async(setMyReservationList) =>{
 
 function initJSX(myReservationList){
     let jsx = [];
-    
-    
-    // const testDate = new Date(2021,1,10); //Date(년도, 월-1, 일)
-    // if(currentDate>testDate){
-    //     console.log(currentDate,testDate);
-    // }
 
     const {account, reservationList} = myReservationList; 
     
-    //console.log('mypage data',reservationList);
-
+    console.log('mypage data',reservationList);
+    
     for(let i = 0; i<reservationList.length; i++){
-        //const reservationSplitUseDate=reservationList[i].use_date.split('-');
+        const {id,name,use_date,use_time,state} = reservationList[i];
 
-        const compareDateResult = compareToCurrentAndReservationDate(reservationList[i].use_date.split('-'));
+        let compareDateResult;
+        if(reservationList[0].name !== undefined)//즉, 예약 현황이 1개라도 존재하면
+            compareDateResult = compareToCurrentAndReservationDate(reservationList[i].use_date.split('-'));
 
         //console.log(reservationSplitUseDate);
-        if(reservationList[0].name === undefined)  //여기서  reservationList[0].name 은 운동장 이름
+        if(name === undefined) //여기서 name은 운동장 이름. 즉, 예약 현황이 없으면
             jsx = reservationList[0].text;
-        else if(!compareDateResult){ //일단은 테스트로 ! 박아둠.
+        else if(compareDateResult){ //쿼리스트링으로 account를 넘겨준다치자. 그런데 어차피 서버쪽에서 account에 해당하는 pk값 찾아와야해. 그러면 그냥 account 안넘기고, db에서 use_date랑 use time 값이 똑같은 id 값 가져오면 될것같은데
             jsx[i]=
-                <tr id = {reservationList[i].id} key={reservationList[i].id}>
-                    <td>{reservationList[i].id}</td>
-                    <td>{reservationList[i].name}</td>
-                    <td>{reservationList[i].use_date} &nbsp; {reservationList[i].use_time}</td>
-                    <td>{reservationList[i].state}</td>
-                    <td><button type='button' onClick={()=>deleteReservation(reservationList[i].id)}>리뷰 작성</button></td>
+                <tr id = {id} key={id}>
+                    <td>{id}</td>
+                    <td>{name}</td>
+                    <td>{use_date} &nbsp; {use_time}</td>
+                    <td>{state}</td>
+                    <td><Link to={`/review?groundid=${id}&usedate=${use_date}&usetime=${use_time}`}><button type='button' >리뷰 작성</button></Link></td>
                 </tr>
         }
         else{
@@ -75,7 +72,6 @@ function compareToCurrentAndReservationDate(date){
     const currentDate = new Date();
     const reservationDate = new Date(year, month-1, day); //Date(년도, 월-1, 일)
 
-    //console.log(reservationDate);
     return (currentDate > reservationDate) ? true : false;
 }
 

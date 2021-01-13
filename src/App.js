@@ -12,6 +12,7 @@ import GroundDetail from './routes/ground_detail';
 import AdminPage from './routes/adminpage';
 import MyPage from './routes/mypage';
 import Inquire from './routes/inquire';
+import Review from './components/review';
 
 class App extends Component{
   render(){
@@ -31,6 +32,8 @@ class App extends Component{
         <Route path="/adminpage" component={AdminPage}></Route>
         <Route path="/mypage" component={MyPage}></Route>
         <Route path="/inquire" component={Inquire}></Route>
+        <Route path="/review" component={Review}></Route>
+        
         <Footer></Footer>
       </BrowserRouter>
     

@@ -1,0 +1,25 @@
+.review_wrap{
+    margin-top: 7%;
+    width: 100%;
+    border:0px;
+    font-size: 20px;
+}
+.review_form{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+.review_form>.reviewTextLabel{
+    margin-bottom: 5%;
+    font-size: 1.2em;
+}
+.review_form>.reviewTextInput{
+    height: 300px;
+    margin-bottom: 5%;
+}
+.review_form>.reviewButton{
+    width:50%;
+    height: 50px;
+    margin: 0 auto;
+}
