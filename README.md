@@ -25,7 +25,9 @@
   
   
 ## DB ERD
-![210114 DB ERD UPDATE](https://user-images.githubusercontent.com/46620616/104589754-b15e2480-56ad-11eb-8833-f2db2b7a18ff.JPG)
+
+![erd 찐찐찐](https://user-images.githubusercontent.com/46620616/104605058-60582b80-56c1-11eb-8c82-afb5c5317db1.png)
+
 
 
 ## 주요 기능
@@ -68,9 +70,14 @@
  - 예약 승인 버튼을 누르면 DB에서 해당 예약 번호의 예약 상태를 ‘승인 대기’에서 ‘승인 완료’로 변경했습니다.
  - 예약 취소 버튼을 누르면 해당 예약 번호의 예약을 DB에서 삭제했습니다.
  
+ ### 마이 페이지
+ ![마이페이지123](https://user-images.githubusercontent.com/46620616/104600184-0739c900-56bc-11eb-9888-1fbf49c3c29c.JPG)
  
-![210114 마이페이지 및 관리자 페이지](https://user-images.githubusercontent.com/46620616/104590196-4eb95880-56ae-11eb-8b03-096ee4332c0b.JPG)
- 
+  <br></br>
+  
+ ### 관리자 페이지
+ ![관리자페이지](https://user-images.githubusercontent.com/46620616/104605295-a8774e00-56c1-11eb-98f2-c239c01878a7.png)
+
  
  <br></br> 
 8. 이메일 문의
