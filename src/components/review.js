@@ -3,10 +3,10 @@ import queryString from 'query-string';
 import axios from 'axios';
 import '../css/review.css';
 
-function submitReview(reviewText, groundId){
+function submitReview(reviewText, reservationId){
     const data = {
         reviewText,
-        groundId
+        reservationId
     };
     axios({
         method: 'post',
