@@ -1,26 +1,27 @@
-.review_wrap{
+.ground_reviewComponent_wrap{
+
     width: 1200px;
-    border:1px solid black;
     margin: 0 auto;
+    
+    font-size: 20px;
 }
-.reviewForm{
-    display: flex;
-}
-.inputReviewText{
-    border:3px solid black;
-    margin: 0%;
-    width: 70%;
-    height:80px;
-    margin-right: 5%;
+.ground_reviewComponent_wrap>.title{
+    text-align: center;
     
 }
-.reviewButton{
-    width: 10%;
-    background-color:#2ecc71;
-    border-color:  #2ecc71;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 22px;
-    font-weight: bold;
-    color: white;
+.reviewInfo_wrap{
+    border-bottom: 1px solid rgb(168, 168, 168);
+    padding: 4% 0%;
+}
+.reviewInfo_wrap>.account{
+    font-size: 1.2em;
+    font-weight:bold;
+}
+.reviewInfo_wrap>.useDate{
+    padding: 1% 0%;
+    font-size: 1em;
+    color:gray;
+}
+.reviewInfo_wrap>.text{
+
 }

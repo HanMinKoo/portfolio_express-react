@@ -11,13 +11,15 @@
     padding: 20px 0px;
     display: flex;
     border-bottom: 1px solid gray;
-    font-size: 22px;
+    font-size: 20px;
 }
 .menuList li{
-    color: rgb(158, 158, 158);
+    color: rgb(139, 138, 138);
     margin-right: 5%;
     cursor: pointer;
+    font-size: 1.2em;
 }
+
 
 .select{
     border-bottom:3px solid black ;
