@@ -31,21 +31,19 @@ router.get('/list',(req,res)=>{
         else
             console.log('table name:ground_time_list / Result: query Success');
 
-        //console.log("groundTimeListgroundTimeListgroundTimeList:", groundTimeList);
+        dbCon.end();
         res.json([groundTimeList]);
     });
 
 });
 
 
-router.post('/',(req,res)=>{//get방식은 url query에 값을 form의 데이터들을 붙여 보내준다.예약과 관련된 날짜만 넘기는거니 괜찮음.
+router.post('/',(req,res)=>{
     console.log("정말정말??", req.body);
 
     if(req.session.account === undefined)
         res.json({result:'not login', message:'로그인 사용자만 이용할 수 있습니다.'});
     
-    //const dbCon=connectionDB.connectDB();
-
     const ground_id=req.body.ground_id;
     const use_date = `${req.body.year}-${req.body.month}-${req.body.day}`;
 
@@ -53,8 +51,6 @@ router.post('/',(req,res)=>{//get방식은 url query에 값을 form의 데이터
     if(req.body.groundTime!==undefined && req.session.account!==undefined){    
         const dbCon=connectionDB.connectDB();
         
-        dbCon.beginTransaction();  //트랜잭션 적용 시작
-
         const query = `insert into web_portfolio1.ground_reservation_list(user_id,ground_id,use_date,use_time) 
         values('${req.session.user_id}',${ground_id},'${use_date}','${req.body.groundTime}')`;
 
@@ -62,13 +58,11 @@ router.post('/',(req,res)=>{//get방식은 url query에 값을 form의 데이터
             printQueryResult(dbCon,err,data,'ground_reservation_list','reservation process','insert');
             console.log(data);
             if(!err){
-                dbCon.commit(); //트랜잭션 저장
-                dbCon.end();
                 res.json({result:'reservationSuccess', message:'예약 성공', error:'none'});
             }
             else{
+                dbCon.end();
                 res.json({result:'error', message:'예약 실패. 다시 시도해주세요.', error:err});
-                dbCon.end(); //210103 추가.
             }
         });
     }
@@ -81,18 +75,20 @@ router.delete('/:id',(req,res)=>{
     console.log('delete id: ',req.params.id);
     const id =req.params.id;
     console.log(typeof(id));
-    const db=connectionDB.connectDB();
+    const dbCon=connectionDB.connectDB();
 
     const query= `delete from ground_reservation_list where id=${id}`;
 
-    db.query(query,(err,result)=>{
+    dbCon.query(query,(err,result)=>{
         if(err){
             console.log('table name:ground_reservation_list / Error: delete query Error : ',err);
+            dbCon.end();
             res.json({result:'error'});
         }
         else{
             console.log('table name:ground_reservation_list / Result: delete query Success');
             console.log(result);
+            dbCon.end();
             res.json({result:'success'});
         }
     });
@@ -101,18 +97,21 @@ router.delete('/:id',(req,res)=>{
 router.put('/status/:id',(req,res)=>{
     console.log("update id:",req.params.id);
     const id =req.params.id;
-    const db=connectionDB.connectDB();
+    const dbCon=connectionDB.connectDB();
 
     const query= `update ground_reservation_list set state='승인 완료' where id=${id}`;
 
-    db.query(query,(err,result)=>{
+    dbCon.query(query,(err,result)=>{
         if(err){
             console.log('table name:ground_reservation_list / Error: update query Error : ',err);
+            dbCon.end();
             res.json({result:'error'});
+            
         }
         else{
             console.log('table name:ground_reservation_list / Result: update query Success');
             console.log(result);
+            dbCon.end();
             res.json({result:'success'});
         }
     });

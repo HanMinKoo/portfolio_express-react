@@ -52,7 +52,9 @@ router.get('/:groundId', (req, res)=>{
     console.log('testsetsetset',groundId);
     const query = `select user.account, ground_review.text, ground_reservation_list.use_date, ground_reservation_list.use_time from ground_reservation_list 
         INNER JOIN ground_review ON ground_reservation_list.id = ground_review.ground_reservation_list_id 
-            LEFT JOIN user ON ground_reservation_list.user_id = user.id where ground_reservation_list.ground_id =${groundId}`;
+            INNER JOIN user ON ground_reservation_list.user_id = user.id where ground_reservation_list.ground_id =${groundId}`;  
+        
+        //LEFT JOIN user ON ground_reservation_list.user_id = user.id where ground_reservation_list.ground_id =${groundId}`;
 
     dbCon.query(query, (err,data)=>{
         if(err){
