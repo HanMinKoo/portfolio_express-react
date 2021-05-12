@@ -43,8 +43,7 @@
  <br></br>
 2. 반응형 웹 구현
  - 브라우저 너비에 따라 최적화된 화면을 보여주고자 반응형 웹을 구현했습니다.
- 
- ![반응형웹](https://user-images.githubusercontent.com/46620616/104831990-134aa400-58d1-11eb-9cb6-3f5d9c598bd3.JPG)
+ - 이미지 삭제
 
  
  <br></br>
@@ -79,12 +78,12 @@
  - 예약 취소 버튼을 누르면 해당 예약 번호의 예약을 DB에서 삭제했습니다.
  
  ### 마이 페이지
- ![마이페이지123](https://user-images.githubusercontent.com/46620616/104600184-0739c900-56bc-11eb-9888-1fbf49c3c29c.JPG)
+ - 이미지 삭제
  
   <br></br>
   
  ### 관리자 페이지
- ![관리자페이지](https://user-images.githubusercontent.com/46620616/104605295-a8774e00-56c1-11eb-98f2-c239c01878a7.png)
+ - 이미지 삭제
 
  
  <br></br> 
@@ -99,20 +98,17 @@
   - <h3>1번. 마이 페이지에서 리뷰 작성 버튼 클릭</h3>
    - <h4> 버튼을 클릭하면 해당 예약 번호를 쿼리스트링에 포함해 리뷰 작성 페이지로 이동합니다.</h4>
 
-<img src="https://user-images.githubusercontent.com/46620616/104832287-9ec53480-58d3-11eb-97c7-735f14c642fa.JPG"  width="80%" >
-  <br></br> 
+- 이미지 삭제
   
   - <h3>2번. 리뷰 작성</h3>
    - <h4> 리뷰 작성 성공 시 예약 번호, 작성 내용, 작성 시간을 reivew 테이블에 추가합니다.</h4>
    - <h4> 그 후, 해당 예약 번호의 리뷰 등록 여부를 예약 현황 테이블에서 업데이트합니다.</h4>
    - <h4> 이 과정을 일련의 과정으로 처리하기 위해 트랜잭션을 활용했습니다.</h4>
-   <img src="https://user-images.githubusercontent.com/46620616/104832289-a1278e80-58d3-11eb-869f-40650b1b843f.JPG"  width="50%"  >
-   <br></br> 
+   - 이미지 삭제
    
   - <h3>3번. 운동장 상세 페이지에 작성 리뷰 출력</h3>
    - <h4> 운동장 리뷰 테이블, 예약 현황 테이블, 사용자 정보 테이블을 INNER JOIN을 통해 결합하여 해당 운동장의 예약 현황을 출력합니다.</h4>
-  <img src="https://user-images.githubusercontent.com/46620616/104832215-edbe9a00-58d2-11eb-8140-d4f63c40f826.JPG"  width="80%"  >
-  <br></br> 
+  - 이미지 삭제
  
 
 
